@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using MotoShop.Services.Implementation;
+using MotoShop.Services.Services;
 using System;
 using System.Text;
 
@@ -32,6 +34,13 @@ namespace MotoShop.WebAPI.Extensions
                 options.RequireHttpsMetadata = false;
                 options.TokenValidationParameters = tokentValidationParams;
             });
+
+            return services;
+        }
+
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        {
+            services.AddScoped<IApplicationUserService, ApplicationUserService>();
 
             return services;
         }
