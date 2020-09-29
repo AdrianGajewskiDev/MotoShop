@@ -6,6 +6,7 @@ namespace MotoShop.Web.Controllers
     [Route(template: "api/[controller]")]
     public class HomeController : ControllerBase
     {
+        [HttpGet("[action]")]
         public IActionResult Index()
         {
             return Ok("Home index value");

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using MotoShop.Data.Database_Context;
 using MotoShop.Data.Models.User;
 using MotoShop.WebAPI.Configurations;
+using MotoShop.WebAPI.Extensions;
 
 namespace MotoShop.Web
 {
@@ -24,11 +25,11 @@ namespace MotoShop.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddJwtAuthentication(Configuration["JWT:Key"]);
             services.AddDbContext<ApplicationDatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Production")));
             services.AddIdentityCore<ApplicationUser>(options => ApplicationUserConfigurations.Configure(options))
                 .AddEntityFrameworkStores<ApplicationDatabaseContext>()
                 .AddDefaultTokenProviders();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,13 +43,13 @@ namespace MotoShop.Web
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapControllerRoute(name: "default", pattern: "api/{controller}/{action}/{params?}");
+                endpoints.MapControllerRoute(name: "default", pattern: "api/{controller}/{action?}/{params?}");
             });
         }
     }
