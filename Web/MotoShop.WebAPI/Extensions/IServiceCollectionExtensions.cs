@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using MotoShop.Services.Implementation;
 using MotoShop.Services.Services;
+using MotoShop.WebAPI.Token_Providers;
 using System;
 using System.Text;
 
@@ -40,7 +41,12 @@ namespace MotoShop.WebAPI.Extensions
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            //Scoped
             services.AddScoped<IApplicationUserService, ApplicationUserService>();
+
+
+            //Singletons
+            services.AddSingleton<JsonWebTokenWriter>();
 
             return services;
         }
