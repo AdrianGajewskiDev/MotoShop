@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MotoShop.Data.Database_Context;
 
 namespace MotoShop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20201001141122_add Motocycle Entity")]
+    partial class addMotocycleEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -168,9 +170,6 @@ namespace MotoShop.Data.Migrations
                     b.Property<DateTime>("Placed")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ShopItemID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
@@ -179,8 +178,6 @@ namespace MotoShop.Data.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("AuthorID");
-
-                    b.HasIndex("ShopItemID");
 
                     b.ToTable("Advertisements");
                 });
@@ -191,6 +188,9 @@ namespace MotoShop.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AdvertisementID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
@@ -210,6 +210,9 @@ namespace MotoShop.Data.Migrations
                         .HasMaxLength(20);
 
                     b.HasKey("ID");
+
+                    b.HasIndex("AdvertisementID")
+                        .IsUnique();
 
                     b.ToTable("ShopItem");
 
@@ -455,10 +458,15 @@ namespace MotoShop.Data.Migrations
                     b.HasOne("MotoShop.Data.Models.User.ApplicationUser", "Author")
                         .WithMany()
                         .HasForeignKey("AuthorID");
+                });
 
-                    b.HasOne("MotoShop.Data.Models.Store.ShopItem", "ShopItem")
-                        .WithMany()
-                        .HasForeignKey("ShopItemID");
+            modelBuilder.Entity("MotoShop.Data.Models.Store.ShopItem", b =>
+                {
+                    b.HasOne("MotoShop.Data.Models.Store.Advertisement", null)
+                        .WithOne("ShopItem")
+                        .HasForeignKey("MotoShop.Data.Models.Store.ShopItem", "AdvertisementID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

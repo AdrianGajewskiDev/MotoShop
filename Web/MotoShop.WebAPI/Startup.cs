@@ -9,6 +9,7 @@ using MotoShop.Data.Database_Context;
 using MotoShop.Data.Models.User;
 using MotoShop.WebAPI.Configurations;
 using MotoShop.WebAPI.Extensions;
+using MotoShop.WebAPI.Helpers;
 
 namespace MotoShop.Web
 {

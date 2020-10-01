@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MotoShop.Data.Database_Context;
 
 namespace MotoShop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20201001132829_add base enities")]
+    partial class addbaseenities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -168,9 +170,6 @@ namespace MotoShop.Data.Migrations
                     b.Property<DateTime>("Placed")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ShopItemID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
@@ -179,8 +178,6 @@ namespace MotoShop.Data.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("AuthorID");
-
-                    b.HasIndex("ShopItemID");
 
                     b.ToTable("Advertisements");
                 });
@@ -192,6 +189,9 @@ namespace MotoShop.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AdvertisementID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -199,17 +199,19 @@ namespace MotoShop.Data.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ItemType")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("OwnerID")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)")
                         .HasMaxLength(20);
 
                     b.HasKey("ID");
+
+                    b.HasIndex("AdvertisementID")
+                        .IsUnique();
+
+                    b.HasIndex("OwnerID");
 
                     b.ToTable("ShopItem");
 
@@ -354,51 +356,6 @@ namespace MotoShop.Data.Migrations
                     b.HasDiscriminator().HasValue("Car");
                 });
 
-            modelBuilder.Entity("MotoShop.Data.Models.Store.Motocycle", b =>
-                {
-                    b.HasBaseType("MotoShop.Data.Models.Store.ShopItem");
-
-                    b.Property<float>("Acceleration")
-                        .HasColumnType("real")
-                        .HasMaxLength(10);
-
-                    b.Property<float>("CubicCapacity")
-                        .HasColumnType("real")
-                        .HasMaxLength(10);
-
-                    b.Property<string>("Fuel")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
-                    b.Property<int>("FuelConsumption")
-                        .HasColumnType("int")
-                        .HasMaxLength(10);
-
-                    b.Property<int>("HorsePower")
-                        .HasColumnType("int")
-                        .HasMaxLength(10);
-
-                    b.Property<float>("Lenght")
-                        .HasColumnType("real")
-                        .HasMaxLength(10);
-
-                    b.Property<string>("MotocycleBrand")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MotocycleModel")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("Width")
-                        .HasColumnType("real")
-                        .HasMaxLength(10);
-
-                    b.Property<DateTime>("YearOfProduction")
-                        .HasColumnType("datetime2");
-
-                    b.HasDiscriminator().HasValue("Motocycle");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -453,12 +410,21 @@ namespace MotoShop.Data.Migrations
             modelBuilder.Entity("MotoShop.Data.Models.Store.Advertisement", b =>
                 {
                     b.HasOne("MotoShop.Data.Models.User.ApplicationUser", "Author")
-                        .WithMany()
+                        .WithMany("Advertisements")
                         .HasForeignKey("AuthorID");
+                });
 
-                    b.HasOne("MotoShop.Data.Models.Store.ShopItem", "ShopItem")
-                        .WithMany()
-                        .HasForeignKey("ShopItemID");
+            modelBuilder.Entity("MotoShop.Data.Models.Store.ShopItem", b =>
+                {
+                    b.HasOne("MotoShop.Data.Models.Store.Advertisement", "Advertisement")
+                        .WithOne("ShopItem")
+                        .HasForeignKey("MotoShop.Data.Models.Store.ShopItem", "AdvertisementID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MotoShop.Data.Models.User.ApplicationUser", "Owner")
+                        .WithMany("ShopItems")
+                        .HasForeignKey("OwnerID");
                 });
 #pragma warning restore 612, 618
         }

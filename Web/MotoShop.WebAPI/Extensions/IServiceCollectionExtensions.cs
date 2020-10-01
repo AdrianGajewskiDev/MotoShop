@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using MotoShop.Services.Implementation;
 using MotoShop.Services.Services;
+using MotoShop.WebAPI.Helpers;
 using MotoShop.WebAPI.Token_Providers;
 using System;
 using System.Text;
@@ -43,6 +44,7 @@ namespace MotoShop.WebAPI.Extensions
         {
             //Scoped
             services.AddScoped<IApplicationUserService, ApplicationUserService>();
+            services.AddScoped<DatabaseSeeder>();
 
 
             //Singletons

@@ -10,8 +10,8 @@ using MotoShop.Data.Database_Context;
 namespace MotoShop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    [Migration("20200929123503_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20201001135440_changed entity values on Advertisement Model")]
+    partial class changedentityvaluesonAdvertisementModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -152,6 +152,75 @@ namespace MotoShop.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("MotoShop.Data.Models.Store.Advertisement", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AuthorID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<DateTime>("Placed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("AuthorID");
+
+                    b.ToTable("Advertisements");
+                });
+
+            modelBuilder.Entity("MotoShop.Data.Models.Store.ShopItem", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AdvertisementID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OwnerID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)")
+                        .HasMaxLength(20);
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("AdvertisementID")
+                        .IsUnique();
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("ShopItem");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("ShopItem");
+                });
+
             modelBuilder.Entity("MotoShop.Data.Models.User.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -172,6 +241,7 @@ namespace MotoShop.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -181,6 +251,7 @@ namespace MotoShop.Data.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
@@ -221,6 +292,71 @@ namespace MotoShop.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("MotoShop.Data.Models.Store.Car", b =>
+                {
+                    b.HasBaseType("MotoShop.Data.Models.Store.ShopItem");
+
+                    b.Property<float>("Acceleration")
+                        .HasColumnType("real")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("CarBrand")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("CarModel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("CarType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<float>("CubicCapacity")
+                        .HasColumnType("real")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("Fuel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<int>("FuelConsumption")
+                        .HasColumnType("int")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("Gearbox")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("HorsePower")
+                        .HasColumnType("int")
+                        .HasMaxLength(10);
+
+                    b.Property<float>("Lenght")
+                        .HasColumnType("real")
+                        .HasMaxLength(10);
+
+                    b.Property<int>("NumberOfDoors")
+                        .HasColumnType("int")
+                        .HasMaxLength(10);
+
+                    b.Property<int>("NumberOfSeats")
+                        .HasColumnType("int")
+                        .HasMaxLength(10);
+
+                    b.Property<float>("Width")
+                        .HasColumnType("real")
+                        .HasMaxLength(10);
+
+                    b.Property<DateTime>("YearOfProduction")
+                        .HasColumnType("datetime2");
+
+                    b.HasDiscriminator().HasValue("Car");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -272,6 +408,26 @@ namespace MotoShop.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MotoShop.Data.Models.Store.Advertisement", b =>
+                {
+                    b.HasOne("MotoShop.Data.Models.User.ApplicationUser", "Author")
+                        .WithMany("Advertisements")
+                        .HasForeignKey("AuthorID");
+                });
+
+            modelBuilder.Entity("MotoShop.Data.Models.Store.ShopItem", b =>
+                {
+                    b.HasOne("MotoShop.Data.Models.Store.Advertisement", null)
+                        .WithOne("ShopItem")
+                        .HasForeignKey("MotoShop.Data.Models.Store.ShopItem", "AdvertisementID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MotoShop.Data.Models.User.ApplicationUser", null)
+                        .WithMany("ShopItems")
+                        .HasForeignKey("ApplicationUserId");
                 });
 #pragma warning restore 612, 618
         }

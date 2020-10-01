@@ -31,5 +31,6 @@ namespace MotoShop.Tests.Services
             Assert.Equal(result, expected);
 
         }
+
     }
 }

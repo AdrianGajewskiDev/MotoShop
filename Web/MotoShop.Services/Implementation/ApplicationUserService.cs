@@ -23,6 +23,12 @@ namespace MotoShop.Services.Implementation
             _userManager = userManager;
         }
 
+        public async Task<ApplicationUser> GetUserByEmail(string email) => await _userManager.FindByEmailAsync(email);
+
+        public async Task<ApplicationUser> GetUserByID(string id) => await _userManager.FindByIdAsync(id);
+
+        public async Task<ApplicationUser> GetUserByUserName(string username) => await _userManager.FindByNameAsync(username);
+      
         public async Task<bool> RegisterNewUserAsync(ApplicationUser user, string password)
         {
             if (user == null)
