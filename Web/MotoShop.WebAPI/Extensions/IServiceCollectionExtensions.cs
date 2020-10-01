@@ -44,6 +44,8 @@ namespace MotoShop.WebAPI.Extensions
         {
             //Scoped
             services.AddScoped<IApplicationUserService, ApplicationUserService>();
+            services.AddScoped<IAdvertisementService, AdvertisementService>();
+            services.AddScoped<IShopItemsService, ShopItemsService>();
             services.AddScoped<DatabaseSeeder>();
 
 

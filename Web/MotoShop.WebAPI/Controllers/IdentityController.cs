@@ -5,6 +5,7 @@ using MotoShop.Data.Models.User;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Models;
 using MotoShop.WebAPI.Token_Providers;
+using Serilog;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -53,7 +54,10 @@ namespace MotoShop.WebAPI.Controllers
             var result = await _applicationUserService.RegisterNewUserAsync(user, userRegisterRequestModel.Password);
 
             if (result == true)
+            {
+                Log.Information($"Registered new user with id of { user.Id}");
                 return Created(_linkGenerator.GetPathByAction("Register", "Identity"), "User was succesfully created");
+            }
 
             return BadRequest(new { message = "Something bad has happened while trying to register new user" });
         }
@@ -73,6 +77,8 @@ namespace MotoShop.WebAPI.Controllers
                 string prefix = userLogInVariant == UserSignInVariant.Email ? "email" : "username";
                 return NotFound(new { message = $"User with {prefix} of {userSignInRequestModel.Data} does not exists !!" });
             }
+
+            Log.Information($"The { userSignInRequestModel.Data} logged in");
 
             Claim[] claims = { new Claim("UserID", userID) };
 

@@ -43,6 +43,7 @@ namespace MotoShop.WebAPI.Helpers
                     Price = 1600,
                     Width = 1.5f,
                     YearOfProduction = new DateTime(2001, 1,10),
+                    ItemType = ItemType.Car.ToString()
                 };
 
             _context.Cars.Add(car);
@@ -80,6 +81,8 @@ namespace MotoShop.WebAPI.Helpers
                 Price = 1600,
                 Width = 1.5f,
                 YearOfProduction = new DateTime(2001, 1, 10),
+                ItemType = ItemType.Car.ToString()
+
             };
 
             _context.Cars.Add(cr);
