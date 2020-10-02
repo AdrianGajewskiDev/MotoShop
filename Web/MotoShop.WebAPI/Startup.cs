@@ -26,7 +26,7 @@ namespace MotoShop.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options => JsonConfiguration.Configure(options));
             services.AddJwtAuthentication(Configuration["JWT:Key"]);
             services.AddDbContext<ApplicationDatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Production")));
             services.AddIdentityCore<ApplicationUser>(options => ApplicationUserConfigurations.Configure(options))

@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MotoShop.Data\MotoShop.Data.csproj" />
     <ProjectReference Include="..\MotoShop.Services\MotoShop.Services.csproj" />
+    <ProjectReference Include="..\MotoShop.WebAPI\MotoShop.WebAPI.csproj" />
   </ItemGroup>
 
 </Project>

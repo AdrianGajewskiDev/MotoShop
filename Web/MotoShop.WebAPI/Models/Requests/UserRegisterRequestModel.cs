@@ -1,4 +1,4 @@
-﻿namespace MotoShop.WebAPI.Models
+﻿namespace MotoShop.WebAPI.Models.Request
 {
     public class UserRegisterRequestModel
     {

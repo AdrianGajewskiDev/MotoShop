@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Helpers;
-using System.Security.Authentication;
-using System.Threading.Tasks;
 
 namespace MotoShop.WebAPI.Controllers
 {
@@ -21,13 +19,12 @@ namespace MotoShop.WebAPI.Controllers
             this.shopItemsService = shopItemsService;
         }
 
-        [HttpGet("test")]
-        public IActionResult Test()
+        [HttpGet("All")]
+        public IActionResult GetAllAdvertisements()
         {
-            var ad = advertisementService.GetAdvertisementById(18);
-            var item = shopItemsService.GetItemByAdvertisement(ad.ID);
+            var ads = advertisementService.GetAll();
 
-            return Ok(new {ad, item });
+            return Ok(ads);
         }
     }
 }

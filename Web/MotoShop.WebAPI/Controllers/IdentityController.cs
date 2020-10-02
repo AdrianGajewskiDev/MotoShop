@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Routing;
 using MotoShop.Data.Helpers;
 using MotoShop.Data.Models.User;
 using MotoShop.Services.Services;
-using MotoShop.WebAPI.Models;
+using MotoShop.WebAPI.Models.Request;
 using MotoShop.WebAPI.Token_Providers;
 using Serilog;
 using System.Security.Claims;
