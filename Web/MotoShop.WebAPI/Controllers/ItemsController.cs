@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Helpers;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 
 namespace MotoShop.WebAPI.Controllers
@@ -21,12 +22,12 @@ namespace MotoShop.WebAPI.Controllers
         }
 
         [HttpGet("test")]
-        public async Task<IActionResult> Test()
+        public IActionResult Test()
         {
             var ad = advertisementService.GetAdvertisementById(18);
             var item = shopItemsService.GetItemByAdvertisement(ad.ID);
 
-            return Ok(item);
+            return Ok(new {ad, item });
         }
     }
 }

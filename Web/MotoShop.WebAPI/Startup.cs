@@ -10,6 +10,7 @@ using MotoShop.Data.Models.User;
 using MotoShop.WebAPI.Configurations;
 using MotoShop.WebAPI.Extensions;
 using MotoShop.WebAPI.Helpers;
+using MotoShop.WebAPI.Midleware;
 
 namespace MotoShop.Web
 {
@@ -43,8 +44,11 @@ namespace MotoShop.Web
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseExceptionHandler(new ExceptionHandlerOptions
+            {
+                ExceptionHandler = new ExceptionHandlerMidleware().HandleException
+            });
             app.UseHttpsRedirection();
-
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
