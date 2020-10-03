@@ -60,8 +60,6 @@ namespace MotoShop.WebAPI.Helpers
             _context.Advertisements.Add(advertisement);
 
 
-
-
             Car cr = new Car
             {
                 Acceleration = 4,

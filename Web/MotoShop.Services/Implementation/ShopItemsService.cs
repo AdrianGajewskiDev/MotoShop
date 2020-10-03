@@ -1,4 +1,5 @@
-﻿using MotoShop.Data.Database_Context;
+﻿using Microsoft.EntityFrameworkCore;
+using MotoShop.Data.Database_Context;
 using MotoShop.Data.Models.Constants;
 using MotoShop.Data.Models.Store;
 using MotoShop.Services.Services;
@@ -11,18 +12,34 @@ namespace MotoShop.Services.Implementation
     public class ShopItemsService : IShopItemsService
     {
         private readonly ApplicationDatabaseContext _context;
-        private readonly IAdvertisementService _advertisementService;
 
-        public ShopItemsService(ApplicationDatabaseContext context, IAdvertisementService advertisementService)
+        public ShopItemsService(ApplicationDatabaseContext context)
         {
             _context = context;
-            _advertisementService = advertisementService;
         }
 
         public async Task<bool> AddItemAsync(int advertisementID, ShopItem item)
         {
-            Advertisement advertisement = _advertisementService.GetAdvertisementById(advertisementID);
+            Advertisement advertisement = _context.Advertisements
+                    .Where(x => x.ID == advertisementID)
+                    .Include(x => x.Author)
+                    .Include(x => x.ShopItem)
+                    .FirstOrDefault();
             advertisement.ShopItem = item;
+
+            switch (item.ItemType)
+            {
+                case "Car":
+                    {
+                        await _context.Cars.AddAsync(advertisement.ShopItem as Car);
+                    }break;
+                case "Motocycle":
+                    {
+                        await _context.Motocycles.AddAsync(advertisement.ShopItem as Motocycle);
+                    }
+                    break;
+            }
+
 
             if (await _context.SaveChangesAsync() > 0)
                 return true;
@@ -39,7 +56,13 @@ namespace MotoShop.Services.Implementation
 
         public ShopItem GetItemByAdvertisement(int advertisementID)
         {
-            var items = _context.Advertisements.Where(x => x.ID == advertisementID).FirstOrDefault().ShopItem;
+            var items = _context.Advertisements
+                .Where(x => x.ID == advertisementID)
+                .Include(x => x.ShopItem)
+                .FirstOrDefault().ShopItem;
+
+            if (items == null)
+                return null;
 
             switch (items.ItemType)
             {

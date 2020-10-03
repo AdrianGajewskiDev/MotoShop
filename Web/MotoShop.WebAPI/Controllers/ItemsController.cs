@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MotoShop.Data.Models.Store;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Helpers;
+using System.Collections.Generic;
 
 namespace MotoShop.WebAPI.Controllers
 {
@@ -22,7 +24,15 @@ namespace MotoShop.WebAPI.Controllers
         [HttpGet("All")]
         public IActionResult GetAllAdvertisements()
         {
-            var ads = advertisementService.GetAll();
+
+            List<Advertisement> ads = new List<Advertisement>();
+
+            var adverts = advertisementService.GetAll();
+
+            foreach (var ad in adverts)
+            {
+                ads.Add(advertisementService.GetAdvertisementById(ad.ID));
+            }
 
             return Ok(ads);
         }
