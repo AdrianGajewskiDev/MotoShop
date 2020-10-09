@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MotoShop.Data.Models.Constants;
 using MotoShop.Data.Models.Store;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Models.Requests;
@@ -19,13 +17,11 @@ namespace MotoShop.WebAPI.Controllers
     {
         private readonly IAdvertisementService _advertisementService;
         private readonly IApplicationUserService _applicationUserService;
-        private readonly IShopItemsService _shopItemsService;
 
-        public AdvertisementsController(IAdvertisementService advertisementService, IApplicationUserService applicationUserService, IShopItemsService shopItemsService)
+        public AdvertisementsController(IAdvertisementService advertisementService, IApplicationUserService applicationUserService)
         {
             _advertisementService = advertisementService;
             _applicationUserService = applicationUserService;
-            _shopItemsService = shopItemsService;
         }
 
         [HttpGet("All")]

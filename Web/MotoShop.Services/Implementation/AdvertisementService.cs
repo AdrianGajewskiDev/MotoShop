@@ -56,21 +56,20 @@ namespace MotoShop.Services.Implementation
 
         public Advertisement GetAdvertisementById(int id, bool includeAuthorAndItem = true)
         {
-            if (includeAuthorAndItem == true)
-                return _context.Advertisements
-                    .Where(x => x.ID == id)
-                    .Include(x => x.Author)
-                    .Include(x => x.ShopItem)
-                    .FirstOrDefault();
+            Func<ApplicationDatabaseContext, int, Advertisement> func =
+                EF.CompileQuery((ApplicationDatabaseContext db, int id) =>
+                 db.Advertisements
+                 .Include(x => x.Author)
+                 .Include(x => x.ShopItem)
+                 .Single(c => c.ID == id));
 
-            return _context.Advertisements
-                    .Where(x => x.ID == id)
-                    .FirstOrDefault();
+            return func(_context, id);
         }
+
 
         public IEnumerable<Advertisement> GetAll()
         {
-            return _context.Advertisements.Include(x => x.ShopItem);
+            return  _context.Advertisements.Include(x => x.ShopItem);
         }
 
         public IEnumerable<Advertisement> GetAllAdvertisementsByAuthorId(string authorID)
