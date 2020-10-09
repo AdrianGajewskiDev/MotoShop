@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MotoShop.Data.Database_Context;
-using MotoShop.Data.Models.Constants;
 using MotoShop.Data.Models.Store;
 using MotoShop.Services.Services;
 using System;
@@ -21,17 +20,18 @@ namespace MotoShop.Services.Implementation
             _service = service;
         }
 
-        public async Task AddAdvertisementAsync(Advertisement advertisement)
+        public async Task<bool> AddAdvertisementAsync(Advertisement advertisement)
         {
             if (advertisement == null)
                 throw new ArgumentNullException();
 
-            if(advertisement.ShopItem != null)
-            {
-                await _service.AddItemAsync(advertisement.ID, advertisement.ShopItem);
-            }
+
             await _context.Advertisements.AddAsync(advertisement);
-            await _context.SaveChangesAsync();
+
+            if (await _context.SaveChangesAsync() > 0)
+                return true;
+
+            return false;
         }
 
         public void DeleteAdvertisement(int advertisementID)
@@ -70,7 +70,7 @@ namespace MotoShop.Services.Implementation
 
         public IEnumerable<Advertisement> GetAll()
         {
-            return _context.Advertisements;
+            return _context.Advertisements.Include(x => x.ShopItem);
         }
 
         public IEnumerable<Advertisement> GetAllAdvertisementsByAuthorId(string authorID)

@@ -10,6 +10,7 @@ using MotoShop.Data.Models.User;
 using MotoShop.WebAPI.Configurations;
 using MotoShop.WebAPI.Extensions;
 using MotoShop.WebAPI.Midleware;
+using AutoMapper;
 
 namespace MotoShop.Web
 {
@@ -26,13 +27,17 @@ namespace MotoShop.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddJsonOptions(JsonConfiguration.Configure);
-            services.AddJwtAuthentication(Configuration["JWT:Key"]);
             services.AddDbContext<ApplicationDatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Production"), SqlServerConfigurations.Configure));
             services.AddIdentityCore<ApplicationUser>(ApplicationUserConfigurations.Configure)
                 .AddEntityFrameworkStores<ApplicationDatabaseContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddJwtAuthentication(Configuration["JWT:Key"]);
+            services.AddAutoMapper(typeof(Startup))
+                .SetUpAutoMapper();
+
             services.AddApplicationServices();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +47,6 @@ namespace MotoShop.Web
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseExceptionHandler(new ExceptionHandlerOptions
             {
                 ExceptionHandler = new ExceptionHandlerMidleware().HandleException
@@ -51,7 +55,6 @@ namespace MotoShop.Web
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

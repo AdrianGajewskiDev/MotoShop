@@ -1,5 +1,7 @@
 ﻿using MotoShop.Data.Models.Store;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MotoShop.Services.Services
@@ -10,7 +12,8 @@ namespace MotoShop.Services.Services
         IEnumerable<Advertisement> GetAllAdvertisementsByAuthorId(string authorID);
         IEnumerable<Advertisement> GetAll();
 
-        Task AddAdvertisementAsync(Advertisement advertisement);
+        Task<bool> AddAdvertisementAsync(Advertisement advertisement);
         void DeleteAdvertisement(int advertisementID);
+
     }
 }

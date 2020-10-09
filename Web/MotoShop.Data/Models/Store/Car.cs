@@ -14,11 +14,10 @@ namespace MotoShop.Data.Models.Store
         [MaxLength(length: 50)]
         public string CarType { get; set; }
         [Required]
-        [MaxLength(length: 10)]
         public int NumberOfDoors { get; set; }
         [Required]
-        [MaxLength(length: 10)]
         public int NumberOfSeats { get; set; }
         public string Gearbox { get; set; }
+
     }
 }

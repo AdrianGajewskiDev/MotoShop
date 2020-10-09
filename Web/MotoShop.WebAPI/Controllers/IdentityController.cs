@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using MotoShop.Data.Helpers;
 using MotoShop.Data.Models.User;
@@ -27,6 +28,7 @@ namespace MotoShop.WebAPI.Controllers
             _jsonWebTokenWriter = jsonWebTokenWriter;
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> RegisterNewUser([FromBody] UserRegisterRequestModel userRegisterRequestModel)
         {
@@ -62,6 +64,7 @@ namespace MotoShop.WebAPI.Controllers
             return BadRequest(new { message = "Something bad has happened while trying to register new user" });
         }
 
+        [AllowAnonymous]
         [HttpPost("signIn")]
         public async Task<IActionResult> SignIn([FromBody] UserSignInRequestModel userSignInRequestModel)
         {
@@ -82,7 +85,7 @@ namespace MotoShop.WebAPI.Controllers
 
             Claim[] claims = { new Claim("UserID", userID) };
 
-            var token = _jsonWebTokenWriter.GenerateToken(claims, 5000);
+            var token = _jsonWebTokenWriter.GenerateToken(claims, 5);
 
             return Ok(new { token = token });
         }

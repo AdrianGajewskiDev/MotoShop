@@ -9,8 +9,8 @@ namespace MotoShop.Data.Models.Store
         public int ID { get; set; }
 
         [Required]
-        [MaxLength(length: 20)]
-        public decimal Price { get; set; }
+        public float Price { get; set; }
+
         public string ImageUrl { get; set; }
 
         public string OwnerID { get; set; }

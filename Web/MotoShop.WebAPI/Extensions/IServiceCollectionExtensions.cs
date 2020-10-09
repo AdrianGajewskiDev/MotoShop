@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using MotoShop.Services.Implementation;
 using MotoShop.Services.Services;
+using MotoShop.WebAPI.AutoMapper.Profiles;
 using MotoShop.WebAPI.Helpers;
 using MotoShop.WebAPI.Token_Providers;
 using System;
@@ -22,6 +24,7 @@ namespace MotoShop.WebAPI.Extensions
                 IssuerSigningKey = new SymmetricSecurityKey(jwtKey),
                 ValidateIssuer = false,
                 ValidateAudience = false,
+                RequireExpirationTime = true,
                 ClockSkew = TimeSpan.Zero
             };
 
@@ -32,8 +35,7 @@ namespace MotoShop.WebAPI.Extensions
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options => 
             {
-                options.SaveToken = true;
-                options.RequireHttpsMetadata = false;
+                options.SaveToken = false;
                 options.TokenValidationParameters = tokentValidationParams;
             });
 
@@ -51,6 +53,19 @@ namespace MotoShop.WebAPI.Extensions
 
             //Singletons
             services.AddSingleton<JsonWebTokenWriter>();
+
+            return services;
+        }
+
+        public static IServiceCollection SetUpAutoMapper(this IServiceCollection services)
+        {
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile<ItemsProfile>();
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             return services;
         }

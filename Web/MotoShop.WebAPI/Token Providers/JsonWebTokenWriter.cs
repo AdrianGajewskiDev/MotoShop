@@ -16,13 +16,13 @@ namespace MotoShop.WebAPI.Token_Providers
             _configuration = configuration;
         }
 
-        public string GenerateToken(Claim[] claims, double expires)
+        public string GenerateToken(Claim[] claims, double expiresInHours)
         {
 
             var tokenDescriptor = new SecurityTokenDescriptor 
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMilliseconds(expires),
+                Expires = DateTime.UtcNow.AddHours(expiresInHours),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"])), SecurityAlgorithms.HmacSha256Signature)
             };
 
