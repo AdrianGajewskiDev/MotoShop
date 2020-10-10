@@ -1,10 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MotoShop.Data.Database_Context;
+﻿using MotoShop.Data.Database_Context;
 using MotoShop.Data.Models.Store;
+using MotoShop.Services.EntityFramework.CompiledQueries;
 using MotoShop.Services.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MotoShop.Services.Implementation
@@ -12,12 +11,10 @@ namespace MotoShop.Services.Implementation
     public class AdvertisementService : IAdvertisementService
     {
         private readonly ApplicationDatabaseContext _context;
-        private readonly IShopItemsService _service;
 
-        public AdvertisementService(ApplicationDatabaseContext context, IShopItemsService service)
+        public AdvertisementService(ApplicationDatabaseContext context)
         {
             _context = context;
-            _service = service;
         }
 
         public async Task<bool> AddAdvertisementAsync(Advertisement advertisement)
@@ -56,25 +53,18 @@ namespace MotoShop.Services.Implementation
 
         public Advertisement GetAdvertisementById(int id, bool includeAuthorAndItem = true)
         {
-            Func<ApplicationDatabaseContext, int, Advertisement> func =
-                EF.CompileQuery((ApplicationDatabaseContext db, int id) =>
-                 db.Advertisements
-                 .Include(x => x.Author)
-                 .Include(x => x.ShopItem)
-                 .Single(c => c.ID == id));
-
-            return func(_context, id);
+            return AdvertisementQueries.GetByID(_context, id);
         }
 
 
         public IEnumerable<Advertisement> GetAll()
         {
-            return  _context.Advertisements.Include(x => x.ShopItem);
+            return AdvertisementQueries.GetAll(_context);
         }
 
         public IEnumerable<Advertisement> GetAllAdvertisementsByAuthorId(string authorID)
         {
-            return GetAll().Where(x => x.AuthorID == authorID);
+            return AdvertisementQueries.GetAllAdvertisementsByAuthorId(_context, authorID);
         }
     }
 }

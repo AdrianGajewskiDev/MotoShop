@@ -2,6 +2,7 @@
 using MotoShop.Data.Database_Context;
 using MotoShop.Data.Models.Constants;
 using MotoShop.Data.Models.Store;
+using MotoShop.Services.EntityFramework.CompiledQueries;
 using MotoShop.Services.Services;
 using System;
 using System.Linq;
@@ -20,11 +21,7 @@ namespace MotoShop.Services.Implementation
 
         public async Task<bool> AddItemAsync(int advertisementID, ShopItem item)
         {
-            Advertisement advertisement = _context.Advertisements
-                    .Where(x => x.ID == advertisementID)
-                    .Include(x => x.Author)
-                    .Include(x => x.ShopItem)
-                    .FirstOrDefault();
+            Advertisement advertisement = AdvertisementQueries.GetByID(_context, advertisementID);
             advertisement.ShopItem = item;
 
             switch (item.ItemType)
@@ -56,20 +53,17 @@ namespace MotoShop.Services.Implementation
 
         public ShopItem GetItemByAdvertisement(int advertisementID)
         {
-            var items = _context.Advertisements
-                .Where(x => x.ID == advertisementID)
-                .Include(x => x.ShopItem)
-                .FirstOrDefault().ShopItem;
+            var item = AdvertisementQueries.GetByID(_context,advertisementID).ShopItem;
 
-            if (items == null)
+            if (item == null)
                 return null;
 
-            switch (items.ItemType)
+            switch (item.ItemType)
             {
                 case "Car":
-                    return GetItemByID(items.ID,ItemType.Car );
+                    return GetItemByID(item.ID,ItemType.Car );
                 case "Motocycle":
-                    return GetItemByID(items.ID, ItemType.Motocycle);
+                    return GetItemByID(item.ID, ItemType.Motocycle);
             }
 
             return null;
@@ -80,9 +74,9 @@ namespace MotoShop.Services.Implementation
             switch (type)
             {
                 case ItemType.Car:
-                    return _context.Cars.Where(x => x.ID == id).FirstOrDefault();
+                    return ShopItemQueries.GetByID<Car>(_context, id);
                 case ItemType.Motocycle:
-                    return _context.Motocycles.Where(x => x.ID == id).FirstOrDefault();
+                    return ShopItemQueries.GetByID<Motocycle>(_context, id);
                 case ItemType.CarParts:
                     break;
             }

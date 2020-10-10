@@ -20,7 +20,7 @@ namespace MotoShop.Tests.Services
             DbContextOptionsBuilder<ApplicationDatabaseContext> dbContextOptions = new DbContextOptionsBuilder<ApplicationDatabaseContext>().UseSqlServer(_connectionString);
             ApplicationDatabaseContext context = new ApplicationDatabaseContext(dbContextOptions.Options);
             IShopItemsService shopItemsService = new Mock<IShopItemsService>().Object;
-            IAdvertisementService service = new AdvertisementService(context, shopItemsService);
+            IAdvertisementService service = new AdvertisementService(context);
 
 
             var actual = service.GetAdvertisementById(18);
@@ -36,7 +36,7 @@ namespace MotoShop.Tests.Services
             DbContextOptionsBuilder<ApplicationDatabaseContext> dbContextOptions = new DbContextOptionsBuilder<ApplicationDatabaseContext>().UseSqlServer(_connectionString);
             ApplicationDatabaseContext context = new ApplicationDatabaseContext(dbContextOptions.Options);
             IShopItemsService shopItemsService = new Mock<IShopItemsService>().Object;
-            IAdvertisementService service = new AdvertisementService(context, shopItemsService);
+            IAdvertisementService service = new AdvertisementService(context);
 
             var actual = service.GetAllAdvertisementsByAuthorId(_userID);
             var expected = 2;
@@ -50,7 +50,7 @@ namespace MotoShop.Tests.Services
             DbContextOptionsBuilder<ApplicationDatabaseContext> dbContextOptions = new DbContextOptionsBuilder<ApplicationDatabaseContext>().UseSqlServer(_connectionString);
             ApplicationDatabaseContext context = new ApplicationDatabaseContext(dbContextOptions.Options);
             IShopItemsService shopItemsService = new Mock<IShopItemsService>().Object;
-            IAdvertisementService service = new AdvertisementService(context, shopItemsService);
+            IAdvertisementService service = new AdvertisementService(context);
 
             var actual = service.GetAll().Count();
             var expected = 3;
@@ -64,7 +64,7 @@ namespace MotoShop.Tests.Services
             DbContextOptionsBuilder<ApplicationDatabaseContext> dbContextOptions = new DbContextOptionsBuilder<ApplicationDatabaseContext>().UseSqlServer(_connectionString);
             ApplicationDatabaseContext context = new ApplicationDatabaseContext(dbContextOptions.Options);
             IShopItemsService shopItemsService = new ShopItemsService(context);
-            IAdvertisementService service = new AdvertisementService(context, shopItemsService);
+            IAdvertisementService service = new AdvertisementService(context);
 
             service.DeleteAdvertisement(23);
 
