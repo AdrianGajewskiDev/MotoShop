@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Internal;
 using MotoShop.Data.Database_Context;
 using MotoShop.Data.Helpers;
 using MotoShop.Data.Models.User;
 using MotoShop.Services.Services;
 using System;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using System.Xml.XPath;
 
 namespace MotoShop.Services.Implementation
 {

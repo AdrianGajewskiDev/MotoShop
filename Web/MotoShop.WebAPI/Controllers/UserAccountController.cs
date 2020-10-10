@@ -29,6 +29,9 @@ namespace MotoShop.WebAPI.Controllers
         {
             string userID = User.FindFirst(c => c.Type == "UserID").Value;
 
+            if (string.IsNullOrEmpty(userID))
+                return NotFound($"Cannot find user with id of { userID}");
+
             var user = await _userService.GetUserByID(userID);
 
             var model = _mapper.Map<UserAccountDetailsResponseModel>(user);
