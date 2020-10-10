@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MotoShop.Data.Models.Constants;
 using MotoShop.Data.Models.Store;
 using MotoShop.Services.Services;
+using MotoShop.WebAPI.Attributes;
 using MotoShop.WebAPI.Models.Response;
 using MotoShop.WebAPI.Models.Response.ItemsController;
 using System;
@@ -23,6 +24,7 @@ namespace MotoShop.WebAPI.Controllers
         }
 
         [HttpGet("Details/{id}")]
+        [Cache(5)]
         public ActionResult<ApiResponse<ItemDetailsResponseModel>> GetItemDetails(int id, [FromQuery] string itemType)
         {
             ShopItem item = _shopItemsService.GetItemByID(id, Enum.Parse<ItemType>(itemType));

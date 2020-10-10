@@ -55,6 +55,7 @@ namespace MotoShop.WebAPI.Extensions
 
             //Singletons
             services.AddSingleton<JsonWebTokenWriter>();
+            services.AddSingleton<ICachingService, CachingService>();
 
             return services;
         }
@@ -83,6 +84,16 @@ namespace MotoShop.WebAPI.Extensions
                 options.Providers.Add<BrotliCompressionProvider>();
                 options.Providers.Add<GzipCompressionProvider>();
             });
+            return services;
+        }
+
+        public static IServiceCollection AddCaching(this IServiceCollection services, string connectionString)
+        {
+            services.AddStackExchangeRedisCache(setup => 
+            {
+                setup.Configuration = connectionString;
+            });
+
             return services;
         }
     }

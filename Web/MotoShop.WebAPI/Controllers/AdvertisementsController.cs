@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MotoShop.Data.Models.Store;
 using MotoShop.Services.Services;
+using MotoShop.WebAPI.Attributes;
 using MotoShop.WebAPI.Models.Requests;
 using MotoShop.WebAPI.Models.Response;
 using MotoShop.WebAPI.Models.Response.ItemsController;
@@ -25,6 +26,7 @@ namespace MotoShop.WebAPI.Controllers
         }
 
         [HttpGet("All")]
+        [Cache(5)]
         public ActionResult<ApiResponse<AllAdvertisementsResponseModel>> GetAllAdvertisements()
         {
             IEnumerable<Advertisement> advertisements = _advertisementService.GetAll();
