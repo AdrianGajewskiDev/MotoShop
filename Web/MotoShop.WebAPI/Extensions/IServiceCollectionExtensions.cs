@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
+using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using MotoShop.Services.Implementation;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.AutoMapper.Profiles;
+using MotoShop.WebAPI.Configurations;
 using MotoShop.WebAPI.Helpers;
 using MotoShop.WebAPI.Token_Providers;
 using System;
@@ -56,7 +59,6 @@ namespace MotoShop.WebAPI.Extensions
             //Singletons
             services.AddSingleton<JsonWebTokenWriter>();
             services.AddSingleton<ICachingService, CachingService>();
-
             return services;
         }
 
@@ -87,11 +89,15 @@ namespace MotoShop.WebAPI.Extensions
             return services;
         }
 
-        public static IServiceCollection AddCaching(this IServiceCollection services, string connectionString)
+        public static IServiceCollection AddCaching(this IServiceCollection services, Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
+            var redisOptions = new RedisOptions();
+            configuration.GetSection("RedisOptions").Bind(redisOptions);
+            services.AddSingleton(redisOptions);
+
             services.AddStackExchangeRedisCache(setup => 
             {
-                setup.Configuration = connectionString;
+                setup.Configuration = redisOptions.ConnectionString;
             });
 
             return services;

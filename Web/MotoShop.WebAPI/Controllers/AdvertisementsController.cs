@@ -26,7 +26,7 @@ namespace MotoShop.WebAPI.Controllers
         }
 
         [HttpGet("All")]
-        [Cache(5)]
+        [Cache(1)]
         public ActionResult<ApiResponse<AllAdvertisementsResponseModel>> GetAllAdvertisements()
         {
             IEnumerable<Advertisement> advertisements = _advertisementService.GetAll();

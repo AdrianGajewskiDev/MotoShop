@@ -28,7 +28,7 @@ namespace MotoShop.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCaching(Configuration.GetConnectionString("Redis"));
+            services.AddCaching(Configuration);
             services.AddCompression();
             services.AddControllers().AddJsonOptions(JsonConfiguration.Configure);
             services.AddDbContext<ApplicationDatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Production"), SqlServerConfigurations.Configure));

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using MotoShop.Services.Services;
+using MotoShop.WebAPI.Configurations;
 using System;
 using System.Linq;
 using System.Text;
@@ -22,8 +23,9 @@ namespace MotoShop.WebAPI.Attributes
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             var service = context.HttpContext.RequestServices.GetRequiredService<ICachingService>();
+            var redisOptions = context.HttpContext.RequestServices.GetRequiredService<RedisOptions>();
 
-            if (service == null)
+            if (service == null ||redisOptions.Enabled == false)
                 await next();
 
             string key = GenerateCacheKey(context.HttpContext.Request);
