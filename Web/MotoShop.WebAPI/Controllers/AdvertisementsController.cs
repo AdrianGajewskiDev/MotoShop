@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using MotoShop.Data.Models.Store;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Attributes;
+using MotoShop.WebAPI.Helpers;
 using MotoShop.WebAPI.Models.Requests;
 using MotoShop.WebAPI.Models.Response;
 using MotoShop.WebAPI.Models.Response.ItemsController;
@@ -26,7 +27,7 @@ namespace MotoShop.WebAPI.Controllers
         }
 
         [HttpGet("All")]
-        [Cache(1)]
+        [Cache(5)]
         public ActionResult<ApiResponse<AllAdvertisementsResponseModel>> GetAllAdvertisements()
         {
             IEnumerable<Advertisement> advertisements = _advertisementService.GetAll();
@@ -49,6 +50,7 @@ namespace MotoShop.WebAPI.Controllers
         }
 
         [HttpPost("Add")]
+        [ClearCache()]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> AddAdvertisement([ FromBody]NewAdvertisementRequestModel newAdvertisementRequestModel)
         {

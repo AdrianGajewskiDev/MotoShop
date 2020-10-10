@@ -2,6 +2,7 @@
 using MotoShop.Services.Services;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MotoShop.Services.Implementation
@@ -27,6 +28,14 @@ namespace MotoShop.Services.Implementation
             {
                 AbsoluteExpirationRelativeToNow = timeToLive
             });
+        }
+
+        public async Task ClearCache(IEnumerable<string> keys)
+        {
+            foreach (var key in keys)
+            {
+                await _distributedCache.RemoveAsync(key);
+            }
         }
 
         public async Task<string> GetCachedResponseAsync(string key)

@@ -67,6 +67,7 @@ namespace MotoShop.WebAPI.Extensions
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile<ItemsProfile>();
+                mc.AddProfile<ApplicationUserProfile>();
             });
 
             IMapper mapper = mappingConfig.CreateMapper();

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Configurations;
+using MotoShop.WebAPI.Helpers;
 using System;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,9 @@ namespace MotoShop.WebAPI.Attributes
                 await next();
 
             string key = GenerateCacheKey(context.HttpContext.Request);
+
+            if (!CacheKeys.Keys.Contains(key))
+                CacheKeys.Keys.Add(key);
 
             var cachedResponse = await service.GetCachedResponseAsync(key);
 
