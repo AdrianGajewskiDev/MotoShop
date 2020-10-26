@@ -1,12 +1,12 @@
-<div fxLayout="row" class="navbar">
-    <div fxLayoutAlign="center center" class="navbar-brand">
+<div fxLayout="row" fxFlex="100" class="navbar">
+    <div fxLayoutAlign="center center" class="navbar-brand" fxLayoutAlign.lt-md="start center"  fxFlex.lt-md="80">
         <img src="../../assets/images-layout/Logo.png" alt="Logo">
     </div>
-    <div fxLayoutAlign="center center" class="searchbox">
+    <div fxFlex.lt-md="60" fxShow fxHide.lt-md fxFlex.lt-sm="0" fxLayoutAlign="center center" class="searchbox">
         <input type="text" placeholder="Search...">
         <mat-icon class="search-icon" aria-hidden="false" aria-label="Example home icon">search</mat-icon>
     </div>
-    <div fxLayout="row" fxLayoutAlign="center center" class="nav-links">
+    <div fxLayout="row" fxShow  fxHide.lt-md fxLayoutAlign="center center" class="nav-links">
         <ul fxLayout="row" fxLayoutGap="30px">
             <li class="nav-link"><a href="#">Home</a></li>
             <li class="nav-link"><a href="#">Cart</a></li>
@@ -14,3 +14,25 @@
         </ul>
     </div>
 </div> 
+
+<mat-drawer-container fxHide fxShow.lt-md class="example-container" autosize>
+    <mat-drawer fxLayout="column" fxLayoutAlign="center center" #drawer class="example-sidenav" mode="side">
+      <mat-icon  fxHide fxShow.lt-md class="hamburger-menu-close" (click)="drawer.toggle()">clear</mat-icon>
+        <div  fxLayoutAlign="center center" class="searchbox searchbox-sidenav">
+            <input type="text" placeholder="Search...">
+            <mat-icon class="search-icon" aria-hidden="false" aria-label="Example home icon">search</mat-icon>
+        </div>
+        <div  class="sidenav-content">
+            <ul fxLayout="column">
+                <li class="nav-link-sidenav"><a href="#">Home</a></li>
+                <li class="nav-link-sidenav"><a href="#">Cart</a></li>
+                <li fxLayoutAlign="center center" class="signInUpButton-sidenav"><a href="#">SignIn/Up</a></li>
+            </ul>
+        </div>
+    </mat-drawer>
+ 
+    <mat-icon fxHide fxShow.lt-md class="hamburger-menu" (click)="drawer.toggle()">
+        menu
+    </mat-icon>
+
+</mat-drawer-container>

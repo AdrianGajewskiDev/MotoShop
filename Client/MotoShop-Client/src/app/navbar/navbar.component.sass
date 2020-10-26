@@ -1,7 +1,7 @@
 @import "../Sass/variables"
 
 .navbar
-    height: 10%
+    min-height: 10vh
     width: 100%
 
 .navbar-brand
@@ -32,9 +32,21 @@
     border-bottom-right-radius: 15px
     border-top-right-radius: 15px
     font-size: 2rem
+    cursor: pointer
+    outline: none
+
+.search-icon:active
+    background: $primaryGrey
 
 .nav-links
     width: 30%
+
+.nav-links ul
+    list-style: none
+
+.nav-link:hover
+    transform: scale(1.2)
+    transition: all 0.3s ease-in
 
 .nav-link a
     text-decoration: none
@@ -49,7 +61,87 @@
     cursor: pointer
     padding: 10px
 
+.signInUpButton:hover
+    transform: scale(1.2)
+    transition: all 0.3s ease-in
+
 .signInUpButton a
     font-size: 1.3rem
     text-decoration: none
     color: #000
+
+.hamburger-menu
+    color: $primaryYelow
+    font-size: 3rem
+    position: absolute
+    left: 92%
+    top: 2%
+    z-index: 100
+
+.example-container
+    position: absolute
+    width: 100%
+    height: 100vh
+    border: 1px solid rgba(0, 0, 0, 0.5)
+
+.example-sidenav-content
+    display: flex
+    height: 100%
+    align-items: center
+    justify-content: center
+
+.example-sidenav
+    padding: 20px
+    padding-top: 10vh
+    background-color: $primaryYelow
+    height: 100vh
+    width: 100%
+    overflow: hidden
+
+.hamburger-menu-close
+    color: #000
+    position: absolute
+    left: 80%
+    top: 0%
+    background: transparent
+    font-size: 3rem
+
+.sidenav-content
+    height: 70vh
+    padding-top: 20%
+    text-align: center
+
+.sidenav-content ul
+    list-style: none
+
+.nav-link-sidenav
+    margin-bottom: 20px
+
+.nav-link-sidenav a
+    text-decoration: none
+    color: #000
+    font-size: 2rem
+
+.signInUpButton-sidenav
+    height: 5vh
+    background-color: #000
+    text-align: center
+    border-radius: 15px
+    cursor: pointer
+    padding: 10px
+
+.signInUpButton-sidenav a
+    font-size: 1.3rem
+    text-decoration: none
+    color: $primaryYelow
+
+.searchbox-sidenav
+    width: 100% !important
+
+@media screen and (max-width: 590px)
+    .hamburger-menu
+        left: 80%
+
+@media screen and (min-width: 500px)
+    .hamburger-menu-close
+        left: 90%

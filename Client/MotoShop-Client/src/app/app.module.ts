@@ -18,7 +18,6 @@ import { NavbarComponent } from './navbar/navbar.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    
     FlexLayoutModule,
   ],
   providers: [],
