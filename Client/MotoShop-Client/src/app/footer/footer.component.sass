@@ -1,0 +1,54 @@
+@import "../Sass/variables"
+
+.footer
+    position: absolute
+    bottom: 0
+    background-color: $primaryYelow
+    height: 7vh
+    width: 100%
+    padding: 10px 0
+
+.footer-content-first
+    width: 30%
+    border-right: 3px solid $primaryGrey
+    span
+        font-size: 1.2em
+        font-weight: bold
+
+.footer-content-second
+    width: 40%
+    .footer-content-second-upper-content
+        font-weight: bold
+    .footer-content-second-bottom-content
+        margin-top: 10px
+        span
+            margin-right: 10px
+
+.footer-content-third
+    width: 20%
+    img
+        width: 50px
+        height: 50px
+
+@media screen and(max-width: 1375px)
+    .footer-content-second-bottom-content
+        font-size: 0.6em
+
+@media screen and(max-width: 960px)
+    .footer-content-first
+        width: 100%
+    .footer-content-second
+        width: 100%
+        margin-top: 10px
+        background-color: $primaryYelow
+
+    .footer-content-third
+        width: 100%
+        background-color: $primaryYelow
+
+@media screen and(max-width: 450px)
+    .footer-content-first
+        span
+            font-size: 0.9em
+    .footer-content-second-bottom-content
+        font-size: 0.6em
