@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-identity-placeholder',
@@ -9,13 +10,13 @@ export class IdentityPlaceholderComponent implements OnInit {
 
   private switcherPosition: "left" | "right" = "left";
 
-  constructor() { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     document.getElementById("left-button").classList.add("active")
   }
 
-  switchbtn(btn:string) :void{
+  async switchbtn(btn:string){
     if(this.switcherPosition == btn)
       return;
 
@@ -29,12 +30,14 @@ export class IdentityPlaceholderComponent implements OnInit {
         {
           document.getElementById("left-button").classList.toggle("active");
           document.getElementById("right-button").classList.toggle("active");
+          this.router.navigate([{ outlets: {  identity: ['login'] } }] ,{relativeTo:this.activatedRoute})
         }
         break;
       case "right":
         {
           document.getElementById("right-button").classList.toggle("active");
           document.getElementById("left-button").classList.toggle("active");
+          this.router.navigate([{ outlets: {  identity: ['register'] } }] ,{relativeTo:this.activatedRoute})
         }
         break;
       default:

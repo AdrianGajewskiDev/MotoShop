@@ -1,12 +1,31 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { IdentityPlaceholderComponent } from './identity/identity-placeholder/identity-placeholder.component';
+import { LoginComponent } from './identity/login/login.component';
+import { RegisterComponent } from './identity/register/register.component';
 
 
 const routes: Routes = [
   {
     path: "identity",
-    component: IdentityPlaceholderComponent
+    component: IdentityPlaceholderComponent,
+    children:[
+       {
+        path: '',
+        component: LoginComponent,
+        outlet: "identity"
+      },
+      {
+        path: 'register',
+        component: RegisterComponent,
+        outlet: "identity"
+      },
+        {
+        path: 'login',
+        component: LoginComponent,
+        outlet: "identity"
+      }
+    ]
   },
 
 ];
