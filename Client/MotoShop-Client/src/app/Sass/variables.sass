@@ -2,3 +2,8 @@
 $primaryYelow:#F3CA3E
 $primaryGrey:#333333
 $backgroundImageUrl: "src/assets/images-layout/background.png"
+
+@mixin linear-gradient($direction, $color-stops...)
+    background: nth(nth($color-stops, 1), 1)
+    background: -webkit-linear-gradient(legacy-direction($direction), $color-stops)
+    background: linear-gradient($direction, $color-stops)

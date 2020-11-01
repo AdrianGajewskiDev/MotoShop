@@ -10,12 +10,12 @@
         <ul fxLayout="row" fxLayoutGap="30px">
             <li class="nav-link"><a href="#">Home</a></li>
             <li class="nav-link"><a href="#">Cart</a></li>
-            <li fxLayoutAlign="center center" class="signInUpButton"><a href="#">SignIn/Up</a></li>
+            <li fxLayoutAlign="center center" class="signInUpButton"><a (click)="goTo('/identity')">SignIn/Up</a></li>
         </ul>
     </div>
 </div> 
 
-<mat-drawer-container fxHide fxShow.lt-md class="example-container" autosize>
+<mat-drawer-container id="mat-drawer-container" fxHide fxShow.lt-md class="example-container disable" autosize>
     <mat-drawer fxLayout="column" fxLayoutAlign="center center" #drawer class="example-sidenav" mode="side">
       <mat-icon  fxHide fxShow.lt-md class="hamburger-menu-close" (click)="drawer.toggle()">clear</mat-icon>
         <div  fxLayoutAlign="center center" class="searchbox searchbox-sidenav">

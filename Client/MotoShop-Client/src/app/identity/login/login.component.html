@@ -1,0 +1,23 @@
+<div fxLayoutAlign="center start" class="container">
+    <div class="login-form-container" fxLayout="column" fxLayoutAlign="start center">
+        <h1>Sign In</h1>
+        <form class="form" fxLayout="column" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <mat-form-field class="form-input">
+                <mat-label>Username</mat-label>
+                <input formControlName="data" matInput placeholder="Username or email..." autocomplete="off">
+                <mat-error *ngIf="loginForm.get('data').hasError('required')">
+                    Username or email is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-input">
+                <mat-label>Password</mat-label>
+                <input formControlName="password" type="password" matInput autocomplete="off" placeholder="Password..."/>
+                <mat-error *ngIf="loginForm.get('password').hasError('required')">
+                    Password is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <span class="forgot-password">Forgot a password ? <a>Click here</a></span>
+            <button [disabled]="!loginForm.valid" class="btn-submit" type="submit">Sign In</button>
+        </form>
+    </div>
+</div>

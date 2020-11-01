@@ -4,19 +4,28 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import {AngularMaterialModule} from "./modules/angular.material.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
+import {ReactiveFormsModule, FormsModule} from "@angular/forms"
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+import { IdentityPlaceholderComponent } from './identity/identity-placeholder/identity-placeholder.component';
+import { RegisterComponent } from './identity/register/register.component';
+import { LoginComponent } from './identity/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    IdentityPlaceholderComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     AngularMaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
