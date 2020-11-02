@@ -26,7 +26,7 @@
             <ul fxLayout="column">
                 <li class="nav-link-sidenav"><a href="#">Home</a></li>
                 <li class="nav-link-sidenav"><a href="#">Cart</a></li>
-                <li fxLayoutAlign="center center" class="signInUpButton-sidenav"><a href="#">SignIn/Up</a></li>
+                <li fxLayoutAlign="center center" class="signInUpButton-sidenav"><a (click)="goTo('/identity'); drawer.toggle()">SignIn/Up</a></li>
             </ul>
         </div>
     </mat-drawer>

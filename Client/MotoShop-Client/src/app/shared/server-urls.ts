@@ -1,0 +1,1 @@
+export const serverBaseUrl:string = "https://localhost:44304/";

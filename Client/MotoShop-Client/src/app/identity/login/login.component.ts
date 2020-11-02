@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { slideInOutAnimation } from 'src/app/shared/animations';
 
 @Component({
@@ -14,7 +13,13 @@ import { slideInOutAnimation } from 'src/app/shared/animations';
 })
 export class LoginComponent implements OnInit{
 
-  constructor(private fb: FormBuilder, private router:Router) { }
+/*
+TODO:
+  -add user service to handle login method
+  -implement onSubmit()
+ */
+
+  constructor(private fb: FormBuilder) { }
 
   public loginForm: FormGroup;
   public animationState: "slideIn" | "slideOut" = "slideIn";
