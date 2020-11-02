@@ -40,6 +40,14 @@ namespace MotoShop.Web
             services.AddAutoMapper(typeof(Startup))
                 .SetUpAutoMapper();
 
+            services.AddCors(setup => 
+            {
+                setup.AddPolicy("DevPolicy", configure => 
+                {
+                    configure.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                });
+            });
+
             services.AddApplicationServices();
 
         }
@@ -52,6 +60,7 @@ namespace MotoShop.Web
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("DevPolicy");
             app.UseResponseCompression();
 
             app.UseExceptionHandler(new ExceptionHandlerOptions

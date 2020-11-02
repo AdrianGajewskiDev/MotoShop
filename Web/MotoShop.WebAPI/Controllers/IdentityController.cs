@@ -6,6 +6,7 @@ using MotoShop.Data.Models.User;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Models.Request;
 using MotoShop.WebAPI.Token_Providers;
+using Newtonsoft.Json;
 using Serilog;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -58,7 +59,7 @@ namespace MotoShop.WebAPI.Controllers
             if (result == true)
             {
                 Log.Information($"Registered new user with id of { user.Id}");
-                return Created(_linkGenerator.GetPathByAction("Register", "Identity"), "User was succesfully created");
+                return Ok(new { message = "User created successfully"});
             }
 
             return BadRequest(new { message = "Something bad has happened while trying to register new user" });
