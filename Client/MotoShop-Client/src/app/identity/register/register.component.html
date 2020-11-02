@@ -21,6 +21,20 @@
                     Provide a valid <strong>email</strong> adress
                 </mat-error>
             </mat-form-field>
+            <mat-form-field class="form-input">
+                <mat-label>Name</mat-label>
+                <input formControlName="name" type="text" matInput autocomplete="off" placeholder="Name" />
+                <mat-error *ngIf="registerForm.get('name').hasError('required')">
+                    Name is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-input">
+                <mat-label>Last Name</mat-label>
+                <input formControlName="lastName" type="text" matInput autocomplete="off" placeholder="Last Name" />
+                <mat-error *ngIf="registerForm.get('lastName').hasError('required')">
+                    Last Name is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
          
             <mat-form-field class="form-input">
                 <mat-label>Password</mat-label>
@@ -46,7 +60,7 @@
                 Provided passwords are not the same
             </p>
             <span class="form-bottom-text">Already have an account ? <a>Sign In</a></span>
-            <button class="btn-submit" type="submit">Sign In</button>
+            <button [disabled]="!registerForm.valid" class="btn-submit" type="submit">Sign In</button>
         </form>
     </div>
 </div>

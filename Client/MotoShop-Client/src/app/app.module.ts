@@ -5,6 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import {AngularMaterialModule} from "./modules/angular.material.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {ReactiveFormsModule, FormsModule} from "@angular/forms"
+import { HttpClientModule } from "@angular/common/http"
+import {ToastrModule} from "../../node_modules/ngx-toastr"
+
+//services
+import { FormsMapper } from './shared/mapper/formsMapper';
+import { IdentityService } from "./shared/services/identity.service"
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -30,8 +36,13 @@ import { LoginComponent } from './identity/login/login.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
+    HttpClientModule,
+    ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    IdentityService,
+    FormsMapper
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

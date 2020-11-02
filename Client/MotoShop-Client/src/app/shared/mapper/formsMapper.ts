@@ -32,7 +32,7 @@ export class FormsMapper {
       this.values.forEach((element) => {
         if (element.name != null && element.name.toUpperCase() == object) {
           let propName =
-            element.name.charAt(0).toUpperCase() + element.name.slice(1);
+            element.name.charAt(0) + element.name.slice(1);
           this.newValues[propName] = element.value;
         }
       });
