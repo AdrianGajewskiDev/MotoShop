@@ -8,7 +8,7 @@
     </div>
     <div fxLayout="row" fxShow  fxHide.lt-md fxLayoutAlign="center center" class="nav-links">
         <ul fxLayout="row" fxLayoutGap="30px">
-            <li class="nav-link"><a href="#">Home</a></li>
+            <li class="nav-link"><a (click)="goTo('/home')">Home</a></li>
             <li class="nav-link"><a href="#">Cart</a></li>
             <li fxLayoutAlign="center center" class="signInUpButton"><a (click)="goTo('/identity')">SignIn/Up</a></li>
         </ul>

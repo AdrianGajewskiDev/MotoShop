@@ -1,10 +1,37 @@
 .register-form
-    height: 650px !important
+    height: 500px !important
+    width: 600px !important
+    position: relative
+    .form-bottom-text
+        position: absolute !important
+        top: 60% !important
+        left: 50% !important
+    .btn-submit
+        position: absolute !important
+        top: 60% !important
+        left: 50% !important
 
 .error-msg
     font-size: 0.7rem
     color: red
 
-@media screen and(max-height: 820px)
+@media screen and(max-width: 600px)
     .register-form
         height: 500px !important
+        width: 300px !important
+        position: relative
+        .form-bottom-text
+            position: absolute !important
+            top: 60% !important
+            left: 10% !important
+        .btn-submit
+            position: absolute !important
+            top: 60% !important
+            left: 25% !important
+    .form-input
+        width: 100px !important
+
+.register-loading-spinner
+    position: absolute !important
+    left: 45% !important
+    top: 40% !important

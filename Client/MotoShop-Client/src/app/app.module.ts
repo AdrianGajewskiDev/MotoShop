@@ -18,6 +18,8 @@ import { FooterComponent } from './footer/footer.component';
 import { IdentityPlaceholderComponent } from './identity/identity-placeholder/identity-placeholder.component';
 import { RegisterComponent } from './identity/register/register.component';
 import { LoginComponent } from './identity/login/login.component';
+import { HomeComponent } from './home/home.component';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { LoginComponent } from './identity/login/login.component';
     FooterComponent,
     IdentityPlaceholderComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     AngularMaterialModule,

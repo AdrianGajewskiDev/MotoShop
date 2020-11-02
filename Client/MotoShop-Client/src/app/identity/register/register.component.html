@@ -1,66 +1,72 @@
 <div fxLayoutAlign="center start" class="container">
     <div [@slideInOut]="animationState" class="form-container register-form" fxLayout="column" fxLayoutAlign="start center">
         <h1>Register</h1>
-        <form class="form" fxLayout="column" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-            <mat-form-field class="form-input">
-                <mat-label>Username</mat-label>
-                <input formControlName="username" matInput placeholder="Username" autocomplete="off">
-                <mat-error *ngIf="registerForm.get('username').hasError('required')">
-                    Username is <strong>required</strong>
-                </mat-error>
-            </mat-form-field>
-           
-            <mat-form-field class="form-input">
-                <mat-label>Email</mat-label>
-                <input formControlName="email" type="email" matInput autocomplete="off"
-                    placeholder="Email" />
-                <mat-error *ngIf="registerForm.get('email').hasError('required')">
-                    Email is <strong>required</strong>
-                </mat-error>
-                <mat-error *ngIf="registerForm.get('email').hasError('email')">
-                    Provide a valid <strong>email</strong> adress
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field class="form-input">
-                <mat-label>Name</mat-label>
-                <input formControlName="name" type="text" matInput autocomplete="off" placeholder="Name" />
-                <mat-error *ngIf="registerForm.get('name').hasError('required')">
-                    Name is <strong>required</strong>
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field class="form-input">
-                <mat-label>Last Name</mat-label>
-                <input formControlName="lastName" type="text" matInput autocomplete="off" placeholder="Last Name" />
-                <mat-error *ngIf="registerForm.get('lastName').hasError('required')">
-                    Last Name is <strong>required</strong>
-                </mat-error>
-            </mat-form-field>
-         
-            <mat-form-field class="form-input">
-                <mat-label>Password</mat-label>
-                <input formControlName="password" type="password" matInput autocomplete="off" placeholder="Password" />
-                <mat-error *ngIf="registerForm.get('password').hasError('required')">
-                    Password is <strong>required</strong>
-                </mat-error>
-                <mat-error *ngIf="registerForm.get('password').errors?.minlength">
-                    Password should be atleast <strong>7</strong> characters long
-                </mat-error>
-                <mat-error *ngIf="registerForm.get('password').errors?.maxlength">
-                    Password shouldn't be longer than <strong>20</strong> characters
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field class="form-input">
-                <mat-label>Confirm Password</mat-label>
-                <input formControlName="confirmPassword" type="password" matInput autocomplete="off" placeholder="Confirm password" />
-                <mat-error *ngIf="registerForm.get('confirmPassword').hasError('required')">
-                    Confirm Password is <strong>required</strong>
-                </mat-error>
-            </mat-form-field>
-            <p  class="error-msg" *ngIf="registerForm.hasError('passwordsMatchesValidator')">
-                Provided passwords are not the same
-            </p>
+        <app-loading-spinner *ngIf="showLoadingSpinner == true" class="register-loading-spinner"></app-loading-spinner>
+        <form class="form" fxLayout="row" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="left">
+                <p class="error-msg" *ngIf="showRegistrationError == true">{{registrationErrorMsg}}</p>
+                <mat-form-field class="form-input">
+                    <mat-label>Username</mat-label>
+                    <input formControlName="username" matInput placeholder="Username" autocomplete="off">
+                    <mat-error *ngIf="registerForm.get('username').hasError('required')">
+                        Username is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+                
+                <mat-form-field class="form-input">
+                    <mat-label>Email</mat-label>
+                    <input formControlName="email" type="email" matInput autocomplete="off" placeholder="Email" />
+                    <mat-error *ngIf="registerForm.get('email').hasError('required')">
+                        Email is <strong>required</strong>
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.get('email').hasError('email')">
+                        Provide a valid <strong>email</strong> adress
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-input">
+                    <mat-label>Name</mat-label>
+                    <input formControlName="name" type="text" matInput autocomplete="off" placeholder="Name" />
+                    <mat-error *ngIf="registerForm.get('name').hasError('required')">
+                        Name is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="right-form">
+                <mat-form-field class="form-input">
+                    <mat-label>Last Name</mat-label>
+                    <input formControlName="lastName" type="text" matInput autocomplete="off" placeholder="Last Name" />
+                    <mat-error *ngIf="registerForm.get('lastName').hasError('required')">
+                        Last Name is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-input">
+                    <mat-label>Password</mat-label>
+                    <input formControlName="password" type="password" matInput autocomplete="off" placeholder="Password" />
+                    <mat-error *ngIf="registerForm.get('password').hasError('required')">
+                        Password is <strong>required</strong>
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.get('password').errors?.minlength">
+                        Password should be atleast <strong>7</strong> characters long
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.get('password').errors?.maxlength">
+                        Password shouldn't be longer than <strong>20</strong> characters
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-input">
+                    <mat-label>Confirm Password</mat-label>
+                    <input formControlName="confirmPassword" type="password" matInput autocomplete="off"
+                        placeholder="Confirm password" />
+                    <mat-error *ngIf="registerForm.get('confirmPassword').hasError('required')">
+                        Confirm Password is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+                <p class="error-msg" *ngIf="registerForm.hasError('passwordsMatchesValidator')">
+                    Provided passwords are not the same
+                </p>
+            </div>
             <span class="form-bottom-text">Already have an account ? <a>Sign In</a></span>
-            <button [disabled]="!registerForm.valid" class="btn-submit" type="submit">Sign In</button>
+            <button [disabled]="!registerForm.valid" class="btn-submit" type="submit">Register</button>
         </form>
     </div>
 </div>
