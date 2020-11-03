@@ -1,5 +1,9 @@
 <div fxLayoutAlign="center start" class="container">
     <div [@slideInOut]="animationState" class="form-container" fxLayout="column" fxLayoutAlign="start center">
+        <app-loading-spinner *ngIf="showLoadingSpinner == true"></app-loading-spinner>
+        <p class="error-msg" *ngIf="showErrorMessage == true">
+            Incorrect username or password
+        </p>
         <h1>Sign In</h1>
         <form class="form" fxLayout="column" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <mat-form-field class="form-input">
