@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using MotoShop.Services.Implementation;
 using MotoShop.Services.Services;
+using MotoShop.WebAPI.Attributes.Base;
 using MotoShop.WebAPI.AutoMapper.Profiles;
 using MotoShop.WebAPI.Configurations;
 using MotoShop.WebAPI.Helpers;
@@ -58,6 +59,7 @@ namespace MotoShop.WebAPI.Extensions
 
             //Singletons
             services.AddSingleton<JsonWebTokenWriter>();
+            services.AddSingleton<CacheBase>();
             services.AddSingleton<ICachingService, CachingService>();
             return services;
         }

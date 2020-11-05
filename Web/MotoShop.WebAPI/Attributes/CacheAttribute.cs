@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using MotoShop.Services.Services;
+using MotoShop.WebAPI.Attributes.Base;
 using MotoShop.WebAPI.Configurations;
 using MotoShop.WebAPI.Helpers;
 using System;
@@ -23,51 +24,41 @@ namespace MotoShop.WebAPI.Attributes
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var service = context.HttpContext.RequestServices.GetRequiredService<ICachingService>();
-            var redisOptions = context.HttpContext.RequestServices.GetRequiredService<RedisOptions>();
+            var cache = context.HttpContext.RequestServices.GetRequiredService<CacheBase>();
+            await cache.Cache(context, next, _timeToLive);
 
-            if (service == null ||redisOptions.Enabled == false)
-                await next();
+            //var service = context.HttpContext.RequestServices.GetRequiredService<ICachingService>();
+            //var redisOptions = context.HttpContext.RequestServices.GetRequiredService<RedisOptions>();
 
-            string key = GenerateCacheKey(context.HttpContext.Request);
+            //if (service == null ||redisOptions.Enabled == false)
+            //    await next();
 
-            if (!CacheKeys.Keys.Contains(key))
-                CacheKeys.Keys.Add(key);
+            //string key = GenerateCacheKey(context.HttpContext.Request);
 
-            var cachedResponse = await service.GetCachedResponseAsync(key);
+            //if (!CacheKeys.Keys.Contains(key))
+            //    CacheKeys.Keys.Add(key);
 
-            if(!string.IsNullOrEmpty(cachedResponse))
-            {
-                var cntResult = new ContentResult
-                {
-                    Content = cachedResponse,
-                    ContentType = "application/json",
-                    StatusCode = 200
-                };
+            //var cachedResponse = await service.GetCachedResponseAsync(key);
 
-                context.Result = cntResult;
-                return;
-            }
+            //if(!string.IsNullOrEmpty(cachedResponse))
+            //{
+            //    var cntResult = new ContentResult
+            //    {
+            //        Content = cachedResponse,
+            //        ContentType = "application/json",
+            //        StatusCode = 200
+            //    };
 
-            var executedResult = await next();
-            if(executedResult.Result is OkObjectResult result)
-            {
-                await service.CacheResponseAsync(key, result.Value, TimeSpan.FromMinutes(_timeToLive));
-            }
+            //    context.Result = cntResult;
+            //    return;
+            //}
+
+            //var executedResult = await next();
+            //if(executedResult.Result is OkObjectResult result)
+            //{
+            //    await service.CacheResponseAsync(key, result.Value, TimeSpan.FromMinutes(_timeToLive));
+            //}
         }
 
-        public string GenerateCacheKey(HttpRequest request)
-        {
-            var keyBuilder = new StringBuilder();
-
-            keyBuilder.Append($"{request.Path}");
-
-            foreach (var (key, value) in request.Query.OrderBy(x => x.Key))
-            {
-                keyBuilder.Append($"|{key}-{value}");
-            }
-
-            return keyBuilder.ToString();
-        }
     }
 }
