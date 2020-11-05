@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
+using MotoShop.Data.Models.User;
 using MotoShop.Services.Services;
 using Newtonsoft.Json;
 using System;
@@ -15,6 +16,11 @@ namespace MotoShop.Services.Implementation
         public CachingService(IDistributedCache distributedCache)
         {
             _distributedCache = distributedCache;
+        }
+
+        public async Task CacheIdentityResponseAsync(string userID, object obj, TimeSpan timeToLive)
+        {
+            await this.CacheResponseAsync(userID, obj, timeToLive);
         }
 
         public async Task CacheResponseAsync(string key, object obj, TimeSpan timeToLive)
@@ -44,6 +50,16 @@ namespace MotoShop.Services.Implementation
 
             return (string.IsNullOrEmpty(cachedResponse)) ? null : cachedResponse;
 
+        }
+
+        public async Task<string> GetIdentityCachedResponseAsync(string userID)
+        {
+            var response  = await this.GetCachedResponseAsync(userID);
+
+            if(response != null)
+                return response;
+
+            return null;
         }
     }
 }

@@ -10,7 +10,14 @@
         <ul fxLayout="row" fxLayoutGap="30px">
             <li class="nav-link"><a (click)="goTo('/home')">Home</a></li>
             <li class="nav-link"><a href="#">Cart</a></li>
-            <li fxLayoutAlign="center center" class="signInUpButton"><a (click)="goTo('/identity')">SignIn/Up</a></li>
+            <li *ngIf="isUserSignedIn == false" fxLayoutAlign="center center" class="signInUpButton"><a (click)="goTo('/identity')">SignIn/Up</a></li>
+            <li *ngIf="isUserSignedIn == true" fxLayoutAlign="center center" class="my-account-btn">
+                <button mat-button [matMenuTriggerFor]="beforeMenu" class="my-account-btn">Account <span class="material-icons">account_circle</span></button>
+                <mat-menu #beforeMenu="matMenu" xPosition="before" class="dropdown-menu">
+                    <button mat-menu-item (click)="goTo('/userProfile')">My Account</button>
+                    <button mat-menu-item (click)="logout()">Logout</button>
+                </mat-menu>
+            </li>
         </ul>
     </div>
 </div> 
@@ -24,9 +31,17 @@
         </div>
         <div  class="sidenav-content">
             <ul fxLayout="column">
-                <li class="nav-link-sidenav"><a href="#">Home</a></li>
+                <li class="nav-link-sidenav"><a (click)="goTo('/home')">Home</a></li>
                 <li class="nav-link-sidenav"><a href="#">Cart</a></li>
-                <li fxLayoutAlign="center center" class="signInUpButton-sidenav"><a (click)="goTo('/identity'); drawer.toggle()">SignIn/Up</a></li>
+                <li *ngIf="isUserSignedIn == false" fxLayoutAlign="center center" class="signInUpButton-sidenav"><a (click)="goTo('/identity'); drawer.toggle()">SignIn/Up</a></li>
+                <li *ngIf="isUserSignedIn == true" fxLayoutAlign="center center" class="my-account-btn">
+                    <button mat-button [matMenuTriggerFor]="beforeMenu" class="my-account-btn">Account <span
+                            class="material-icons">account_circle</span></button>
+                    <mat-menu #beforeMenu="matMenu" xPosition="before" class="dropdown-menu">
+                        <button mat-menu-item (click)="goTo('/userProfile')">My Account</button>
+                        <button mat-menu-item (click)="logout()">Logout</button>
+                    </mat-menu>
+                </li>
             </ul>
         </div>
     </mat-drawer>

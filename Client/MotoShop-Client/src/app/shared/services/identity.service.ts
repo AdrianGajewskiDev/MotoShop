@@ -19,10 +19,18 @@ export class IdentityService{
         return this.httpClient.post(serverSignInUrl, signInCredentials);
     }
 
+    logout():void{
+        if(this.isSignedIn)
+            this.removeToken();
+    }
+
     public saveToken(token:string): void{
         localStorage.setItem("token",token);        
     }
 
+    public removeToken(){
+        localStorage.removeItem("token");
+    }
     public get getToken():string {
         let token = localStorage.getItem("token")
 

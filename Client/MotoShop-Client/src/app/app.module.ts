@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import {AngularMaterialModule} from "./modules/angular.material.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {ReactiveFormsModule, FormsModule} from "@angular/forms"
-import { HttpClientModule } from "@angular/common/http"
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http"
 import {ToastrModule} from "../../node_modules/ngx-toastr"
 
 //services
@@ -20,6 +20,9 @@ import { RegisterComponent } from './identity/register/register.component';
 import { LoginComponent } from './identity/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { UserProfileComponent } from './identity/user-profile/user-profile.component';
+import { AuthenticationInterceptor } from './shared/Interceptors/authentication.interceptor';
+import { UserService } from './shared/services/user.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,8 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     RegisterComponent,
     LoginComponent,
     HomeComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    UserProfileComponent
   ],
   imports: [
     AngularMaterialModule,
@@ -41,11 +45,19 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     BrowserAnimationsModule,
     FlexLayoutModule,
     HttpClientModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    
   ],
   providers: [
     IdentityService,
-    FormsMapper
+    FormsMapper,
+    UserService,
+    ///Interceptors
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationInterceptor,
+      multi:true
+    }
   ],
   bootstrap: [AppComponent]
 })

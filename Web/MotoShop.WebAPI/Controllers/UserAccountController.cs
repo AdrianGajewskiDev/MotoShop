@@ -24,7 +24,7 @@ namespace MotoShop.WebAPI.Controllers
 
         [HttpGet("details")]
         [Authorize]
-        [Cache(5)]
+        [IdentityCache(5)]
         public async Task<ActionResult<ApiResponse<UserAccountDetailsResponseModel>>> GetUserProfileDetails()
         {
             string userID = User.FindFirst(c => c.Type == "UserID").Value;

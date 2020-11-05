@@ -4,6 +4,8 @@ import { HomeComponent } from './home/home.component';
 import { IdentityPlaceholderComponent } from './identity/identity-placeholder/identity-placeholder.component';
 import { LoginComponent } from './identity/login/login.component';
 import { RegisterComponent } from './identity/register/register.component';
+import { UserProfileComponent } from './identity/user-profile/user-profile.component';
+import { AuthenticationGuard } from './shared/Guards/authentication.guard';
 
 
 const routes: Routes = [
@@ -19,7 +21,7 @@ const routes: Routes = [
     path: "identity",
     component: IdentityPlaceholderComponent,
     children:[
-       {
+      {
         path: '',
         component: LoginComponent,
         outlet: "identity"
@@ -36,7 +38,11 @@ const routes: Routes = [
       }
     ]
   },
-
+  {
+    path:"userProfile",
+    component: UserProfileComponent,
+    canActivate: [AuthenticationGuard]
+  }
 ];
 
 @NgModule({

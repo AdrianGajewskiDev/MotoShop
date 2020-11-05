@@ -56,7 +56,7 @@ namespace MotoShop.WebAPI.Attributes
             }
         }
 
-        private string GenerateCacheKey(HttpRequest request)
+        public string GenerateCacheKey(HttpRequest request)
         {
             var keyBuilder = new StringBuilder();
 
