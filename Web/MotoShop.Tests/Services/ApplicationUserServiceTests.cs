@@ -3,6 +3,7 @@ using MotoShop.Data.Database_Context;
 using MotoShop.Data.Models.User;
 using MotoShop.Services.HelperModels;
 using MotoShop.Services.Implementation;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -34,7 +35,11 @@ namespace MotoShop.Tests.Services
 
         }
 
-
+        [Theory]
+        [InlineData(UpdateDataType.Email, "adrian.gajewski001@gmail.com")]
+        [InlineData(UpdateDataType.Name, "Adrian")]
+        [InlineData(UpdateDataType.Lastname, "Gajewski")]
+        [InlineData(UpdateDataType.PhoneNumber, "507337369")]
         public async Task Application_User_Service_Should_Update_User_Profile_Data(UpdateDataType updateDataType, string data)
         {
             DbContextOptionsBuilder<ApplicationDatabaseContext> dbContextOptions = new DbContextOptionsBuilder<ApplicationDatabaseContext>().UseSqlServer(_connectionString);
@@ -44,18 +49,18 @@ namespace MotoShop.Tests.Services
 
             ApplicationUser userUpdate = new ApplicationUser();
 
-            switch(updateDataType)
+            switch (updateDataType)
             {
                 case UpdateDataType.Username: userUpdate.UserName = data; break;
                 case UpdateDataType.Email: userUpdate.Email = data; break;
                 case UpdateDataType.Name: userUpdate.Name = data; break;
                 case UpdateDataType.Lastname: userUpdate.LastName = data; break;
-                case UpdateDataType.PhoneNumber: userUpdate.PhoneNumber= data; break;
+                case UpdateDataType.PhoneNumber: userUpdate.PhoneNumber = data; break;
 
             };
 
-             await service.UpdateUserDataAsync(userID, userUpdate);
-            var user = await service.GetUserByID(userID);
+            await service.UpdateUserDataAsync(userID, userUpdate);
+            var user = dbContext.Users.Where(x => x.Id == userID).FirstOrDefault();
 
             string actual = DataToCheck(updateDataType, user);
             Assert.Equal(data, actual);
@@ -66,21 +71,14 @@ namespace MotoShop.Tests.Services
         {
             switch (updateDataType)
             {
-                case UpdateDataType.Username:
-                    break;
-                case UpdateDataType.Email:
-                    break;
-                case UpdateDataType.PhoneNumber:
-                    break;
-                case UpdateDataType.Name:
-                    break;
-                case UpdateDataType.Lastname:
-                    break;
-                case UpdateDataType.Password:
-                    break;
-                default:
-                    break;
+                case UpdateDataType.Username: return user.UserName;
+                case UpdateDataType.Email: return user.Email;
+                case UpdateDataType.PhoneNumber: return user.PhoneNumber;
+                case UpdateDataType.Name: return user.Name;
+                case UpdateDataType.Lastname: return user.LastName;
             }
+
+            return string.Empty;
         }
     }
 }
