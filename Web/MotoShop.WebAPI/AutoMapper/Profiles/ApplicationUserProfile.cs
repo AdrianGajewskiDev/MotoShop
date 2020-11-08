@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
 using MotoShop.Data.Models.User;
+using MotoShop.WebAPI.Models.Requests;
 using MotoShop.WebAPI.Models.Response.UserAccount;
 
 namespace MotoShop.WebAPI.AutoMapper.Profiles
@@ -11,6 +11,7 @@ namespace MotoShop.WebAPI.AutoMapper.Profiles
         public ApplicationUserProfile()
         {
             this.CreateMap<ApplicationUser, UserAccountDetailsResponseModel>();
+            this.CreateMap<UpdateUserDataRequestModel, ApplicationUser>();
 
         }
     }

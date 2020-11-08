@@ -1,0 +1,75 @@
+@import "../../Sass/variables"
+
+.container
+    height: 80vh !important
+
+.profile-card
+    width: 800px
+    height: 500px
+    background: $primaryGrey
+    position: relative
+    img
+        position: absolute
+        width: 200px
+        height: 200px
+        left: 10%
+        top: -15%
+
+.img-section
+    width: 40%
+    height: 100%
+    padding-left: 10%
+    padding-top: 20%
+    a
+        align-self: flex-start
+        margin-bottom: 10px
+        text-decoration: underline
+        cursor: pointer
+    a:nth-child(1)
+        color: $primaryYelow
+    a:nth-child(2)
+        color: #41FF31
+    a:nth-child(3)
+        color: red
+
+.user-details-section
+    padding-top: 20px
+    padding-right: 5px
+    padding-bottom: 5px
+    width: 60%
+    height: 100%
+    color: #fff
+    h1
+        margin-bottom: 10px
+    h2
+        margin-bottom: 5px
+
+.sections-switcher
+    margin-top: 80px
+
+.active
+    border-bottom: 2px solid $primaryYelow
+
+.btn-settings
+    padding: 5px !important
+
+.section
+    width: 100%
+    height: 100%
+    padding: 5px
+
+.example-action-buttons
+    padding-bottom: 20px
+
+.example-headers-align
+    margin-bottom: 5px
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description
+    flex-basis: 0
+    &
+        justify-content: space-between
+        align-items: center
+
+.example-headers-align .mat-form-field + .mat-form-field
+    margin-left: 8px

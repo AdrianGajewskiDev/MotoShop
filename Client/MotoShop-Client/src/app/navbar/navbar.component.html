@@ -1,18 +1,20 @@
 <div fxLayout="row" fxFlex="100" class="navbar">
-    <div fxLayoutAlign="center center" class="navbar-brand" fxLayoutAlign.lt-md="start center"  fxFlex.lt-md="80">
+    <div fxLayoutAlign="center center" class="navbar-brand" fxLayoutAlign.lt-md="start center" fxFlex.lt-md="80">
         <img src="../../assets/images-layout/Logo.png" alt="Logo">
     </div>
     <div fxFlex.lt-md="60" fxShow fxHide.lt-md fxFlex.lt-sm="0" fxLayoutAlign="center center" class="searchbox">
         <input type="text" placeholder="Search...">
         <mat-icon class="search-icon" aria-hidden="false" aria-label="Example home icon">search</mat-icon>
     </div>
-    <div fxLayout="row" fxShow  fxHide.lt-md fxLayoutAlign="center center" class="nav-links">
+    <div fxLayout="row" fxShow fxHide.lt-md fxLayoutAlign="center center" class="nav-links">
         <ul fxLayout="row" fxLayoutGap="30px">
             <li class="nav-link"><a (click)="goTo('/home')">Home</a></li>
             <li class="nav-link"><a href="#">Cart</a></li>
-            <li *ngIf="isUserSignedIn == false" fxLayoutAlign="center center" class="signInUpButton"><a (click)="goTo('/identity')">SignIn/Up</a></li>
+            <li *ngIf="isUserSignedIn == false" fxLayoutAlign="center center" class="signInUpButton"><a
+                    (click)="goTo('/userProfile')">SignIn/Up</a></li>
             <li *ngIf="isUserSignedIn == true" fxLayoutAlign="center center" class="my-account-btn">
-                <button mat-button [matMenuTriggerFor]="beforeMenu" class="my-account-btn">Account <span class="material-icons">account_circle</span></button>
+                <button mat-button [matMenuTriggerFor]="beforeMenu" class="my-account-btn">Account <span
+                        class="material-icons">account_circle</span></button>
                 <mat-menu #beforeMenu="matMenu" xPosition="before" class="dropdown-menu">
                     <button mat-menu-item (click)="goTo('/userProfile')">My Account</button>
                     <button mat-menu-item (click)="logout()">Logout</button>
@@ -20,20 +22,21 @@
             </li>
         </ul>
     </div>
-</div> 
+</div>
 
 <mat-drawer-container id="mat-drawer-container" fxHide fxShow.lt-md class="example-container disable" autosize>
     <mat-drawer fxLayout="column" fxLayoutAlign="center center" #drawer class="example-sidenav" mode="side">
-      <mat-icon  fxHide fxShow.lt-md class="hamburger-menu-close" (click)="drawer.toggle()">clear</mat-icon>
-        <div  fxLayoutAlign="center center" class="searchbox searchbox-sidenav">
+        <mat-icon fxHide fxShow.lt-md class="hamburger-menu-close" (click)="drawer.toggle()">clear</mat-icon>
+        <div fxLayoutAlign="center center" class="searchbox searchbox-sidenav">
             <input type="text" placeholder="Search...">
             <mat-icon class="search-icon" aria-hidden="false" aria-label="Example home icon">search</mat-icon>
         </div>
-        <div  class="sidenav-content">
+        <div class="sidenav-content">
             <ul fxLayout="column">
                 <li class="nav-link-sidenav"><a (click)="goTo('/home')">Home</a></li>
                 <li class="nav-link-sidenav"><a href="#">Cart</a></li>
-                <li *ngIf="isUserSignedIn == false" fxLayoutAlign="center center" class="signInUpButton-sidenav"><a (click)="goTo('/identity'); drawer.toggle()">SignIn/Up</a></li>
+                <li *ngIf="isUserSignedIn == false" fxLayoutAlign="center center" class="signInUpButton-sidenav"><a
+                        (click)="goTo('/identity'); drawer.toggle()">SignIn/Up</a></li>
                 <li *ngIf="isUserSignedIn == true" fxLayoutAlign="center center" class="my-account-btn">
                     <button mat-button [matMenuTriggerFor]="beforeMenu" class="my-account-btn">Account <span
                             class="material-icons">account_circle</span></button>
@@ -45,7 +48,7 @@
             </ul>
         </div>
     </mat-drawer>
- 
+
     <mat-icon fxHide fxShow.lt-md class="hamburger-menu" (click)="drawer.toggle()">
         menu
     </mat-icon>

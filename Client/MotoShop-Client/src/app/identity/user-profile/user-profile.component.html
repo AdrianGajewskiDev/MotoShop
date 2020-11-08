@@ -1,4 +1,89 @@
-<p style="color: white;">{{userData.Name}} {{ userData.LastName}}</p>
-<p style="color: white;">{{userData.Username}}</p>
-<p style="color: white;">{{userData.Email}}</p>
-<p style="color: white;">{{userData.PhoneNumber}}</p>
+<div class="container" fxLayoutAlign="center center">
+    <div class="profile-card" fxLayout="row">
+        <img src="../../../assets/images-layout/upp.png" />
+        <div class="img-section" fxLayout="column">
+            <a (click)="editPhoto()">Edit Photo</a>
+            <a (click)="changePhoto()">Change Profile Picture</a>
+            <a (click)="deletePhoto()">Delete Profile Picture</a>
+        </div>
+        <div class="user-details-section" fxLayout="column" fxLayoutAlign="start start">
+            <h1>{{userData.Name}} {{userData.LastName}}</h1>
+            <h2>{{userData.UserName}}</h2>
+            <p>{{userData.Email}}</p>
+            <mat-tab-group class="sections-switcher" mat-align-tabs="start">
+                <mat-tab label="Account">
+                    <div class="section" id="account-settings" fxLayout="column" fxLayoutAlign="start start">
+                        <mat-accordion class="example-headers-align" multi>
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Personal data
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        Edit your data
+                                        <mat-icon>account_circle</mat-icon>
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <form [formGroup]="editUserDataForm" (ngSubmit)="editUserData()">
+                                    <p class="error-msg" *ngIf="showUpdatingError == true">{{errorMessage}}</p>
+                                    <mat-form-field>
+                                        <mat-label>First name</mat-label>
+                                        <input formControlName="name" matInput type="text" autocomplete="off">
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <mat-label>Last name</mat-label>
+                                        <input formControlName="lastName" matInput type="text" autocomplete="off">
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <mat-label>Username</mat-label>
+                                        <input formControlName="username" matInput type="text" autocomplete="off">
+
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <mat-label>Email</mat-label>
+                                        <input formControlName="email" matInput type="email" autocomplete="off">
+                                        <mat-error *ngIf="editUserDataForm.get('email').hasError('email')">
+                                            Please provide a <strong>valid</strong> email adress
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <button type="submit" mat-raised-button color="primary">Save</button>
+                                </form>
+
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                        <mat-accordion class="example-headers-align" multi>
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Password
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        Reset your password
+                                        <mat-icon>vpn_key</mat-icon>
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <mat-form-field>
+                                    <mat-label>Old password</mat-label>
+                                    <input matInput type="password" autocomplete="off">
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label>New password</mat-label>
+                                    <input matInput type="password" autocomplete="off">
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label>Confirm new password</mat-label>
+                                    <input matInput type="text" autocomplete="off">
+                                </mat-form-field>
+                                <button style="margin-left: 10px;" mat-raised-button color="primary">Reset
+                                    password</button>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </mat-tab>
+                <mat-tab label="My Adverts">Content 2</mat-tab>
+                <mat-tab label="Bought">Content 3</mat-tab>
+            </mat-tab-group>
+
+        </div>
+    </div>
+</div>

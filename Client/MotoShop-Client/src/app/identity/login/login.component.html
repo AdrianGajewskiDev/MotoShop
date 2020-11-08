@@ -7,7 +7,7 @@
         <h1>Sign In</h1>
         <form class="form" fxLayout="column" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <mat-form-field class="form-input">
-                <mat-label>Username</mat-label>
+                <mat-label>Username or Email</mat-label>
                 <input formControlName="data" matInput placeholder="Username or email..." autocomplete="off">
                 <mat-error *ngIf="loginForm.get('data').hasError('required')">
                     Username or email is <strong>required</strong>
@@ -15,7 +15,8 @@
             </mat-form-field>
             <mat-form-field class="form-input">
                 <mat-label>Password</mat-label>
-                <input formControlName="password" type="password" matInput autocomplete="off" placeholder="Password..."/>
+                <input formControlName="password" type="password" matInput autocomplete="off"
+                    placeholder="Password..." />
                 <mat-error *ngIf="loginForm.get('password').hasError('required')">
                     Password is <strong>required</strong>
                 </mat-error>

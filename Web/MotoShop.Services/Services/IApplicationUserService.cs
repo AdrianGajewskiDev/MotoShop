@@ -1,5 +1,6 @@
 ﻿using MotoShop.Data.Helpers;
 using MotoShop.Data.Models.User;
+using MotoShop.Services.HelperModels;
 using System.Threading.Tasks;
 
 namespace MotoShop.Services.Services
@@ -12,5 +13,6 @@ namespace MotoShop.Services.Services
         Task<ApplicationUser> GetUserByEmail(string email);
         Task<ApplicationUser> GetUserByUserName(string username);
         int UserExists(ApplicationUser user);
+        Task<UpdateResult> UpdateUserDataAsync(string userID, ApplicationUser model);
     }
 }

@@ -20,7 +20,7 @@ namespace MotoShop.WebAPI.Attributes.Base
             var redisOptions = context.HttpContext.RequestServices.GetRequiredService<RedisOptions>();
             string userId = string.Empty;
 
-            if (identityCache == true)
+             if (identityCache == true)
             {
                 var user = context.HttpContext.User;
                 if(user != null)

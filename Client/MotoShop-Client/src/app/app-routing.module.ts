@@ -20,7 +20,7 @@ const routes: Routes = [
   {
     path: "identity",
     component: IdentityPlaceholderComponent,
-    children:[
+    children: [
       {
         path: '',
         component: LoginComponent,
@@ -31,7 +31,7 @@ const routes: Routes = [
         component: RegisterComponent,
         outlet: "identity"
       },
-        {
+      {
         path: 'login',
         component: LoginComponent,
         outlet: "identity"
@@ -39,7 +39,7 @@ const routes: Routes = [
     ]
   },
   {
-    path:"userProfile",
+    path: "userProfile",
     component: UserProfileComponent,
     canActivate: [AuthenticationGuard]
   }
