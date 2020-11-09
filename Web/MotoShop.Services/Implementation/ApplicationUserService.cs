@@ -1,12 +1,18 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Configuration;
 using MotoShop.Data.Database_Context;
 using MotoShop.Data.Helpers;
 using MotoShop.Data.Models.User;
+using MotoShop.Services.Extensions;
 using MotoShop.Services.HelperModels;
 using MotoShop.Services.Services;
+using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MotoShop.Services.Implementation
@@ -14,12 +20,21 @@ namespace MotoShop.Services.Implementation
     public class ApplicationUserService : IApplicationUserService
     {
         private readonly ApplicationDatabaseContext _dbContext;
-        private UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IConfiguration _configuration;
+        private readonly IEmailSenderService _emailSenderService;
 
-        public ApplicationUserService(ApplicationDatabaseContext dbContext, UserManager<ApplicationUser> userManager)
+        public ApplicationUserService(ApplicationDatabaseContext dbContext, UserManager<ApplicationUser> userManager, 
+            IEmailSenderService emailSenderService = null, IConfiguration configuration = null)
         {
             _dbContext = dbContext;
             _userManager = userManager;
+
+            if(configuration != null)
+                _configuration = configuration;
+
+            if (emailSenderService != null)
+            _emailSenderService = emailSenderService;
         }
 
         public async Task<ApplicationUser> GetUserByEmail(string email) => await _userManager.FindByEmailAsync(email);
@@ -98,7 +113,7 @@ namespace MotoShop.Services.Implementation
             {
                 switch (data)
                 {
-                    case UpdateDataType.Username:
+                    case UpdateDataType.UserName:
                         {
                             if (UserExists(model) != 2) 
                             {
@@ -117,7 +132,15 @@ namespace MotoShop.Services.Implementation
                     case UpdateDataType.Email:
                         {
                             if (UserExists(model) != 1)
-                                user.Email = model.Email;
+                            {
+                                string token = await GenerateUserEmailChangeTokenAsync(user, model.Email);
+                                string confirmationLink = GenerateConfirmationLink(token,user.Id,model.Email, UpdateDataType.Email);
+                                await _emailSenderService.SendConfirmationEmailAsync(new EmailAddress
+                                {
+                                    Email = user.Email,
+                                    Name = user.UserName
+                                }, "Email Verification", confirmationLink, EmailType.Verification_Email_Change);
+                            }
                             else
                                 return new UpdateResult
                                 {
@@ -153,6 +176,7 @@ namespace MotoShop.Services.Implementation
             };
         }
 
+  
         /// <summary>
         /// Returns if UserName or Email is already taken
         /// </summary>
@@ -180,7 +204,7 @@ namespace MotoShop.Services.Implementation
             if (!string.IsNullOrEmpty(user.Email))
                 dataTypes.Add(UpdateDataType.Email);
             if (!string.IsNullOrEmpty(user.UserName))
-                dataTypes.Add(UpdateDataType.Username);
+                dataTypes.Add(UpdateDataType.UserName);
             if (!string.IsNullOrEmpty(user.Name))
                 dataTypes.Add(UpdateDataType.Name);
             if (!string.IsNullOrEmpty(user.LastName))
@@ -190,6 +214,38 @@ namespace MotoShop.Services.Implementation
 
             return dataTypes;
             
+        }
+
+
+        private async Task<string> GenerateUserEmailChangeTokenAsync(ApplicationUser user, string newEmail)
+        {
+            string token = await _userManager.GenerateChangeEmailTokenAsync(user, newEmail);
+            byte[] tokenInBytes = Encoding.UTF8.GetBytes(token);
+            var encodedToken = WebEncoders.Base64UrlEncode(tokenInBytes);
+
+            return encodedToken;
+        }
+        public string GenerateConfirmationLink(string token, string userID, string newData,UpdateDataType updateDataType)
+        {
+            string dataType = updateDataType.ToString();
+            string baseUrl = _configuration["ApplicationUrls:HTTPS"];
+
+            var link = new Uri(baseUrl).Append("/api/","userAccount/", "verificationCallback").AbsoluteUri;
+            link = $"{link}?userID={userID}&token={token}&dataType={dataType}&newData={newData}";
+            return link;
+        }
+
+        public async Task<bool> UpdateEmailAsync(ApplicationUser user, string token, string newEmail)
+        {
+            byte[] decodedToken = WebEncoders.Base64UrlDecode(token);
+            string tk = Encoding.UTF8.GetString(decodedToken);
+
+            var updateResult = await _userManager.ChangeEmailAsync(user, newEmail, tk);
+
+            if (updateResult.Succeeded)
+                return true;
+
+            return false;
         }
     }
 }

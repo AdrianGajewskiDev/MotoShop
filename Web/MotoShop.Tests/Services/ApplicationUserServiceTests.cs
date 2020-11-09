@@ -51,7 +51,7 @@ namespace MotoShop.Tests.Services
 
             switch (updateDataType)
             {
-                case UpdateDataType.Username: userUpdate.UserName = data; break;
+                case UpdateDataType.UserName: userUpdate.UserName = data; break;
                 case UpdateDataType.Email: userUpdate.Email = data; break;
                 case UpdateDataType.Name: userUpdate.Name = data; break;
                 case UpdateDataType.Lastname: userUpdate.LastName = data; break;
@@ -71,7 +71,7 @@ namespace MotoShop.Tests.Services
         {
             switch (updateDataType)
             {
-                case UpdateDataType.Username: return user.UserName;
+                case UpdateDataType.UserName: return user.UserName;
                 case UpdateDataType.Email: return user.Email;
                 case UpdateDataType.PhoneNumber: return user.PhoneNumber;
                 case UpdateDataType.Name: return user.Name;

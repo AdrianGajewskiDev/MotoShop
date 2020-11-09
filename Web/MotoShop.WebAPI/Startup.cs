@@ -13,6 +13,7 @@ using MotoShop.WebAPI.Midleware;
 using AutoMapper;
 using Microsoft.AspNetCore.ResponseCompression;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace MotoShop.Web
 {

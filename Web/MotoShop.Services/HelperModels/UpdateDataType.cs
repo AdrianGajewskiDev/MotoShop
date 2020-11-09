@@ -2,7 +2,7 @@
 {
     public enum UpdateDataType
     {
-        Username,
+        UserName,
         Email,
         PhoneNumber,
         Name,

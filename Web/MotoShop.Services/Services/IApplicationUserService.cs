@@ -14,5 +14,7 @@ namespace MotoShop.Services.Services
         Task<ApplicationUser> GetUserByUserName(string username);
         int UserExists(ApplicationUser user);
         Task<UpdateResult> UpdateUserDataAsync(string userID, ApplicationUser model);
+        Task<bool> UpdateEmailAsync(ApplicationUser user, string token, string newEmail);
+        string GenerateConfirmationLink(string token, string userID, string newData, UpdateDataType updateDataType);
     }
 }

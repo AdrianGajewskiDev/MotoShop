@@ -1,12 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using MotoShop.Data.Models.User;
+using MotoShop.Services.HelperModels;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Attributes;
 using MotoShop.WebAPI.Models.Requests;
 using MotoShop.WebAPI.Models.Response;
 using MotoShop.WebAPI.Models.Response.UserAccount;
+using SendGrid.Helpers.Mail;
+using System;
 using System.Threading.Tasks;
 
 namespace MotoShop.WebAPI.Controllers
@@ -73,6 +78,40 @@ namespace MotoShop.WebAPI.Controllers
             }
 
             return Ok();
+        }
+
+        [HttpGet("verificationCallback")]
+        public async Task<IActionResult> VerificationCallback([FromQuery]string userID,[FromQuery]string token, [FromQuery]string dataType, [FromQuery] string newData)
+        {
+            var user = await _userService.GetUserByID(userID);
+
+            UpdateDataType updateDataType = Enum.Parse<UpdateDataType>(dataType);
+            bool result = false;
+            switch (updateDataType)
+            {
+                case UpdateDataType.UserName:
+                    break;
+                case UpdateDataType.Email:
+                    {
+                        result = await _userService.UpdateEmailAsync(user, token, newData);
+                    }
+                    break;
+                case UpdateDataType.PhoneNumber:
+                    break;
+                case UpdateDataType.Name:
+                    break;
+                case UpdateDataType.Lastname:
+                    break;
+                case UpdateDataType.Password:
+                    break;
+                default:
+                    break;
+            }
+
+            if(result == true)
+                return Ok(new { message = $"{dataType} was successfully updated"});
+
+            return BadRequest(new { message = $"Something went wrong while trying to update the {dataType}" });
         }
     }
 }
