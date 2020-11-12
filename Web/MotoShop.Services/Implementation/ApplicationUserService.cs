@@ -282,5 +282,21 @@ namespace MotoShop.Services.Implementation
 
             return tk;
         }
+
+        public async Task<bool> UpdatePasswordAsync(ApplicationUser user,string token, string newPassword)
+        {
+            string tk = DecodeToken(token);
+            var resetPasswordResult = await _userManager.ResetPasswordAsync(user, tk, newPassword);
+
+            return resetPasswordResult.Succeeded ? true : false;
+        }
+
+        public async Task<bool> SendPasswordChangingConfirmationMessageAsync(ApplicationUser user, string newPassword)
+        {
+            string token = EncodeToken(await _userManager.GeneratePasswordResetTokenAsync(user));
+            string link = GenerateConfirmationLink(token, user.Id, newPassword, UpdateDataType.Password);
+
+            return await _emailSenderService.SendConfirmationEmailAsync(new EmailAddress(user.Email, user.UserName), "Password Reset", link, EmailType.Verification_PasswordChange);
+        }
     }
 }

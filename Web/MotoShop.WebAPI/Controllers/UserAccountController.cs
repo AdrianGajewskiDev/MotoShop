@@ -82,6 +82,21 @@ namespace MotoShop.WebAPI.Controllers
             return Ok();
         }
 
+        [HttpPost("changePassword")]
+        [Authorize]
+
+        public async Task<IActionResult> ChangePassword(NewPasswordRequestModel model)
+        {
+            if (model == null)
+                return BadRequest(new { message = $"{nameof(model)} was null"});
+
+            ApplicationUser user = await _userService.GetUserByID(User.FindFirst(x => x.Type == "UserID").Value);
+
+            var result = await _userService.SendPasswordChangingConfirmationMessageAsync(user, model.NewPassword);
+
+            return Ok();
+        }
+
         [HttpGet("verificationCallback")]
         public async Task<IActionResult> VerificationCallback([FromQuery]string userID,[FromQuery]string token, [FromQuery]string? dataType, [FromQuery] string? newData)
         {
@@ -105,6 +120,7 @@ namespace MotoShop.WebAPI.Controllers
                     }
                     break;
                 case UpdateDataType.Password:
+                    result = await _userService.UpdatePasswordAsync(user, token, newData);
                     break;
                 default:
                     break;

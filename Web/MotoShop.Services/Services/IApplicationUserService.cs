@@ -15,7 +15,9 @@ namespace MotoShop.Services.Services
         Task<bool> RegisterNewUserAsync(ApplicationUser user, string password);
         Task<bool> UpdateEmailAsync(ApplicationUser user, string token, string newEmail);
         Task<bool> SendAccountConfirmationMessageAsync(ApplicationUser user);
+        Task<bool> SendPasswordChangingConfirmationMessageAsync(ApplicationUser user, string newPassword);
         Task<bool> ConfirmUserEmailAsync(ApplicationUser user, string token);
+        Task<bool> UpdatePasswordAsync(ApplicationUser user,string token, string newPassword);
 
         Task<string> SignInAsync(string data, string password, UserSignInVariant variant);
         string GenerateConfirmationLink(string token, string userID, string newData, UpdateDataType updateDataType);
