@@ -45,7 +45,6 @@ namespace MotoShop.WebAPI.Controllers
             var user = await _userService.GetUserByID(userID);
 
             var model = _mapper.Map<UserAccountDetailsResponseModel>(user);
-
             var responseModel = new ApiResponse<UserAccountDetailsResponseModel>
             {
                 HttpStatusCode = System.Net.HttpStatusCode.OK,

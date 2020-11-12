@@ -25,9 +25,11 @@ export class ConfirmationComponent implements OnInit {
           case "password":
             this.message = "Your password has been successfully changed!!!";
             break;
+          case '':
+            this.message = "Your email is now confirmed";
         }
       },
-      (error) => this.message = "Ups, something went wrong"
+      () => this.message = "Ups, something went wrong"
     );
   }
 

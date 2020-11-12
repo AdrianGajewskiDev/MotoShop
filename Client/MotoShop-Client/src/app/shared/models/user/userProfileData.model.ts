@@ -4,5 +4,5 @@ export class UserProfileDataModel {
     PhoneNumber: string;
     Name: string;
     LastName: string;
-
+    EmailConfirmed: boolean;
 }

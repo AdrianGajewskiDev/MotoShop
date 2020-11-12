@@ -73,3 +73,32 @@
 
 .example-headers-align .mat-form-field + .mat-form-field
     margin-left: 8px
+
+@media screen and(max-width: 960px)
+    .profile-card
+        width: 400px
+        height: 80vh
+        img
+            top: 0
+            left: 50%
+
+    .user-details-section
+        width: 100%
+        margin-top: 10px
+
+    .img-section
+        height: 30%
+
+@media screen and(min-width: 600px) and (max-width: 960px)
+    .profile-card
+        width: 500px
+    .img-section
+        padding-top: 0px !important
+
+@media screen and (max-width: 400px)
+    .profile-card
+        img
+            width: 150px
+            height: 150px
+    .img-section
+        padding-top: 0px !important
