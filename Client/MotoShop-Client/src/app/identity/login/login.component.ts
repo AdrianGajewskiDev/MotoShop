@@ -12,21 +12,21 @@ import { IdentityService } from 'src/app/shared/services/identity.service';
   styleUrls: ['./login.component.sass'],
   encapsulation: ViewEncapsulation.None,
   animations: [
-  slideInOutAnimation
+    slideInOutAnimation
   ]
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private identityService: IdentityService,
     private mapper: FormsMapper,
     private router: Router) { }
 
-  public showErrorMessage:boolean = false;  
+  public showErrorMessage: boolean = false;
   public showLoadingSpinner: boolean = false;
   public loginForm: FormGroup;
   public animationState: "slideIn" | "slideOut" = "slideIn";
-  
-   ngOnInit() :void{
+
+  ngOnInit(): void {
     this.loginForm = this.fb.group(
       {
         data: new FormControl('', Validators.required),
@@ -34,32 +34,32 @@ export class LoginComponent implements OnInit{
       });
   }
 
-  onSubmit():void{
+  onSubmit(): void {
     this.showErrorMessage = false;
     this.showLoadingSpinner = true;
     let model = this.mapper.map<SignInModel>(new SignInModel(), this.loginForm);
 
+    console.log("here");
+
     this.identityService.signIn(model).subscribe(
-      (res:any) =>{
+      (res: any) => {
         this.showLoadingSpinner = false;
         this.identityService.saveToken(res.Token);
-        this.router.navigateByUrl("/home").then(() =>
-        {
+        this.router.navigateByUrl("/home").then(() => {
           window.location.reload();
         });
 
       },
       (error) => {
         this.showLoadingSpinner = false;
-        if(error.status == 404)
-        {
+        if (error.status == 404) {
           this.showErrorMessage = true;
         }
       }
-      
+
     );
 
-    
+
   }
 
 

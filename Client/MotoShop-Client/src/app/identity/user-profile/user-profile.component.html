@@ -66,20 +66,45 @@
                                         <mat-icon>vpn_key</mat-icon>
                                     </mat-panel-description>
                                 </mat-expansion-panel-header>
-                                <mat-form-field>
-                                    <mat-label>Old password</mat-label>
-                                    <input matInput type="password" autocomplete="off">
-                                </mat-form-field>
-                                <mat-form-field>
-                                    <mat-label>New password</mat-label>
-                                    <input matInput type="password" autocomplete="off">
-                                </mat-form-field>
-                                <mat-form-field>
-                                    <mat-label>Confirm new password</mat-label>
-                                    <input matInput type="text" autocomplete="off">
-                                </mat-form-field>
-                                <button style="margin-left: 10px;" mat-raised-button color="primary">Reset
-                                    password</button>
+                                <form [formGroup]="editPasswordForm" (ngSubmit)="changePassword()">
+                                    <mat-form-field>
+                                        <mat-label>Old password</mat-label>
+                                        <input formControlName="oldPassword" matInput type="password"
+                                            autocomplete="off">
+                                        <mat-error *ngIf="editPasswordForm.get('oldPassword').hasError('required')">
+                                            Old Password is <strong>required</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <mat-label>New password</mat-label>
+                                        <input formControlName="password" matInput type="password" autocomplete="off">
+                                        <mat-error *ngIf="editPasswordForm.get('password').hasError('required')">
+                                            New Password is <strong>required</strong>
+                                        </mat-error>
+                                        <mat-error *ngIf="editPasswordForm.get('password').errors?.minlength">
+                                            Password should be atleast <strong>7</strong> characters long
+                                        </mat-error>
+                                        <mat-error *ngIf="editPasswordForm.get('password').errors?.maxlength">
+                                            Password shouldn't be longer than <strong>20</strong> characters
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <mat-label>Confirm new password</mat-label>
+                                        <input formControlName="confirmPassword" matInput type="password"
+                                            autocomplete="off">
+                                        <mat-error *ngIf="editPasswordForm.get('confirmPassword').hasError('required')">
+                                            Confirm Password is <strong>required</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <p class="error-msg" *ngIf="editPasswordForm.hasError('passwordsMatchesValidator')">
+                                        Provided passwords are not the same
+                                    </p>
+                                    <button [disabled]="!editPasswordForm.valid" style="margin-left: 10px;"
+                                        mat-raised-button color="primary">
+                                        Reset password
+                                    </button>
+                                </form>
+
                             </mat-expansion-panel>
                         </mat-accordion>
                     </div>

@@ -79,7 +79,7 @@ namespace MotoShop.WebAPI.Controllers
             if(string.IsNullOrEmpty(userID))
             {
                 string prefix = userLogInVariant == UserSignInVariant.Email ? "email" : "username";
-                return NotFound(new { message = "Invalid username or password" });
+                return NotFound(new { message = $"Invalid {prefix} or password " });
             }
 
             Log.Information($"The { userSignInRequestModel.Data} logged in");

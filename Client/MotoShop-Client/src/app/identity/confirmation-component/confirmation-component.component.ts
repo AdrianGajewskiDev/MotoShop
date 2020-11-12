@@ -15,22 +15,20 @@ export class ConfirmationComponent implements OnInit {
   public message: string = "";
 
   ngOnInit(): void {
-    this.activatedRoutes.params.subscribe(
-      (param) => {
-        this.confirmationType = param
-        switch (this.confirmationType) {
-          case "email":
-            this.message = "Your email has been successfully updated!!!";
-            break;
-          case "password":
-            this.message = "Your password has been successfully changed!!!";
-            break;
-          case '':
-            this.message = "Your email is now confirmed";
-        }
-      },
-      () => this.message = "Ups, something went wrong"
-    );
+
+    this.confirmationType = this.activatedRoutes.snapshot.paramMap.get("type");
+
+    switch (this.confirmationType) {
+      case "email":
+        this.message = "Your email has been successfully updated!!!";
+        break;
+      case "password":
+        this.message = "Your password has been successfully changed!!!";
+        break;
+      case '':
+        this.message = "Your email is now confirmed";
+    }
+
   }
 
 }

@@ -130,7 +130,7 @@ namespace MotoShop.WebAPI.Controllers
 
             if(result == true)
             {
-                BrowserLauncher.Launch(_configuration["ApplicationUrls:Client"] + "confirmation/email");
+                BrowserLauncher.Launch(_configuration["ApplicationUrls:Client"] + $"confirmation/{dataType.ToLower()}");
                 await _cachingService.ClearCache(new string[1] {userID});
                 return Ok(new { message =  message});
             }
