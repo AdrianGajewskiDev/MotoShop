@@ -6,7 +6,6 @@ using MotoShop.Data.Models.User;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Models.Request;
 using MotoShop.WebAPI.Token_Providers;
-using Newtonsoft.Json;
 using Serilog;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -58,6 +57,7 @@ namespace MotoShop.WebAPI.Controllers
 
             if (result == true)
             {
+                await _applicationUserService.SendAccountConfirmationMessageAsync(await _applicationUserService.GetUserByUserName(user.UserName));
                 Log.Information($"Registered new user with id of { user.Id}");
                 return Ok(new { message = "User created successfully"});
             }

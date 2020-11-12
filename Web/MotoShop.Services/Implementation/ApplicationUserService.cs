@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Extensions.Configuration;
 using MotoShop.Data.Database_Context;
 using MotoShop.Data.Helpers;
@@ -220,32 +221,67 @@ namespace MotoShop.Services.Implementation
         private async Task<string> GenerateUserEmailChangeTokenAsync(ApplicationUser user, string newEmail)
         {
             string token = await _userManager.GenerateChangeEmailTokenAsync(user, newEmail);
-            byte[] tokenInBytes = Encoding.UTF8.GetBytes(token);
-            var encodedToken = WebEncoders.Base64UrlEncode(tokenInBytes);
+            string encodedToken = EncodeToken(token);
 
             return encodedToken;
         }
-        public string GenerateConfirmationLink(string token, string userID, string newData,UpdateDataType updateDataType)
-        {
-            string dataType = updateDataType.ToString();
-            string baseUrl = _configuration["ApplicationUrls:HTTPS"];
-
-            var link = new Uri(baseUrl).Append("/api/","userAccount/", "verificationCallback").AbsoluteUri;
-            link = $"{link}?userID={userID}&token={token}&dataType={dataType}&newData={newData}";
-            return link;
-        }
+  
 
         public async Task<bool> UpdateEmailAsync(ApplicationUser user, string token, string newEmail)
         {
-            byte[] decodedToken = WebEncoders.Base64UrlDecode(token);
-            string tk = Encoding.UTF8.GetString(decodedToken);
-
+            string tk = DecodeToken(token);
             var updateResult = await _userManager.ChangeEmailAsync(user, newEmail, tk);
 
             if (updateResult.Succeeded)
                 return true;
 
             return false;
+        }
+
+        public async Task<bool> SendAccountConfirmationMessageAsync(ApplicationUser user)
+        {
+            string token = EncodeToken(await _userManager.GenerateEmailConfirmationTokenAsync(user));
+            string link = GenerateConfirmationLink(token, user.Id, null, UpdateDataType.None);
+            var result = await _emailSenderService.SendConfirmationEmailAsync(new EmailAddress(user.Email,user.UserName),"Email confirmation",link, EmailType.Verification_Account_Creating);
+
+            return result;
+        }
+
+        public async Task<bool> ConfirmUserEmailAsync(ApplicationUser user, string token)
+        {
+            var tk = DecodeToken(token);
+            var result = await _userManager.ConfirmEmailAsync(user, tk);
+
+            return result.Succeeded;
+        }
+
+        public string GenerateConfirmationLink(string token, string userID, string newData, UpdateDataType updateDataType = UpdateDataType.None)
+        {
+            string dataType = updateDataType.ToString();
+            string baseUrl = _configuration["ApplicationUrls:HTTPS"];
+
+            var link = new Uri(baseUrl).Append("/api/", "userAccount/", "verificationCallback").AbsoluteUri;
+            link = $"{link}?userID={userID}&token={token}";
+
+            if (updateDataType != UpdateDataType.None)
+                link += $"&dataType={dataType}&newData={newData}";
+            return link;
+        }
+
+        public string EncodeToken(string token)
+        {
+            byte[] tokenInBytes = Encoding.UTF8.GetBytes(token);
+            var encodedToken = WebEncoders.Base64UrlEncode(tokenInBytes);
+
+            return encodedToken;
+        }
+
+        public string DecodeToken(string token)
+        {
+            byte[] decodedToken = WebEncoders.Base64UrlDecode(token);
+            string tk = Encoding.UTF8.GetString(decodedToken);
+
+            return tk;
         }
     }
 }

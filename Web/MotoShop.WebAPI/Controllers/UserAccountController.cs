@@ -1,16 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 using MotoShop.Data.Models.User;
 using MotoShop.Services.HelperModels;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Attributes;
+using MotoShop.WebAPI.Helpers;
 using MotoShop.WebAPI.Models.Requests;
 using MotoShop.WebAPI.Models.Response;
 using MotoShop.WebAPI.Models.Response.UserAccount;
-using SendGrid.Helpers.Mail;
 using System;
 using System.Threading.Tasks;
 
@@ -21,12 +20,16 @@ namespace MotoShop.WebAPI.Controllers
     public class UserAccountController : ControllerBase
     {
         private readonly IApplicationUserService _userService;
+        private readonly ICachingService _cachingService;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
 
-        public UserAccountController(IApplicationUserService userService, IMapper mapper)
+        public UserAccountController(IApplicationUserService userService, ICachingService cachingService, IMapper mapper, IConfiguration configuration)
         {
             _userService = userService;
+            _cachingService = cachingService;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         [HttpGet("details")]
@@ -81,26 +84,26 @@ namespace MotoShop.WebAPI.Controllers
         }
 
         [HttpGet("verificationCallback")]
-        public async Task<IActionResult> VerificationCallback([FromQuery]string userID,[FromQuery]string token, [FromQuery]string dataType, [FromQuery] string newData)
+        public async Task<IActionResult> VerificationCallback([FromQuery]string userID,[FromQuery]string token, [FromQuery]string? dataType, [FromQuery] string? newData)
         {
             var user = await _userService.GetUserByID(userID);
 
-            UpdateDataType updateDataType = Enum.Parse<UpdateDataType>(dataType);
+            UpdateDataType updateDataType = UpdateDataType.None;
+
+            if (!string.IsNullOrEmpty(dataType))
+                updateDataType = Enum.Parse<UpdateDataType>(dataType);
+
             bool result = false;
             switch (updateDataType)
             {
-                case UpdateDataType.UserName:
-                    break;
+                case UpdateDataType.None: 
+                    {
+                       result = await _userService.ConfirmUserEmailAsync(user, token);
+                    }break;
                 case UpdateDataType.Email:
                     {
                         result = await _userService.UpdateEmailAsync(user, token, newData);
                     }
-                    break;
-                case UpdateDataType.PhoneNumber:
-                    break;
-                case UpdateDataType.Name:
-                    break;
-                case UpdateDataType.Lastname:
                     break;
                 case UpdateDataType.Password:
                     break;
@@ -108,8 +111,14 @@ namespace MotoShop.WebAPI.Controllers
                     break;
             }
 
+            string message = (updateDataType == UpdateDataType.None) ? "Your account is now confirmed!!" : $"{dataType} was successfully updated";
+
             if(result == true)
-                return Ok(new { message = $"{dataType} was successfully updated"});
+            {
+                BrowserLauncher.Launch(_configuration["ApplicationUrls:Client"] + "confirmation/email");
+                await _cachingService.ClearCache(new string[1] {userID});
+                return Ok(new { message =  message});
+            }
 
             return BadRequest(new { message = $"Something went wrong while trying to update the {dataType}" });
         }

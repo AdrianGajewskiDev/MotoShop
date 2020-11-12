@@ -7,6 +7,7 @@
         PhoneNumber,
         Name,
         Lastname,
-        Password
+        Password,
+        None
     }
 }

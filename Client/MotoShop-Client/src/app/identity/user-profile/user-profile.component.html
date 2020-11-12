@@ -7,6 +7,8 @@
             <a (click)="deletePhoto()">Delete Profile Picture</a>
         </div>
         <div class="user-details-section" fxLayout="column" fxLayoutAlign="start start">
+            <app-loading-spinner [color]='color' class="account-spinner" *ngIf="showLoadingSpinner == true">
+            </app-loading-spinner>
             <h1>{{userData.Name}} {{userData.LastName}}</h1>
             <h2>{{userData.UserName}}</h2>
             <p>{{userData.Email}}</p>

@@ -1,12 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations"
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
-import {AngularMaterialModule} from "./modules/angular.material.module";
-import {FlexLayoutModule} from "@angular/flex-layout";
-import {ReactiveFormsModule, FormsModule} from "@angular/forms"
+import { AngularMaterialModule } from "./modules/angular.material.module";
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms"
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http"
-import {ToastrModule} from "../../node_modules/ngx-toastr"
+import { ToastrModule } from "../../node_modules/ngx-toastr"
 
 //services
 import { FormsMapper } from './shared/mapper/formsMapper';
@@ -23,6 +23,7 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 import { UserProfileComponent } from './identity/user-profile/user-profile.component';
 import { AuthenticationInterceptor } from './shared/Interceptors/authentication.interceptor';
 import { UserService } from './shared/services/user.service';
+import { ConfirmationComponent } from './identity/confirmation-component/confirmation-component.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { UserService } from './shared/services/user.service';
     LoginComponent,
     HomeComponent,
     LoadingSpinnerComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    ConfirmationComponent
   ],
   imports: [
     AngularMaterialModule,
@@ -46,7 +48,7 @@ import { UserService } from './shared/services/user.service';
     FlexLayoutModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    
+
   ],
   providers: [
     IdentityService,
@@ -56,7 +58,7 @@ import { UserService } from './shared/services/user.service';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthenticationInterceptor,
-      multi:true
+      multi: true
     }
   ],
   bootstrap: [AppComponent]

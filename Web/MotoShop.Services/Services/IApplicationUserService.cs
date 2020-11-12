@@ -16,5 +16,10 @@ namespace MotoShop.Services.Services
         Task<UpdateResult> UpdateUserDataAsync(string userID, ApplicationUser model);
         Task<bool> UpdateEmailAsync(ApplicationUser user, string token, string newEmail);
         string GenerateConfirmationLink(string token, string userID, string newData, UpdateDataType updateDataType);
+        Task<bool> SendAccountConfirmationMessageAsync(ApplicationUser user);
+        Task<bool> ConfirmUserEmailAsync(ApplicationUser user, string token);
+
+        string EncodeToken(string token);
+        string DecodeToken(string token);
     }
 }
