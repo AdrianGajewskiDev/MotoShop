@@ -21,7 +21,7 @@
                     Password is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
-            <span class="form-bottom-text">Forgot a password ? <a>Click here</a></span>
+            <span class="form-bottom-text">Forgot a password ? <a (click)="forgotPassword()">Click here</a></span>
             <button [disabled]="!loginForm.valid" class="btn-submit" type="submit">Sign In</button>
         </form>
     </div>

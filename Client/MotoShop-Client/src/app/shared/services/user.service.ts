@@ -2,10 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../apiResponse';
+import { ResetUserPassword } from '../models/user/resetUserPassword';
 import { UpdateUserPasswordModel } from '../models/user/updateUserPassword.model';
 import { UpdateUserProfileDataModel } from '../models/user/updateUserProfileData.model';
 import { UserProfileDataModel } from '../models/user/userProfileData.model';
-import { serverUserProfileDetailsUrl, serverUpdateUserProfileUrl, serverUpdateUserPasswordUrl } from '../server-urls';
+import { serverResetUserPasswordUrl, serverUserProfileDetailsUrl, serverUpdateUserProfileUrl, serverUpdateUserPasswordUrl } from '../server-urls';
 import { IdentityService } from './identity.service';
 
 @Injectable()
@@ -22,7 +23,10 @@ export class UserService {
         return this.httpClient.post(serverUpdateUserProfileUrl, model);
     }
 
-    updatePassword(model: UpdateUserPasswordModel) {
-        return this.httpClient.post(serverUpdateUserPasswordUrl, model);
+    updatePassword(model: UpdateUserPasswordModel | ResetUserPassword) {
+        if (model instanceof UpdateUserPasswordModel)
+            return this.httpClient.post(serverUpdateUserPasswordUrl, model);
+
+        return this.httpClient.post(serverResetUserPasswordUrl, model)
     }
 }

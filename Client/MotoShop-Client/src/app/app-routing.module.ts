@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ConfirmationComponent } from './identity/confirmation-component/confirmation-component.component';
+import { ForgotPasswordComponent } from './identity/forgot-password/forgot-password.component';
 import { IdentityPlaceholderComponent } from './identity/identity-placeholder/identity-placeholder.component';
 import { LoginComponent } from './identity/login/login.component';
 import { RegisterComponent } from './identity/register/register.component';
@@ -47,6 +48,10 @@ const routes: Routes = [
   {
     path: "confirmation/:type",
     component: ConfirmationComponent
+  },
+  {
+    path: 'forgotPassword',
+    component: ForgotPasswordComponent
   }
 ];
 

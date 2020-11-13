@@ -24,6 +24,7 @@ import { UserProfileComponent } from './identity/user-profile/user-profile.compo
 import { AuthenticationInterceptor } from './shared/Interceptors/authentication.interceptor';
 import { UserService } from './shared/services/user.service';
 import { ConfirmationComponent } from './identity/confirmation-component/confirmation-component.component';
+import { ForgotPasswordComponent } from './identity/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ConfirmationComponent } from './identity/confirmation-component/confirm
     HomeComponent,
     LoadingSpinnerComponent,
     UserProfileComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     AngularMaterialModule,

@@ -4,4 +4,5 @@ export const serverSignInUrl = "https://localhost:44304/api/identity/signIn";
 export const serverUserProfileDetailsUrl = "https://localhost:44304/api/UserAccount/details";
 export const serverUpdateUserProfileUrl = "https://localhost:44304/api/UserAccount/updateUserData";
 export const serverUpdateUserPasswordUrl = "https://localhost:44304/api/UserAccount/changePassword";
+export const serverResetUserPasswordUrl = "https://localhost:44304/api/UserAccount/resetPassword"
 

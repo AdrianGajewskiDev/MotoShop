@@ -94,7 +94,30 @@ namespace MotoShop.WebAPI.Controllers
 
             var result = await _userService.SendPasswordChangingConfirmationMessageAsync(user, model.NewPassword);
 
-            return Ok();
+            if(result == true)
+                return Ok();
+
+            return BadRequest(new { message = $"Something went wrong while trying to send verification email" });
+        }
+
+        [HttpPost("resetPassword")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordRequestModel model)
+        {
+            if (model == null)
+                return BadRequest(new { message = $"{nameof(model)} was null" });
+
+            ApplicationUser user = await _userService.GetUserByEmail(model.Email);
+
+            if (user == null)
+                return NotFound(new { message = $"User with email of {model.Email} does not exist!!" });
+
+
+            var result = await _userService.SendPasswordChangingConfirmationMessageAsync(user, model.NewPassword);
+
+            if (result == true)
+                return Ok();
+
+            return BadRequest(new { message = $"Something went wrong while trying to send verification email" });
         }
 
         [HttpGet("verificationCallback")]
