@@ -36,13 +36,9 @@ namespace MotoShop.Services.Implementation
             if (emailSenderService != null)
             _emailSenderService = emailSenderService;
         }
-
         public async Task<ApplicationUser> GetUserByEmail(string email) => await _userManager.FindByEmailAsync(email);
-
         public async Task<ApplicationUser> GetUserByID(string id) => await _userManager.FindByIdAsync(id);
-
         public async Task<ApplicationUser> GetUserByUserName(string username) => await _userManager.FindByNameAsync(username);
-      
         public async Task<bool> RegisterNewUserAsync(ApplicationUser user, string password)
         {
             if (user == null)
@@ -60,7 +56,6 @@ namespace MotoShop.Services.Implementation
 
             return false;
         }
-
         public async Task<string> SignInAsync(string data, string password, UserSignInVariant variant)
         {
             string userID = string.Empty;
@@ -88,7 +83,6 @@ namespace MotoShop.Services.Implementation
 
             return userID;
         }
-
         //TODO: Add email notifications about the changes
         //  *In email editing case, we should first send confirmation email to the old email adress
         public async Task<UpdateResult> UpdateUserDataAsync(string userID, ApplicationUser model)
@@ -175,8 +169,6 @@ namespace MotoShop.Services.Implementation
                 Result = true
             };
         }
-
-  
         /// <summary>
         /// Returns if UserName or Email is already taken
         /// </summary>
@@ -196,7 +188,6 @@ namespace MotoShop.Services.Implementation
 
             return result;
         }
-
         private List<UpdateDataType> ChechWhatDataToUpdate(ApplicationUser user)
         {
             List<UpdateDataType> dataTypes = new List<UpdateDataType>();
@@ -215,8 +206,6 @@ namespace MotoShop.Services.Implementation
             return dataTypes;
             
         }
-
-
         private async Task<string> GenerateUserEmailChangeTokenAsync(ApplicationUser user, string newEmail)
         {
             string token = await _userManager.GenerateChangeEmailTokenAsync(user, newEmail);
@@ -224,8 +213,6 @@ namespace MotoShop.Services.Implementation
 
             return encodedToken;
         }
-  
-
         public async Task<bool> UpdateEmailAsync(ApplicationUser user, string token, string newEmail)
         {
             string tk = DecodeToken(token);
@@ -236,7 +223,6 @@ namespace MotoShop.Services.Implementation
 
             return false;
         }
-
         public async Task<bool> SendAccountConfirmationMessageAsync(ApplicationUser user)
         {
             string token = EncodeToken(await _userManager.GenerateEmailConfirmationTokenAsync(user));
@@ -245,7 +231,6 @@ namespace MotoShop.Services.Implementation
 
             return result;
         }
-
         public async Task<bool> ConfirmUserEmailAsync(ApplicationUser user, string token)
         {
             var tk = DecodeToken(token);
@@ -253,7 +238,6 @@ namespace MotoShop.Services.Implementation
 
             return result.Succeeded;
         }
-
         public string GenerateConfirmationLink(string token, string userID, string newData, UpdateDataType updateDataType = UpdateDataType.None)
         {
             string dataType = updateDataType.ToString();
@@ -266,7 +250,6 @@ namespace MotoShop.Services.Implementation
                 link += $"&dataType={dataType}&newData={newData}";
             return link;
         }
-
         public string EncodeToken(string token)
         {
             byte[] tokenInBytes = Encoding.UTF8.GetBytes(token);
@@ -274,7 +257,6 @@ namespace MotoShop.Services.Implementation
 
             return encodedToken;
         }
-
         public string DecodeToken(string token)
         {
             byte[] decodedToken = WebEncoders.Base64UrlDecode(token);
@@ -282,7 +264,6 @@ namespace MotoShop.Services.Implementation
 
             return tk;
         }
-
         public async Task<bool> UpdatePasswordAsync(ApplicationUser user,string token, string newPassword)
         {
             string tk = DecodeToken(token);
@@ -290,13 +271,23 @@ namespace MotoShop.Services.Implementation
 
             return resetPasswordResult.Succeeded ? true : false;
         }
-
         public async Task<bool> SendPasswordChangingConfirmationMessageAsync(ApplicationUser user, string newPassword)
         {
             string token = EncodeToken(await _userManager.GeneratePasswordResetTokenAsync(user));
             string link = GenerateConfirmationLink(token, user.Id, newPassword, UpdateDataType.Password);
 
             return await _emailSenderService.SendConfirmationEmailAsync(new EmailAddress(user.Email, user.UserName), "Password Reset", link, EmailType.Verification_PasswordChange);
+        }
+        public async Task<bool> AddUserProfileImageAsync(string userID, string path)
+        {
+            ApplicationUser user = await GetUserByID(userID);
+
+            user.ImageUrl = path;
+
+            if (await _dbContext.SaveChangesAsync() > 0)
+                return true;
+
+            return false;
         }
     }
 }

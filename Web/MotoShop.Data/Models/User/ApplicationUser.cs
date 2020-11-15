@@ -12,6 +12,7 @@ namespace MotoShop.Data.Models.User
         public string Name { get; set; }
         [Required]
         public string LastName { get; set; }
+        public string ImageUrl { get; set; }
 
     }
 }

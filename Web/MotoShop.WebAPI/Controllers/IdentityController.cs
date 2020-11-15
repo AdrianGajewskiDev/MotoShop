@@ -82,7 +82,7 @@ namespace MotoShop.WebAPI.Controllers
                 return NotFound(new { message = $"Invalid {prefix} or password " });
             }
 
-            Log.Information($"The { userSignInRequestModel.Data} logged in");
+            Log.Information($"The { userSignInRequestModel.Data} signed in");
 
             Claim[] claims = { new Claim("UserID", userID) };
 

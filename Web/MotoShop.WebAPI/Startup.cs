@@ -14,6 +14,10 @@ using AutoMapper;
 using Microsoft.AspNetCore.ResponseCompression;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace MotoShop.Web
 {
@@ -41,14 +45,20 @@ namespace MotoShop.Web
             services.AddAutoMapper(typeof(Startup))
                 .SetUpAutoMapper();
 
-            services.AddCors(setup => 
+            services.AddCors(setup =>
             {
-                setup.AddPolicy("DevPolicy", configure => 
+                setup.AddPolicy("DevPolicy", configure =>
                 {
                     configure.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                 });
             });
 
+            services.Configure<FormOptions>(options => 
+            {
+                options.MemoryBufferThreshold = int.MaxValue;
+                options.ValueLengthLimit = int.MaxValue;
+                options.MultipartBodyLengthLimit = int.MaxValue;
+            });
             services.AddApplicationServices();
 
         }
@@ -61,6 +71,12 @@ namespace MotoShop.Web
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(),@"wwwroot", @"resources")),
+                RequestPath = new PathString("/wwwroot/resources")
+            });
             app.UseCors("DevPolicy");
             app.UseResponseCompression();
 
