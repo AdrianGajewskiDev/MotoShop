@@ -10,6 +10,9 @@ import { UserProfileDataModel } from 'src/app/shared/models/user/userProfileData
 import { passwordValidators } from 'src/app/shared/password-validators';
 import { UserService } from 'src/app/shared/services/user.service';
 import { isEmpty } from '../../shared/Helpers/formGroupHelpers'
+import { buildProfileImagePath } from "../../shared/Helpers/buildProfileImagePath"
+import { UploadService } from 'src/app/shared/services/upload.service';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-user-profile',
@@ -21,7 +24,8 @@ export class UserProfileComponent implements OnInit {
   constructor(private userService: UserService,
     private fb: FormBuilder,
     private mapper: FormsMapper,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private uploadService: UploadService) { }
 
   public userData: UserProfileDataModel;
   public showError: boolean = false;
@@ -29,10 +33,13 @@ export class UserProfileComponent implements OnInit {
   public editPasswordForm: FormGroup;
 
   public showLoadingSpinner: boolean = true;
+  public showImageLoadingSpinner: boolean = true;
   public showUpdatingError: boolean = false;
   public errorMessage: string = "";
+  public imageUrl: string = "";
 
   public color = "Black";
+
   ngOnInit(): void {
     this.editUserDataForm = this.fb.group({
       name: [''],
@@ -44,6 +51,8 @@ export class UserProfileComponent implements OnInit {
       (res: ApiResponse<UserProfileDataModel>) => {
         this.userData = res.ResponseContent;
         this.showLoadingSpinner = false;
+        this.showImageLoadingSpinner = false;
+        this.imageUrl = buildProfileImagePath(this.userData.ImageUrl);
       },
       (error) => {
 
@@ -99,7 +108,19 @@ export class UserProfileComponent implements OnInit {
   }
 
   ///TODO: implement these once the uploading profile picture functionality is working
+  changePhoto(): void {
+    this.showImageLoadingSpinner = true;
+    const inputNode: any = document.querySelector('#file');
+
+    this.uploadService.uploadImage(inputNode.files[0]).subscribe(
+      res => {
+        this.showImageLoadingSpinner = false;
+        window.location.reload();
+      },
+      error => this.toastr.error(error.error.message));
+  }
+
+
   editPhoto(): void { }
-  changePhoto(): void { }
   deletePhoto(): void { }
 }

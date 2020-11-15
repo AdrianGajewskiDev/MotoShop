@@ -25,6 +25,7 @@ import { AuthenticationInterceptor } from './shared/Interceptors/authentication.
 import { UserService } from './shared/services/user.service';
 import { ConfirmationComponent } from './identity/confirmation-component/confirmation-component.component';
 import { ForgotPasswordComponent } from './identity/forgot-password/forgot-password.component';
+import { UploadService } from './shared/services/upload.service';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { ForgotPasswordComponent } from './identity/forgot-password/forgot-passw
     IdentityService,
     FormsMapper,
     UserService,
+    UploadService,
     ///Interceptors
     {
       provide: HTTP_INTERCEPTORS,

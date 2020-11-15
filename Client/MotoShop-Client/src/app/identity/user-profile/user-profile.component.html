@@ -1,10 +1,13 @@
 <div class="container" fxLayoutAlign="center center">
     <div class="profile-card" fxLayout.lt-md="column" fxLayout="row">
-        <img src="../../../assets/images-layout/upp.png" />
+
+        <img [src]="imageUrl" />
+        <app-loading-spinner class="img-loadingSpinner" *ngIf="showImageLoadingSpinner == true">
+        </app-loading-spinner>
         <div class="img-section" fxLayout="column">
-            <a (click)="editPhoto()">Edit Photo</a>
-            <a (click)="changePhoto()">Change Profile Picture</a>
-            <a (click)="deletePhoto()">Delete Profile Picture</a>
+            <a (click)="fileInput.click()">Change picture</a>
+            <a>Edit picture</a>
+            <input hidden (change)="changePhoto()" #fileInput type="file" id="file">
         </div>
         <div class="user-details-section" fxLayout="column" fxLayoutAlign.lt-md="start center"
             fxLayoutAlign="start start">

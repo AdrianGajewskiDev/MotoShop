@@ -5,4 +5,5 @@ export const serverUserProfileDetailsUrl = "https://localhost:44304/api/UserAcco
 export const serverUpdateUserProfileUrl = "https://localhost:44304/api/UserAccount/updateUserData";
 export const serverUpdateUserPasswordUrl = "https://localhost:44304/api/UserAccount/changePassword";
 export const serverResetUserPasswordUrl = "https://localhost:44304/api/UserAccount/resetPassword"
+export const serverImageUploadUrl = "https://localhost:44304/api/upload/single"
 

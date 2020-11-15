@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MotoShop.Services.HelperModels;
 using MotoShop.Services.Services;
+using MotoShop.WebAPI.Attributes;
 using MotoShop.WebAPI.Extensions;
 using System.Threading.Tasks;
 
@@ -24,6 +25,7 @@ namespace MotoShop.WebAPI.Controllers
         [Authorize]
         [HttpPost("single")]
         [DisableRequestSizeLimit]
+        [ClearCache]
         public async Task<IActionResult> UploadSingleImage()
         {
             string userID = User.GetUserID();
