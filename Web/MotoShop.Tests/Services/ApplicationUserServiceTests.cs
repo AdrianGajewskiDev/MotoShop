@@ -21,7 +21,7 @@ namespace MotoShop.Tests.Services
         {
             DbContextOptionsBuilder<ApplicationDatabaseContext> dbContextOptions = new DbContextOptionsBuilder<ApplicationDatabaseContext>().UseSqlServer(_connectionString);
             ApplicationDatabaseContext dbContext = new ApplicationDatabaseContext(dbContextOptions.Options);
-            ApplicationUserService service = new ApplicationUserService(dbContext, null);
+            ApplicationUserService service = new ApplicationUserService(dbContext, null,null,null,null);
 
             ApplicationUser user = new ApplicationUser
             {
@@ -44,7 +44,7 @@ namespace MotoShop.Tests.Services
         {
             DbContextOptionsBuilder<ApplicationDatabaseContext> dbContextOptions = new DbContextOptionsBuilder<ApplicationDatabaseContext>().UseSqlServer(_connectionString);
             ApplicationDatabaseContext dbContext = new ApplicationDatabaseContext(dbContextOptions.Options);
-            ApplicationUserService service = new ApplicationUserService(dbContext, null);
+            ApplicationUserService service = new ApplicationUserService(dbContext, null, null, null, null);
             string userID = "e0d6c11b-5f16-4194-99be-cf698eda3820";
 
             ApplicationUser userUpdate = new ApplicationUser();

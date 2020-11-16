@@ -23,19 +23,17 @@ namespace MotoShop.Services.Implementation
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
         private readonly IEmailSenderService _emailSenderService;
+        private readonly IImageUploadService _imageUploadService;
 
-        public ApplicationUserService(ApplicationDatabaseContext dbContext, UserManager<ApplicationUser> userManager, 
-            IEmailSenderService emailSenderService = null, IConfiguration configuration = null)
+        public ApplicationUserService(ApplicationDatabaseContext dbContext, UserManager<ApplicationUser> userManager, IConfiguration configuration, IEmailSenderService emailSenderService, IImageUploadService imageUploadService)
         {
             _dbContext = dbContext;
             _userManager = userManager;
-
-            if(configuration != null)
-                _configuration = configuration;
-
-            if (emailSenderService != null)
+            _configuration = configuration;
             _emailSenderService = emailSenderService;
+            _imageUploadService = imageUploadService;
         }
+
         public async Task<ApplicationUser> GetUserByEmail(string email) => await _userManager.FindByEmailAsync(email);
         public async Task<ApplicationUser> GetUserByID(string id) => await _userManager.FindByIdAsync(id);
         public async Task<ApplicationUser> GetUserByUserName(string username) => await _userManager.FindByNameAsync(username);
@@ -282,9 +280,14 @@ namespace MotoShop.Services.Implementation
         {
             ApplicationUser user = await GetUserByID(userID);
 
-            user.ImageUrl = path;
+            if (!string.IsNullOrEmpty(user.ImageUrl))
+                _imageUploadService.DeleteImage(user.ImageUrl);
 
-            if (await _dbContext.SaveChangesAsync() > 0)
+            user.ImageUrl = path;
+            _dbContext.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            var result = await _dbContext.SaveChangesAsync();
+
+            if (result > 0)
                 return true;
 
             return false;
