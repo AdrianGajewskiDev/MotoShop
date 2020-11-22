@@ -1,11 +1,18 @@
 ﻿using AutoMapper;
 using AutoMapper.Configuration;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
+using MotoShop.Data.Database_Context;
+using MotoShop.Data.Models.User;
 using MotoShop.Services.Implementation;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Attributes.Base;
@@ -14,15 +21,21 @@ using MotoShop.WebAPI.Configurations;
 using MotoShop.WebAPI.Helpers;
 using MotoShop.WebAPI.Token_Providers;
 using System;
+using System.Linq;
+using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MotoShop.WebAPI.Extensions
 {
     public static class IServiceCollectionExtensions
     {
-        public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, string key)
+        public static IServiceCollection AddAuthentication(this IServiceCollection services, Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
-            var jwtKey = Encoding.UTF8.GetBytes(key);
+            var jwtKey = Encoding.UTF8.GetBytes(configuration["JWT:Key"]);
+
+            GoogleAuthOptions googleOptions = new GoogleAuthOptions();
+            configuration.GetSection("GoogleAuthentication").Bind(googleOptions);
 
             var tokentValidationParams = new TokenValidationParameters
             {
@@ -34,15 +47,24 @@ namespace MotoShop.WebAPI.Extensions
                 ClockSkew = TimeSpan.Zero
             };
 
-            services.AddAuthentication(options => 
+
+            services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options => 
+            })
+            .AddCookie()
+            .AddJwtBearer(options =>
             {
                 options.SaveToken = false;
                 options.TokenValidationParameters = tokentValidationParams;
+            })
+            .AddGoogle(options =>
+            {
+                options.ClientId = googleOptions.ClientID;
+                options.ClientSecret = googleOptions.ClientSecret;
+                options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             });
 
             return services;
@@ -54,8 +76,8 @@ namespace MotoShop.WebAPI.Extensions
             services.AddScoped<IApplicationUserService, ApplicationUserService>();
             services.AddScoped<IAdvertisementService, AdvertisementService>();
             services.AddScoped<IShopItemsService, ShopItemsService>();
+            services.AddScoped<IExternalLoginProviderService, ExternalLoginProviderService>();
             services.AddScoped<DatabaseSeeder>();
-
 
             //Singletons
             services.AddSingleton<JsonWebTokenWriter>();
@@ -100,7 +122,7 @@ namespace MotoShop.WebAPI.Extensions
             configuration.GetSection("RedisOptions").Bind(redisOptions);
             services.AddSingleton(redisOptions);
 
-            services.AddStackExchangeRedisCache(setup => 
+            services.AddStackExchangeRedisCache(setup =>
             {
                 setup.Configuration = redisOptions.ConnectionString;
             });

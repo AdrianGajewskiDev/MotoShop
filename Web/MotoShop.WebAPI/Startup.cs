@@ -11,9 +11,6 @@ using MotoShop.WebAPI.Configurations;
 using MotoShop.WebAPI.Extensions;
 using MotoShop.WebAPI.Midleware;
 using AutoMapper;
-using Microsoft.AspNetCore.ResponseCompression;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
@@ -37,11 +34,11 @@ namespace MotoShop.Web
             services.AddCompression();
             services.AddControllers().AddJsonOptions(JsonConfiguration.Configure);
             services.AddDbContext<ApplicationDatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Production"), SqlServerConfigurations.Configure),ServiceLifetime.Transient);
-            services.AddIdentityCore<ApplicationUser>(ApplicationUserConfigurations.Configure)
+            services.AddIdentity<ApplicationUser, IdentityRole>(ApplicationUserConfigurations.Configure)
                 .AddEntityFrameworkStores<ApplicationDatabaseContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddJwtAuthentication(Configuration["JWT:Key"]);
+            IServiceCollectionExtensions.AddAuthentication(services, Configuration);
             services.AddAutoMapper(typeof(Startup))
                 .SetUpAutoMapper();
 
