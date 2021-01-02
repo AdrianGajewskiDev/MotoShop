@@ -46,7 +46,10 @@ namespace MotoShop.Web
             {
                 setup.AddPolicy("DevPolicy", configure =>
                 {
-                    configure.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                    configure.AllowAnyOrigin()
+                                .AllowAnyMethod()
+                                .AllowAnyHeader()
+                                .SetIsOriginAllowed((host) => true);
                 });
             });
 
@@ -63,6 +66,8 @@ namespace MotoShop.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("DevPolicy");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -74,7 +79,7 @@ namespace MotoShop.Web
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(),@"wwwroot", @"resources")),
                 RequestPath = new PathString("/wwwroot/resources")
             });
-            app.UseCors("DevPolicy");
+         
             app.UseResponseCompression();
 
             app.UseExceptionHandler(new ExceptionHandlerOptions

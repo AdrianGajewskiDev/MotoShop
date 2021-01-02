@@ -1,18 +1,10 @@
 ﻿using AutoMapper;
-using AutoMapper.Configuration;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
-using MotoShop.Data.Database_Context;
-using MotoShop.Data.Models.User;
 using MotoShop.Services.Implementation;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Attributes.Base;
@@ -21,10 +13,7 @@ using MotoShop.WebAPI.Configurations;
 using MotoShop.WebAPI.Helpers;
 using MotoShop.WebAPI.Token_Providers;
 using System;
-using System.Linq;
-using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MotoShop.WebAPI.Extensions
 {
@@ -51,21 +40,15 @@ namespace MotoShop.WebAPI.Extensions
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddCookie()
             .AddJwtBearer(options =>
             {
                 options.SaveToken = false;
                 options.TokenValidationParameters = tokentValidationParams;
-            })
-            .AddGoogle(options =>
-            {
-                options.ClientId = googleOptions.ClientID;
-                options.ClientSecret = googleOptions.ClientSecret;
-                options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             });
+         
 
             return services;
         }

@@ -4,7 +4,9 @@ import { Router } from '@angular/router';
 import { slideInOutAnimation } from 'src/app/shared/animations';
 import { FormsMapper } from 'src/app/shared/mapper/formsMapper';
 import { SignInModel } from 'src/app/shared/models/user/signIn.model';
+import { ExternalSignInService } from 'src/app/shared/services/externalSignIn.service';
 import { IdentityService } from 'src/app/shared/services/identity.service';
+import { ExternalProviders } from "../../shared/externalProviders"
 
 @Component({
   selector: 'app-login',
@@ -19,13 +21,15 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private identityService: IdentityService,
     private mapper: FormsMapper,
-    private router: Router) { }
+    private router: Router,
+    private externalSignInService: ExternalSignInService) { }
 
   public showErrorMessage: boolean = false;
   public showLoadingSpinner: boolean = false;
   public loginForm: FormGroup;
   public animationState: "slideIn" | "slideOut" = "slideIn";
 
+  public externalProviders = ExternalProviders;
   ngOnInit(): void {
     this.loginForm = this.fb.group(
       {
@@ -62,6 +66,12 @@ export class LoginComponent implements OnInit {
 
   forgotPassword() {
     this.router.navigateByUrl("/forgotPassword");
+  }
+
+  externalSignIn(provider: string) {
+    this.showLoadingSpinner = true;
+
+    this.externalSignInService.signIn();
   }
 
 }

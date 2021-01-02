@@ -26,6 +26,8 @@ import { UserService } from './shared/services/user.service';
 import { ConfirmationComponent } from './identity/confirmation-component/confirmation-component.component';
 import { ForgotPasswordComponent } from './identity/forgot-password/forgot-password.component';
 import { UploadService } from './shared/services/upload.service';
+import { GoogleAuthenticationModule } from './modules/google.authentication.module';
+import { ExternalSignInService } from './shared/services/externalSignIn.service';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { UploadService } from './shared/services/upload.service';
     FlexLayoutModule,
     HttpClientModule,
     ToastrModule.forRoot(),
+    GoogleAuthenticationModule
 
   ],
   providers: [
@@ -58,6 +61,7 @@ import { UploadService } from './shared/services/upload.service';
     FormsMapper,
     UserService,
     UploadService,
+    ExternalSignInService,
     ///Interceptors
     {
       provide: HTTP_INTERCEPTORS,
