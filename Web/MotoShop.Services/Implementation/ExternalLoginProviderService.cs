@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using MotoShop.Data.Database_Context;
 using MotoShop.Data.Models.User;
+using MotoShop.Services.HelperModels;
 using MotoShop.Services.Services;
-using System.Linq;
 using System.Threading.Tasks;
+using static Google.Apis.Auth.GoogleJsonWebSignature;
 
 namespace MotoShop.Services.Implementation
 {
@@ -11,25 +13,29 @@ namespace MotoShop.Services.Implementation
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDatabaseContext _dbContext;
+        private readonly GoogleAuthOptions _googleAuthOptions;
 
-        public ExternalLoginProviderService(UserManager<ApplicationUser> userManager, ApplicationDatabaseContext dbContext)
+        public ExternalLoginProviderService(UserManager<ApplicationUser> userManager, 
+            ApplicationDatabaseContext dbContext, IOptions<GoogleAuthOptions> options)
         {
             _userManager = userManager;
             _dbContext = dbContext;
+            _googleAuthOptions = options.Value;
         }
 
-        public async Task<IdentityResult> AddLoginAsync(ApplicationUser user, UserLoginInfo info) => await _userManager.AddLoginAsync(user, info);
-
-        public string BuildUsername(ApplicationUser user)
+        public Task<bool> Create(ApplicationUser model, ExternalSignInProvider provider, string providerID)
         {
-            if (!_dbContext.Users.Any(x => x.UserName == user.Name))
-                return user.Name;
-            else if (!_dbContext.Users.Any(x => x.UserName == user.LastName))
-                return user.LastName;
-
-            return user.Id.Substring(1, 5);
+            return Task.FromResult(false);
         }
 
-        public async Task<IdentityResult> CreateAsync(ApplicationUser user) => await _userManager.CreateAsync(user);
+        public async Task<Payload> ValidateGoogleAccessTokenAsync(string token)
+        {
+            ValidationSettings settings = new ValidationSettings
+            {
+                Audience = new string[] { _googleAuthOptions.ClientID }
+            };
+
+            return await ValidateAsync(token, settings);
+        }
     }
 }

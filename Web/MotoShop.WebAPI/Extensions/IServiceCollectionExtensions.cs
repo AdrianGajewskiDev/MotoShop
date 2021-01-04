@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using MotoShop.Services.HelperModels;
 using MotoShop.Services.Implementation;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Attributes.Base;

@@ -1,4 +1,4 @@
-﻿namespace MotoShop.WebAPI.Configurations
+﻿namespace MotoShop.Services.HelperModels
 {
     public class GoogleAuthOptions
     {

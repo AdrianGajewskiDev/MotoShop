@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using MotoShop.Services.HelperModels;
 
 namespace MotoShop.Web
 {
@@ -41,6 +42,8 @@ namespace MotoShop.Web
             IServiceCollectionExtensions.AddAuthentication(services, Configuration);
             services.AddAutoMapper(typeof(Startup))
                 .SetUpAutoMapper();
+
+            services.Configure<GoogleAuthOptions>(Configuration.GetSection("GoogleAuthentication"));
 
             services.AddCors(setup =>
             {

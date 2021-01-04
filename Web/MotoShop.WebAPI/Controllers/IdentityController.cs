@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using MotoShop.Data.Helpers;
 using MotoShop.Data.Models.User;
+using MotoShop.Services.HelperModels;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Models.Request;
+using MotoShop.WebAPI.Models.Requests;
 using MotoShop.WebAPI.Token_Providers;
 using Serilog;
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -95,13 +95,14 @@ namespace MotoShop.WebAPI.Controllers
             return Ok(new { token = token });
         }
 
-        //[AllowAnonymous]
-        //[HttpGet("externalSignIn/{provider}")]
-        //public async Task<IActionResult> ExternalSignIn(string provider)
-        //{
-       
+        [AllowAnonymous]
+        [HttpPost("externalSignIn")]
+        public async Task<IActionResult> ExternalSignIn([FromBody] ExternalSignInRequestModel model)
+        {
+            var result = await _externalLoginProviderService.ValidateGoogleAccessTokenAsync(model.AccessToken);
 
-        //}
+            return Ok();
+        }
 
     }
 
