@@ -16,6 +16,12 @@ namespace MotoShop.WebAPI.Token_Providers
             _configuration = configuration;
         }
 
+        public string GenerateToken(string name, string value, double expiresInHours)
+        {
+            Claim[] claims = { new Claim(name, value) };
+            return GenerateToken(claims, expiresInHours);
+        }
+
         public string GenerateToken(Claim[] claims, double expiresInHours)
         {
 

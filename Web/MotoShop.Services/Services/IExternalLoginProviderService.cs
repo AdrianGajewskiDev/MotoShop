@@ -9,5 +9,6 @@ namespace MotoShop.Services.Services
     {
         Task<bool> Create(ApplicationUser model, ExternalSignInProvider provider, string providerID);
         Task<GoogleJsonWebSignature.Payload> ValidateGoogleAccessTokenAsync(string token);
+        bool CheckIfValidLoginProvider(string provider);
     }
 }

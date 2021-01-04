@@ -4,5 +4,6 @@
     {
         public string AccessToken { get; set; }
         public string Provider { get; set; }
+        public string ProviderID { get; set; }
     }
 }

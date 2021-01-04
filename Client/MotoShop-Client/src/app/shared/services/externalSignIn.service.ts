@@ -1,6 +1,5 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { copyFileSync } from "fs";
 import { GoogleAuthService } from "ng-gapi";
 import { ExternalSignInModel } from "../models/identity/externalSignIn.model";
 import { serverExternalSignInUrl } from "../server-urls";
@@ -10,7 +9,7 @@ import { serverExternalSignInUrl } from "../server-urls";
 export class ExternalSignInService {
     constructor(private service: GoogleAuthService, private client: HttpClient) { }
 
-    signIn(): void {
+    googleSignIn(): void {
         this.service.getAuth().subscribe(res => {
             res.signIn().then(user => this.externalSignInCallback(user))
         });
@@ -21,7 +20,8 @@ export class ExternalSignInService {
         let model: ExternalSignInModel =
         {
             AccessToken: user.getAuthResponse().id_token,
-            Provider: "Google"
+            Provider: "Google",
+            ProviderID: "google.com"
         }
 
         console.log(model.AccessToken);

@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
   externalSignIn(provider: string) {
     this.showLoadingSpinner = true;
 
-    this.externalSignInService.signIn();
+    this.externalSignInService.googleSignIn();
   }
 
 }

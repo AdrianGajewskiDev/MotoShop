@@ -10,7 +10,6 @@ using MotoShop.WebAPI.Models.Requests;
 using MotoShop.WebAPI.Token_Providers;
 using Serilog;
 using System;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MotoShop.WebAPI.Controllers
@@ -88,9 +87,7 @@ namespace MotoShop.WebAPI.Controllers
 
             Log.Information($"The { userSignInRequestModel.Data} signed in");
 
-            Claim[] claims = { new Claim("UserID", userID) };
-
-            var token = _jsonWebTokenWriter.GenerateToken(claims, 5);
+            var token = _jsonWebTokenWriter.GenerateToken("UserID", userID, 5);
 
             return Ok(new { token = token });
         }
@@ -99,9 +96,44 @@ namespace MotoShop.WebAPI.Controllers
         [HttpPost("externalSignIn")]
         public async Task<IActionResult> ExternalSignIn([FromBody] ExternalSignInRequestModel model)
         {
+            if (!_externalLoginProviderService.CheckIfValidLoginProvider(model.Provider))
+                return BadRequest("Invalid or unsupported External login provider");
+
+
+            ExternalSignInProvider provider = Enum.Parse<ExternalSignInProvider>(model.Provider);
+
             var result = await _externalLoginProviderService.ValidateGoogleAccessTokenAsync(model.AccessToken);
 
-            return Ok();
+            var user = await _applicationUserService.GetUserByEmail(result.Email);
+
+            if(user != null)
+            {
+                var token = _jsonWebTokenWriter.GenerateToken("UserID", user.Id, 5);
+
+                return Ok(new { token = token });
+            }
+
+            user = new ApplicationUser
+            {
+                Email = result.Email,
+                ImageUrl = result.Picture,
+                LastName = result.FamilyName,
+                Name = result.GivenName,
+                EmailConfirmed = result.EmailVerified,
+                UserName = string.Concat(result.GivenName, result.FamilyName, provider)
+            };
+
+            var succeeded = await _externalLoginProviderService.Create(user, provider, model.ProviderID);
+
+            if(succeeded)
+            {
+                var token = _jsonWebTokenWriter.GenerateToken("UserID", user.Id, 5);
+
+                return Ok(new { token = token });
+            }
+
+            return BadRequest("Something went wrong while trying to complete the task. Try again.");
+
         }
 
     }

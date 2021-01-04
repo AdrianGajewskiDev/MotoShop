@@ -4,6 +4,7 @@ using MotoShop.Data.Database_Context;
 using MotoShop.Data.Models.User;
 using MotoShop.Services.HelperModels;
 using MotoShop.Services.Services;
+using System;
 using System.Threading.Tasks;
 using static Google.Apis.Auth.GoogleJsonWebSignature;
 
@@ -12,20 +13,37 @@ namespace MotoShop.Services.Implementation
     public class ExternalLoginProviderService : IExternalLoginProviderService
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ApplicationDatabaseContext _dbContext;
         private readonly GoogleAuthOptions _googleAuthOptions;
 
-        public ExternalLoginProviderService(UserManager<ApplicationUser> userManager, 
-            ApplicationDatabaseContext dbContext, IOptions<GoogleAuthOptions> options)
+        public ExternalLoginProviderService(UserManager<ApplicationUser> userManager, ApplicationDatabaseContext dbContext, 
+            IOptions<GoogleAuthOptions> options, IApplicationUserService applicationUserService)
         {
             _userManager = userManager;
-            _dbContext = dbContext;
             _googleAuthOptions = options.Value;
         }
 
-        public Task<bool> Create(ApplicationUser model, ExternalSignInProvider provider, string providerID)
+        public bool CheckIfValidLoginProvider(string provider)
         {
-            return Task.FromResult(false);
+            var providers = EnumUtil.GetValues<ExternalSignInProvider>();
+
+            return provider.Contains(provider);
+        }
+
+        public async Task<bool> Create(ApplicationUser model, ExternalSignInProvider provider, string providerID)
+        {
+            var result = await _userManager.CreateAsync(model);
+
+            if(result.Succeeded)
+            {
+                var providerStr = provider.ToString();
+                UserLoginInfo loginInfo = new UserLoginInfo(providerStr, providerID, providerStr);
+                var success = await _userManager.AddLoginAsync(model, loginInfo);
+
+                if (success.Succeeded)
+                    return true;
+            }
+
+            return false;
         }
 
         public async Task<Payload> ValidateGoogleAccessTokenAsync(string token)
@@ -37,5 +55,6 @@ namespace MotoShop.Services.Implementation
 
             return await ValidateAsync(token, settings);
         }
+
     }
 }
