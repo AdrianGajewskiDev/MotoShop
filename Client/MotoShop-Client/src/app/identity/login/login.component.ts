@@ -1,3 +1,4 @@
+import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -43,8 +44,6 @@ export class LoginComponent implements OnInit {
     this.showLoadingSpinner = true;
     let model = this.mapper.map<SignInModel>(new SignInModel(), this.loginForm);
 
-    console.log("here");
-
     this.identityService.signIn(model).subscribe(
       (res: any) => {
         this.showLoadingSpinner = false;
@@ -70,7 +69,6 @@ export class LoginComponent implements OnInit {
 
   externalSignIn(provider: string) {
     this.showLoadingSpinner = true;
-
     this.externalSignInService.googleSignIn();
   }
 

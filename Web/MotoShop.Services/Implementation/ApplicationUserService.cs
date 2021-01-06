@@ -177,7 +177,6 @@ namespace MotoShop.Services.Implementation
         public int UserExists(ApplicationUser user)
         {
             int result = 0;
-
             if (_dbContext.Users.Where(x => x.Email == user.Email).Count() > 0)
                 result = 1;
 

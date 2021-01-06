@@ -99,7 +99,6 @@ namespace MotoShop.WebAPI.Controllers
             if (!_externalLoginProviderService.CheckIfValidLoginProvider(model.Provider))
                 return BadRequest("Invalid or unsupported External login provider");
 
-
             ExternalSignInProvider provider = Enum.Parse<ExternalSignInProvider>(model.Provider);
 
             var result = await _externalLoginProviderService.ValidateGoogleAccessTokenAsync(model.AccessToken);
@@ -125,7 +124,7 @@ namespace MotoShop.WebAPI.Controllers
 
             var succeeded = await _externalLoginProviderService.Create(user, provider, model.ProviderID);
 
-            if(succeeded)
+            if (succeeded)
             {
                 var token = _jsonWebTokenWriter.GenerateToken("UserID", user.Id, 5);
 
@@ -133,7 +132,6 @@ namespace MotoShop.WebAPI.Controllers
             }
 
             return BadRequest("Something went wrong while trying to complete the task. Try again.");
-
         }
 
     }
