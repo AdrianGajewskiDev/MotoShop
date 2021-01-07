@@ -24,9 +24,7 @@ namespace MotoShop.Services.Implementation
 
         public bool CheckIfValidLoginProvider(string provider)
         {
-            var providers = EnumUtil.GetValues<ExternalSignInProvider>();
-
-            return provider.Contains(provider);
+            return Enum.TryParse(typeof(ExternalSignInProvider), provider, true, out var enumProvider);
         }
 
         public async Task<bool> Create(ApplicationUser model, ExternalSignInProvider provider, string providerID)
