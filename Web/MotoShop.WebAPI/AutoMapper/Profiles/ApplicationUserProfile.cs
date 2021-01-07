@@ -7,7 +7,6 @@ namespace MotoShop.WebAPI.AutoMapper.Profiles
 {
     public class ApplicationUserProfile : Profile
     {
-
         public ApplicationUserProfile()
         {
             this.CreateMap<ApplicationUser, UserAccountDetailsResponseModel>();

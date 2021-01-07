@@ -5,5 +5,6 @@ export class UserProfileDataModel {
     Name: string;
     LastName: string;
     EmailConfirmed: boolean;
-    ImageUrl:string;
+    ImageUrl: string;
+    IsExternal: boolean;
 }

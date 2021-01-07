@@ -52,7 +52,10 @@ export class UserProfileComponent implements OnInit {
         this.userData = res.ResponseContent;
         this.showLoadingSpinner = false;
         this.showImageLoadingSpinner = false;
-        this.imageUrl = this.userData.ImageUrl;
+        if (this.userData.IsExternal)
+          this.imageUrl = this.userData.ImageUrl;
+        else
+          this.imageUrl = buildProfileImagePath(this.userData.ImageUrl);
       },
       (error) => {
 

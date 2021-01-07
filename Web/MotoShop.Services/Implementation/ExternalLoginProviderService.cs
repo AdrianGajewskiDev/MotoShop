@@ -31,6 +31,7 @@ namespace MotoShop.Services.Implementation
 
         public async Task<bool> Create(ApplicationUser model, ExternalSignInProvider provider, string providerID)
         {
+            model.IsExternal = true;
             var result = await _userManager.CreateAsync(model);
 
             if(result.Succeeded)

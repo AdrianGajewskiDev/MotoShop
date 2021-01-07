@@ -16,7 +16,7 @@
             <h1>{{userData.Name}} {{userData.LastName}}</h1>
             <h2>{{userData.UserName}}</h2>
             <p>{{userData.Email}}</p>
-            <p class="error-msg" *ngIf="userData.EmailConfirmed == false | async"> You hasn't confimed your email yet.
+            <p class="error-msg" *ngIf="userData.EmailConfirmed == false"> You hasn't confimed your email yet.
             </p>
             <mat-tab-group class="sections-switcher" mat-align-tabs="start">
                 <mat-tab label="Account">

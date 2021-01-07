@@ -133,7 +133,5 @@ namespace MotoShop.WebAPI.Controllers
 
             return BadRequest("Something went wrong while trying to complete the task. Try again.");
         }
-
     }
-
 }

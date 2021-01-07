@@ -44,6 +44,7 @@ namespace MotoShop.Services.Implementation
                 throw new ArgumentNullException(nameof(user));
             }
 
+            user.IsExternal = false;
             var result = await _userManager.CreateAsync(user, password);
 
             if (result.Succeeded)
