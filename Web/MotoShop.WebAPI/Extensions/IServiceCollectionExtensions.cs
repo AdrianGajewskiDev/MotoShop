@@ -56,12 +56,13 @@ namespace MotoShop.WebAPI.Extensions
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            //Scoped
-            services.AddScoped<IApplicationUserService, ApplicationUserService>();
-            services.AddScoped<IAdvertisementService, AdvertisementService>();
-            services.AddScoped<IShopItemsService, ShopItemsService>();
-            services.AddScoped<IExternalLoginProviderService, ExternalLoginProviderService>();
-            services.AddScoped<DatabaseSeeder>();
+            //Transient
+            services.AddTransient<IApplicationUserService, ApplicationUserService>();
+            services.AddTransient<IAdvertisementService, AdvertisementService>();
+            services.AddTransient<IShopItemsService, ShopItemsService>();
+            services.AddTransient<IExternalLoginProviderService, ExternalLoginProviderService>();
+            services.AddTransient<DatabaseSeeder>();
+            services.AddTransient<IAdministrationService, AdministrationService>();
 
             //Singletons
             services.AddSingleton<JsonWebTokenWriter>();
