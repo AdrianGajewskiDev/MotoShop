@@ -61,5 +61,7 @@ namespace MotoShop.Services.Implementation
         {
             return GetAllUsers().Select(selectExpression);
         }
+
+        public async Task<bool> IsInRole(ApplicationUser user, string role) => await _userManager.IsInRoleAsync(user, role);
     }
 }

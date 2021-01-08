@@ -8,11 +8,12 @@ namespace MotoShop.Services.Services
     public interface IApplicationUserService
     {
         int UserExists(ApplicationUser user);
+        Task<bool> UserExists(string email, string username);
         Task<ApplicationUser> GetUserByID(string id);
         Task<ApplicationUser> GetUserByEmail(string email);
         Task<ApplicationUser> GetUserByUserName(string username);
         Task<UpdateResult> UpdateUserDataAsync(string userID, ApplicationUser model);
-        Task<bool> RegisterNewUserAsync(ApplicationUser user, string password);
+        Task<ApplicationUser> RegisterNewUserAsync(ApplicationUser user, string password);
         Task<bool> UpdateEmailAsync(ApplicationUser user, string token, string newEmail);
         Task<bool> SendAccountConfirmationMessageAsync(ApplicationUser user);
         Task<bool> SendPasswordChangingConfirmationMessageAsync(ApplicationUser user, string newPassword);

@@ -37,7 +37,7 @@ namespace MotoShop.Services.Implementation
         public async Task<ApplicationUser> GetUserByEmail(string email) => await _userManager.FindByEmailAsync(email);
         public async Task<ApplicationUser> GetUserByID(string id) => await _userManager.FindByIdAsync(id);
         public async Task<ApplicationUser> GetUserByUserName(string username) => await _userManager.FindByNameAsync(username);
-        public async Task<bool> RegisterNewUserAsync(ApplicationUser user, string password)
+        public async Task<ApplicationUser> RegisterNewUserAsync(ApplicationUser user, string password)
         {
             if (user == null)
             {
@@ -50,10 +50,10 @@ namespace MotoShop.Services.Implementation
             if (result.Succeeded)
             {
                 await _dbContext.SaveChangesAsync();
-                return true;
+                return user;
             }
 
-            return false;
+            return null;
         }
         public async Task<string> SignInAsync(string data, string password, UserSignInVariant variant)
         {
@@ -291,6 +291,13 @@ namespace MotoShop.Services.Implementation
                 return true;
 
             return false;
+        }
+
+        public async Task<bool> UserExists(string email, string username)
+        {
+            var user = await GetUserByEmail(email);
+
+            return user != null;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using MotoShop.Data.Helpers;
@@ -21,14 +22,15 @@ namespace MotoShop.WebAPI.Controllers
         private readonly IExternalLoginProviderService _externalLoginProviderService;
         private readonly IApplicationUserService _applicationUserService;
         private readonly JsonWebTokenWriter _jsonWebTokenWriter;
+        private readonly IMapper _mapper;
 
-        public IdentityController(IExternalLoginProviderService externalLoginProviderService,
-            IApplicationUserService applicationUserService,
-            JsonWebTokenWriter jsonWebTokenWriter)
+        public IdentityController(IExternalLoginProviderService externalLoginProviderService, IApplicationUserService applicationUserService, 
+            JsonWebTokenWriter jsonWebTokenWriter, IMapper mapper)
         {
             _externalLoginProviderService = externalLoginProviderService;
             _applicationUserService = applicationUserService;
             _jsonWebTokenWriter = jsonWebTokenWriter;
+            _mapper = mapper;
         }
 
         [AllowAnonymous]
@@ -38,13 +40,7 @@ namespace MotoShop.WebAPI.Controllers
             if (userRegisterRequestModel == null)
                 return BadRequest(new { message = $"{nameof(userRegisterRequestModel)} was null" });
 
-            var user = new ApplicationUser
-            {
-                Email = userRegisterRequestModel.Email,
-                LastName = userRegisterRequestModel.LastName,
-                Name = userRegisterRequestModel.Name,
-                UserName = userRegisterRequestModel.UserName
-            };
+            var user = _mapper.Map<ApplicationUser>(userRegisterRequestModel);
 
             var check = _applicationUserService.UserExists(user);
 
@@ -58,7 +54,7 @@ namespace MotoShop.WebAPI.Controllers
 
             var result = await _applicationUserService.RegisterNewUserAsync(user, userRegisterRequestModel.Password);
 
-            if (result == true)
+            if (result != null)
             {
                 await _applicationUserService.SendAccountConfirmationMessageAsync(await _applicationUserService.GetUserByUserName(user.UserName));
                 Log.Information($"Registered new user with id of { user.Id}");

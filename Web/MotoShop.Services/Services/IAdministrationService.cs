@@ -15,5 +15,6 @@ namespace MotoShop.Services.Services
 
         Task<bool> AddRoleToUser(ApplicationUser user, IdentityRole role);
         Task<bool> AddRoleToUser(ApplicationUser user, string role);
+        Task<bool> IsInRole(ApplicationUser user, string role);
     }
 }
