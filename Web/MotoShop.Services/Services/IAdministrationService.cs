@@ -10,6 +10,7 @@ namespace MotoShop.Services.Services
     {
         IEnumerable<ApplicationUser> GetAllUsers();
         IEnumerable<TResult> GetUsersData<TResult>(Func<ApplicationUser, TResult> selectExpression);
+        IEnumerable<TResult> GetUsersData<TResult>(string data);
         Task<IdentityResult> CreateAdminAsync(ApplicationUser user);
         Task<IdentityResult> DeleteAdmin(ApplicationUser user);
 

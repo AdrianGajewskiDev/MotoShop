@@ -5,6 +5,7 @@ using MotoShop.Data.Models.User;
 using MotoShop.Services.HelperModels;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Models.Request;
+using MotoShop.WebAPI.Models.Response.Administration;
 using System.Threading.Tasks;
 
 namespace MotoShop.WebAPI.Controllers
@@ -25,7 +26,7 @@ namespace MotoShop.WebAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize("AdministratorPolicy")]
+        [Authorize(Roles = ApplicationRoles.Administrator)]
         public async Task<IActionResult> CreateAdmin(UserRegisterRequestModel model)
         {
             if((await _applicationUserService.UserExists(model.Email, model.UserName)))
@@ -53,13 +54,34 @@ namespace MotoShop.WebAPI.Controllers
             return BadRequest("Something went wrong while trying to complete the action. Try again");
         }
 
-        [HttpGet]
+        [HttpGet("{filter?}")]
         [Authorize(Roles = ApplicationRoles.Administrator)]
-        public IActionResult Test()
+        public IActionResult GetAllUsers(string filter = null)
         {
-            return Ok();
+            if(filter == null)
+            {
+                var users = _service.GetAllUsers();
+
+                if (users == null)
+                    return NotFound("Cannot find any available users");
+
+                var model = new GetAllUsersResponseModel<ApplicationUser>
+                {
+                    Users = users
+                };
+
+                return Ok(new { data = model });
+            }
+
+            var usersData = _service.GetUsersData<string>(filter);
+
+            var dataModel = new GetAllUsersResponseModel<string>
+            {
+                Users = usersData
+            };
+
+            return Ok(new { data = dataModel });
+
         }
-
-
     }
 }

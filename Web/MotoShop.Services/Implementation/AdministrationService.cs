@@ -7,6 +7,7 @@ using MotoShop.Services.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace MotoShop.Services.Implementation
@@ -62,6 +63,32 @@ namespace MotoShop.Services.Implementation
             return GetAllUsers().Select(selectExpression);
         }
 
+        public IEnumerable<TResult> GetUsersData<TResult>(string data)
+        {
+            Type requiredType = typeof(TResult);
+            PropertyInfo property = typeof(ApplicationUser).GetProperties().FirstOrDefault(x => x.PropertyType == requiredType
+            && x.Name == data);
+
+            var users = GetAllUsers();
+
+            List<TResult> results = new List<TResult>();
+
+            foreach (var user in users)
+            {
+                var prop = user.GetType().GetProperty(data);
+
+                if(prop == null)
+                    continue;
+
+                var validData = prop.GetValue(user, null);
+
+                if (validData != null)
+                    results.Add((TResult)validData);
+            }
+
+            return results;
+
+        }
         public async Task<bool> IsInRole(ApplicationUser user, string role) => await _userManager.IsInRoleAsync(user, role);
     }
 }
