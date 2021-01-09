@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MotoShop.Data.Models.User;
 using MotoShop.Services.HelperModels;
 using MotoShop.Services.Services;
+using MotoShop.WebAPI.Helpers;
 using MotoShop.WebAPI.Models.Request;
 using MotoShop.WebAPI.Models.Response.Administration;
 using System.Threading.Tasks;
@@ -34,12 +35,12 @@ namespace MotoShop.WebAPI.Controllers
                 ApplicationUser user = await _applicationUserService.GetUserByEmail(model.Email);
 
                 if (await _service.IsInRole(user, ApplicationRoles.Administrator))
-                    return BadRequest("User already is a administrator");
+                    return BadRequest(StaticMessages.AlreadyIs(ApplicationRoles.Administrator));
 
                 if (await _service.AddRoleToUser(user, ApplicationRoles.Administrator))
-                    return Ok("Administrator successfully created");
+                    return Ok(StaticMessages.Created(ApplicationRoles.Administrator));
 
-                return BadRequest("Something went wrong while trying to complete the action. Try again");
+                return BadRequest(StaticMessages.SomethingWentWrong);
             }
 
             var newUser = await _applicationUserService.RegisterNewUserAsync(_mapper.Map<ApplicationUser>(model), model.Password);
@@ -48,10 +49,10 @@ namespace MotoShop.WebAPI.Controllers
             {
                 await _service.CreateAdminAsync(newUser);
 
-                return Ok("Administrator successfully created");
+                return Ok(StaticMessages.Created(ApplicationRoles.Administrator));
             }
 
-            return BadRequest("Something went wrong while trying to complete the action. Try again");
+            return BadRequest(StaticMessages.SomethingWentWrong);
         }
 
         [HttpGet("{filter?}")]
@@ -63,7 +64,7 @@ namespace MotoShop.WebAPI.Controllers
                 var users = _service.GetAllUsers();
 
                 if (users == null)
-                    return NotFound("Cannot find any available users");
+                    return NotFound(StaticMessages.NotFound("Users"));
 
                 var model = new GetAllUsersResponseModel<ApplicationUser>
                 {

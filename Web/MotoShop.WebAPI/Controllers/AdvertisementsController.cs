@@ -33,7 +33,7 @@ namespace MotoShop.WebAPI.Controllers
             IEnumerable<Advertisement> advertisements = _advertisementService.GetAll();
 
             if (advertisements == null)
-                return NotFound("Cannot find any available advertisements");
+                return NotFound(StaticMessages.NotFound("advertisements"));
 
             var model = new AllAdvertisementsResponseModel
             {
@@ -69,7 +69,7 @@ namespace MotoShop.WebAPI.Controllers
             };
 
             if (newAdvertisementRequestModel.Car == null && newAdvertisementRequestModel.Motocycle == null)
-                return BadRequest("Advertisement item was null");
+                return BadRequest(StaticMessages.WasNull("Advertisement item"));
 
 
             if (newAdvertisementRequestModel.Car != null)
@@ -82,7 +82,7 @@ namespace MotoShop.WebAPI.Controllers
             if (await _advertisementService.AddAdvertisementAsync(advertisement))
                 return Ok();
 
-            return BadRequest("Something bad has happened while trying to add new advertisement");
+            return BadRequest(StaticMessages.SomethingWentWrong);
         }
     }
 }

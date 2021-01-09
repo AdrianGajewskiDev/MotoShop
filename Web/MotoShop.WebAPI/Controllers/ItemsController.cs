@@ -4,6 +4,7 @@ using MotoShop.Data.Models.Constants;
 using MotoShop.Data.Models.Store;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Attributes;
+using MotoShop.WebAPI.Helpers;
 using MotoShop.WebAPI.Models.Response;
 using MotoShop.WebAPI.Models.Response.ItemsController;
 using System;
@@ -30,7 +31,7 @@ namespace MotoShop.WebAPI.Controllers
             ShopItem item = _shopItemsService.GetItemByID(id, Enum.Parse<ItemType>(itemType));
 
             if (item == null)
-                return NotFound($"Item with id of { id } was not found");
+                return NotFound(StaticMessages.NotFound("Item", "id", id));
 
             ItemDetailsResponseModel model = null;
 
@@ -52,7 +53,7 @@ namespace MotoShop.WebAPI.Controllers
             var respone = new ApiResponse<string>
             {
                 HttpStatusCode = System.Net.HttpStatusCode.InternalServerError,
-                ResponseContent = "Something went wrong while proceding the request"
+                ResponseContent = StaticMessages.SomethingWentWrong
             };
 
             return BadRequest(respone);

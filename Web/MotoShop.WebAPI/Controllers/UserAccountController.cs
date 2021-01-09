@@ -40,7 +40,7 @@ namespace MotoShop.WebAPI.Controllers
             string userID = User.FindFirst(c => c.Type == "UserID").Value;
 
             if (string.IsNullOrEmpty(userID))
-                return NotFound($"Cannot find user with id of { userID}");
+                return NotFound(StaticMessages.NotFound("User", "id", userID));
 
             var user = await _userService.GetUserByID(userID);
 
@@ -60,7 +60,7 @@ namespace MotoShop.WebAPI.Controllers
         public async Task<IActionResult> UpdateUserData(UpdateUserDataRequestModel model)
         {
             if (model == null)
-                return BadRequest(new { message = "Request model was null" });
+                return BadRequest(new { message = StaticMessages.WasNull(nameof(model))});
 
             string userID = User.FindFirst(c => c.Type == "UserID").Value;
             ApplicationUser applicationUser = _mapper.Map<ApplicationUser>(model);
@@ -73,10 +73,10 @@ namespace MotoShop.WebAPI.Controllers
                 {
                     string dataType = (result.ErrorIdentificator == 1) ? "Email" : "Username";
 
-                    return BadRequest(new { message = $"{dataType} is already taken" });
+                    return BadRequest(new { message = StaticMessages.Taken(dataType)});
                 }
 
-                return BadRequest(new { message = "Something went wrong while trying to update user profile" });
+                return BadRequest(new { message = StaticMessages.SomethingWentWrong });
             }
 
             return Ok();
@@ -88,7 +88,7 @@ namespace MotoShop.WebAPI.Controllers
         public async Task<IActionResult> ChangePassword(NewPasswordRequestModel model)
         {
             if (model == null)
-                return BadRequest(new { message = $"{nameof(model)} was null"});
+                return BadRequest(new { message = StaticMessages.WasNull(nameof(model))});
 
             ApplicationUser user = await _userService.GetUserByID(User.FindFirst(x => x.Type == "UserID").Value);
 
@@ -97,7 +97,7 @@ namespace MotoShop.WebAPI.Controllers
             if(result == true)
                 return Ok();
 
-            return BadRequest(new { message = $"Something went wrong while trying to send verification email" });
+            return BadRequest(new { message = StaticMessages.SomethingWentWrong });
         }
 
         [HttpPost("resetPassword")]
@@ -109,7 +109,7 @@ namespace MotoShop.WebAPI.Controllers
             ApplicationUser user = await _userService.GetUserByEmail(model.Email);
 
             if (user == null)
-                return NotFound(new { message = $"User with email of {model.Email} does not exist!!" });
+                return NotFound(new { message = StaticMessages.NotExist("User", "Email", model.Email)});
 
 
             var result = await _userService.SendPasswordChangingConfirmationMessageAsync(user, model.NewPassword);
@@ -117,7 +117,7 @@ namespace MotoShop.WebAPI.Controllers
             if (result == true)
                 return Ok();
 
-            return BadRequest(new { message = $"Something went wrong while trying to send verification email" });
+            return BadRequest(new { message = StaticMessages.SomethingWentWrong });
         }
 
         [HttpGet("verificationCallback")]
@@ -158,7 +158,7 @@ namespace MotoShop.WebAPI.Controllers
                 return Ok(new { message =  message});
             }
 
-            return BadRequest(new { message = $"Something went wrong while trying to update the {dataType}" });
+            return BadRequest(new { message = StaticMessages.FailedToUpdate(dataType)});
         }
     }
 }

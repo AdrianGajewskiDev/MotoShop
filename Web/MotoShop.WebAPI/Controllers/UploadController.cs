@@ -6,6 +6,7 @@ using MotoShop.Services.HelperModels;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Attributes;
 using MotoShop.WebAPI.Extensions;
+using MotoShop.WebAPI.Helpers;
 using System.Threading.Tasks;
 
 namespace MotoShop.WebAPI.Controllers
@@ -41,7 +42,7 @@ namespace MotoShop.WebAPI.Controllers
                 return Ok(new { path = result.Path });
             }
 
-            return BadRequest("Something went wrong while trying to upload an image");
+            return BadRequest(StaticMessages.SomethingWentWrong);
 
         }
     }

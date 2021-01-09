@@ -6,6 +6,7 @@ using MotoShop.Data.Helpers;
 using MotoShop.Data.Models.User;
 using MotoShop.Services.HelperModels;
 using MotoShop.Services.Services;
+using MotoShop.WebAPI.Helpers;
 using MotoShop.WebAPI.Models.Request;
 using MotoShop.WebAPI.Models.Requests;
 using MotoShop.WebAPI.Token_Providers;
@@ -39,7 +40,7 @@ namespace MotoShop.WebAPI.Controllers
         public async Task<IActionResult> RegisterNewUser([FromBody] UserRegisterRequestModel userRegisterRequestModel)
         {
             if (userRegisterRequestModel == null)
-                return BadRequest(new { message = $"{nameof(userRegisterRequestModel)} was null" });
+                return BadRequest(new { message = StaticMessages.WasNull(nameof(userRegisterRequestModel)) });
 
             var user = _mapper.Map<ApplicationUser>(userRegisterRequestModel);
 
@@ -48,9 +49,9 @@ namespace MotoShop.WebAPI.Controllers
             if (check > 0)
             {
                 if (check == 1)
-                    return BadRequest(new { message = "Email is already taken" });
+                    return BadRequest(new { message = StaticMessages.Taken("Email") });
                 else
-                    return BadRequest(new { message = "Username is already taken" });
+                    return BadRequest(new { message = StaticMessages.Taken("Username") });
             }
 
             var result = await _applicationUserService.RegisterNewUserAsync(user, userRegisterRequestModel.Password);
@@ -59,10 +60,10 @@ namespace MotoShop.WebAPI.Controllers
             {
                 await _applicationUserService.SendAccountConfirmationMessageAsync(await _applicationUserService.GetUserByUserName(user.UserName));
                 Log.Information($"Registered new user with id of { user.Id}");
-                return Ok(new { message = "User created successfully" });
+                return Ok(new { message = StaticMessages.Created("User")});
             }
 
-            return BadRequest(new { message = "Something bad has happened while trying to register new user" });
+            return BadRequest(new { message = StaticMessages.SomethingWentWrong });
         }
 
         [AllowAnonymous]
@@ -70,7 +71,7 @@ namespace MotoShop.WebAPI.Controllers
         public async Task<IActionResult> SignIn([FromBody] UserSignInRequestModel userSignInRequestModel)
         {
             if (userSignInRequestModel == null)
-                return BadRequest(new { message = $"{nameof(userSignInRequestModel)} was null" });
+                return BadRequest(new { message = StaticMessages.WasNull(nameof(userSignInRequestModel)) });
 
             UserSignInVariant userLogInVariant = userSignInRequestModel.Data.Contains("@") ? UserSignInVariant.Email : UserSignInVariant.UserName;
 
@@ -79,7 +80,7 @@ namespace MotoShop.WebAPI.Controllers
             if (string.IsNullOrEmpty(userID))
             {
                 string prefix = userLogInVariant == UserSignInVariant.Email ? "email" : "username";
-                return NotFound(new { message = $"Invalid {prefix} or password " });
+                return NotFound(new { message = StaticMessages.InvalidSignInData(prefix) });
             }
 
             Log.Information($"The { userSignInRequestModel.Data} signed in");
@@ -95,7 +96,7 @@ namespace MotoShop.WebAPI.Controllers
         public async Task<IActionResult> ExternalSignIn([FromBody] ExternalSignInRequestModel model)
         {
             if (!_externalLoginProviderService.CheckIfValidLoginProvider(model.Provider))
-                return BadRequest("Invalid or unsupported External login provider");
+                return BadRequest(StaticMessages.InvalidLoginProvider);
 
             ExternalSignInProvider provider = Enum.Parse<ExternalSignInProvider>(model.Provider);
 
@@ -130,7 +131,7 @@ namespace MotoShop.WebAPI.Controllers
                 return Ok(new { token = token });
             }
 
-            return BadRequest("Something went wrong while trying to complete the task. Try again.");
+            return BadRequest(StaticMessages.SomethingWentWrong);
         }
     }
 }
