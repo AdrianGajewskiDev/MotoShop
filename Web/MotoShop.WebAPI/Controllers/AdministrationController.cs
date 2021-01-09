@@ -25,7 +25,7 @@ namespace MotoShop.WebAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = ApplicationRoles.Administrator)]
+        [Authorize("AdministratorPolicy")]
         public async Task<IActionResult> CreateAdmin(UserRegisterRequestModel model)
         {
             if((await _applicationUserService.UserExists(model.Email, model.UserName)))
@@ -52,5 +52,14 @@ namespace MotoShop.WebAPI.Controllers
 
             return BadRequest("Something went wrong while trying to complete the action. Try again");
         }
+
+        [HttpGet]
+        [Authorize(Roles = ApplicationRoles.Administrator)]
+        public IActionResult Test()
+        {
+            return Ok();
+        }
+
+
     }
 }

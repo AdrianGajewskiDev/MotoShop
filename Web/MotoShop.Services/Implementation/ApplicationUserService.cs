@@ -25,7 +25,8 @@ namespace MotoShop.Services.Implementation
         private readonly IEmailSenderService _emailSenderService;
         private readonly IImageUploadService _imageUploadService;
 
-        public ApplicationUserService(ApplicationDatabaseContext dbContext, UserManager<ApplicationUser> userManager, IConfiguration configuration, IEmailSenderService emailSenderService, IImageUploadService imageUploadService)
+        public ApplicationUserService(ApplicationDatabaseContext dbContext, UserManager<ApplicationUser> userManager,
+                                        IConfiguration configuration, IEmailSenderService emailSenderService, IImageUploadService imageUploadService)
         {
             _dbContext = dbContext;
             _userManager = userManager;
@@ -298,6 +299,11 @@ namespace MotoShop.Services.Implementation
             var user = await GetUserByEmail(email);
 
             return user != null;
+        }
+
+        public async Task<bool> IsAdmin(string userID)
+        {
+            return await _userManager.IsInRoleAsync(await GetUserByID(userID), ApplicationRoles.Administrator);
         }
     }
 }

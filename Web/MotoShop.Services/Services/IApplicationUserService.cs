@@ -24,5 +24,7 @@ namespace MotoShop.Services.Services
         string GenerateConfirmationLink(string token, string userID, string newData, UpdateDataType updateDataType);
         string EncodeToken(string token);
         string DecodeToken(string token);
+
+        Task<bool> IsAdmin(string userID);
     }
 }

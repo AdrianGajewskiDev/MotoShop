@@ -9,6 +9,7 @@ using MotoShop.Services.HelperModels;
 using MotoShop.Services.Implementation;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Attributes.Base;
+using MotoShop.WebAPI.Authorization;
 using MotoShop.WebAPI.AutoMapper.Profiles;
 using MotoShop.WebAPI.Configurations;
 using MotoShop.WebAPI.Helpers;
@@ -20,7 +21,7 @@ namespace MotoShop.WebAPI.Extensions
 {
     public static class IServiceCollectionExtensions
     {
-        public static IServiceCollection AddAuthentication(this IServiceCollection services, Microsoft.Extensions.Configuration.IConfiguration configuration)
+        public static IServiceCollection AddAuthenticationExtension(this IServiceCollection services, Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             var jwtKey = Encoding.UTF8.GetBytes(configuration["JWT:Key"]);
 
@@ -49,7 +50,22 @@ namespace MotoShop.WebAPI.Extensions
                 options.SaveToken = false;
                 options.TokenValidationParameters = tokentValidationParams;
             });
-         
+            
+
+            return services;
+        }
+
+        public static IServiceCollection AddAuthorizationExtension(this IServiceCollection services)
+        {
+            services.AddAuthorization(conf => 
+            {
+                conf.AddPolicy("AdministratorPolicy", configurePolicy => 
+                {
+                    configurePolicy.RequireAuthenticatedUser();
+                    configurePolicy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                    configurePolicy.Requirements.Add(new AdministratorAuthorizationRequirement());
+                });
+            });
 
             return services;
         }

@@ -38,5 +38,15 @@ namespace MotoShop.WebAPI.Token_Providers
 
             return token;
         }
+
+        public Claim[] AddStandardClaims(string userID, string role)
+        {
+            return new Claim[]
+            {
+                new Claim("UserID", userID),
+                new Claim(ClaimTypes.Role, role)
+            };
+
+        }
     }
 }

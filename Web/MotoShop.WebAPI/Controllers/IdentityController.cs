@@ -11,6 +11,7 @@ using MotoShop.WebAPI.Models.Requests;
 using MotoShop.WebAPI.Token_Providers;
 using Serilog;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MotoShop.WebAPI.Controllers
@@ -83,7 +84,8 @@ namespace MotoShop.WebAPI.Controllers
 
             Log.Information($"The { userSignInRequestModel.Data} signed in");
 
-            var token = _jsonWebTokenWriter.GenerateToken("UserID", userID, 5);
+            var role = await _applicationUserService.IsAdmin(userID) ? ApplicationRoles.Administrator : ApplicationRoles.NormalUser;
+            var token = _jsonWebTokenWriter.GenerateToken(_jsonWebTokenWriter.AddStandardClaims(userID, role), 5);
 
             return Ok(new { token = token });
         }
@@ -122,7 +124,8 @@ namespace MotoShop.WebAPI.Controllers
 
             if (succeeded)
             {
-                var token = _jsonWebTokenWriter.GenerateToken("UserID", user.Id, 5);
+                var role = await _applicationUserService.IsAdmin(user.Id) ? ApplicationRoles.Administrator : ApplicationRoles.NormalUser;
+                var token = _jsonWebTokenWriter.GenerateToken(_jsonWebTokenWriter.AddStandardClaims(user.Id, role), 5);
 
                 return Ok(new { token = token });
             }

@@ -39,9 +39,10 @@ namespace MotoShop.Web
                 .AddEntityFrameworkStores<ApplicationDatabaseContext>()
                 .AddDefaultTokenProviders();
 
-            IServiceCollectionExtensions.AddAuthentication(services, Configuration);
+            services.AddAuthenticationExtension(Configuration);
             services.AddAutoMapper(typeof(Startup))
                 .SetUpAutoMapper();
+
 
             services.Configure<GoogleAuthOptions>(Configuration.GetSection("GoogleAuthentication"));
 
