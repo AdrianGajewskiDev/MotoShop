@@ -18,6 +18,10 @@
             <p>{{userData.Email}}</p>
             <p class="error-msg" *ngIf="userData.EmailConfirmed == false"> You hasn't confimed your email yet.
             </p>
+            <button *ngIf="userService.isAdmin" class="admin-btn" mat-raised-button color="primary"
+                (click)="goToAdminPanel()">Administration
+                Panel</button>
+
             <mat-tab-group class="sections-switcher" mat-align-tabs="start">
                 <mat-tab label="Account">
                     <div class="section" id="account-settings" fxLayout="column" fxLayoutAlign="start start">

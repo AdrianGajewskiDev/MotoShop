@@ -305,5 +305,10 @@ namespace MotoShop.Services.Implementation
         {
             return await _userManager.IsInRoleAsync(await GetUserByID(userID), ApplicationRoles.Administrator);
         }
+
+        public async Task<IEnumerable<string>> GetUserRolesAsync(string userID)
+        {
+            return await _userManager.GetRolesAsync(await GetUserByID(userID));
+        }
     }
 }

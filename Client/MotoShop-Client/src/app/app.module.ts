@@ -28,6 +28,7 @@ import { ForgotPasswordComponent } from './identity/forgot-password/forgot-passw
 import { UploadService } from './shared/services/upload.service';
 import { GoogleAuthenticationModule } from './modules/google.authentication.module';
 import { ExternalSignInService } from './shared/services/externalSignIn.service';
+import { AdministrationPanelComponent } from './administration-panel/administration-panel.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ExternalSignInService } from './shared/services/externalSignIn.service'
     LoadingSpinnerComponent,
     UserProfileComponent,
     ConfirmationComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    AdministrationPanelComponent
   ],
   imports: [
     AngularMaterialModule,

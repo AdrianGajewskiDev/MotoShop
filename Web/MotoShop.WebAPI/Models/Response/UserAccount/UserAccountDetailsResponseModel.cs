@@ -1,4 +1,6 @@
-﻿namespace MotoShop.WebAPI.Models.Response.UserAccount
+﻿using System.Collections.Generic;
+
+namespace MotoShop.WebAPI.Models.Response.UserAccount
 {
     public class UserAccountDetailsResponseModel
     {
@@ -10,5 +12,6 @@
         public bool EmailConfirmed { get; set; }
         public bool IsExternal { get; set; }
         public string ImageUrl { get; set; }
+        public IEnumerable<string> Roles { get; set; }
     }
 }

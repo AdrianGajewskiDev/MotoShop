@@ -12,7 +12,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 import { isEmpty } from '../../shared/Helpers/formGroupHelpers'
 import { buildProfileImagePath } from "../../shared/Helpers/buildProfileImagePath"
 import { UploadService } from 'src/app/shared/services/upload.service';
-import { error } from 'protractor';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -21,11 +21,12 @@ import { error } from 'protractor';
 })
 export class UserProfileComponent implements OnInit {
 
-  constructor(private userService: UserService,
+  constructor(public userService: UserService,
     private fb: FormBuilder,
     private mapper: FormsMapper,
     private toastr: ToastrService,
-    private uploadService: UploadService) { }
+    private uploadService: UploadService,
+    private router: Router) { }
 
   public userData: UserProfileDataModel;
   public showError: boolean = false;
@@ -52,6 +53,7 @@ export class UserProfileComponent implements OnInit {
         this.userData = res.ResponseContent;
         this.showLoadingSpinner = false;
         this.showImageLoadingSpinner = false;
+
         if (this.userData.IsExternal)
           this.imageUrl = this.userData.ImageUrl;
         else
@@ -110,7 +112,6 @@ export class UserProfileComponent implements OnInit {
 
   }
 
-  ///TODO: implement these once the uploading profile picture functionality is working
   changePhoto(): void {
     this.showImageLoadingSpinner = true;
     const inputNode: any = document.querySelector('#file');
@@ -121,6 +122,10 @@ export class UserProfileComponent implements OnInit {
         window.location.reload();
       },
       error => this.toastr.error(error.error.message));
+  }
+
+  goToAdminPanel() {
+    this.router.navigateByUrl("/administrator");
   }
 
 

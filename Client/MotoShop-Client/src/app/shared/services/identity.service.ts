@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http"
 import { serverRegisterNewUserUrl, serverSignInUrl } from "../server-urls";
 import { UserRegisterModel } from '../models/user/userRegister.model';
 import { SignInModel } from '../models/user/signIn.model';
+import { BehaviorSubject } from "rxjs";
 
 @Injectable()
 export class IdentityService {
@@ -10,6 +11,7 @@ export class IdentityService {
 
     private registerUrl = serverRegisterNewUserUrl;
     private signedIn: boolean = localStorage.getItem("token") != null;
+
 
     registerUser(model: UserRegisterModel) {
         return this.httpClient.post<UserRegisterModel>(this.registerUrl, model);
@@ -40,7 +42,10 @@ export class IdentityService {
         return "";
     }
 
+
     public get isSignedIn(): boolean {
         return this.signedIn;
     }
+
+
 }

@@ -51,7 +51,6 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl("/home").then(() => {
           window.location.reload();
         });
-
       },
       (error) => {
         this.showLoadingSpinner = false;

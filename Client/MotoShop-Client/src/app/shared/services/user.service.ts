@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../apiResponse';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { ResetUserPassword } from '../models/user/resetUserPassword';
 import { UpdateUserPasswordModel } from '../models/user/updateUserPassword.model';
 import { UpdateUserProfileDataModel } from '../models/user/updateUserProfileData.model';
@@ -28,5 +29,20 @@ export class UserService {
             return this.httpClient.post(serverUpdateUserPasswordUrl, model);
 
         return this.httpClient.post(serverResetUserPasswordUrl, model)
+    }
+
+    get isAdmin(): boolean {
+        const helper = new JwtHelperService();
+        const token = this.identityService.getToken;
+
+        if (token == null || undefined)
+            return false;
+
+        const role = helper.decodeToken(token).role;
+
+        if (role == "Administrator")
+            return true;
+
+        return false;
     }
 }

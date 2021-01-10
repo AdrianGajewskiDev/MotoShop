@@ -7,4 +7,5 @@ export class UserProfileDataModel {
     EmailConfirmed: boolean;
     ImageUrl: string;
     IsExternal: boolean;
+    Roles: string[];
 }

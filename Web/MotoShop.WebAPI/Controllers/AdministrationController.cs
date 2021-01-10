@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MotoShop.Data.Models.User;
 using MotoShop.Services.HelperModels;
 using MotoShop.Services.Services;
+using MotoShop.WebAPI.Attributes;
 using MotoShop.WebAPI.Helpers;
 using MotoShop.WebAPI.Models.Request;
 using MotoShop.WebAPI.Models.Response.Administration;
@@ -57,6 +58,7 @@ namespace MotoShop.WebAPI.Controllers
 
         [HttpGet("{filter?}")]
         [Authorize(Roles = ApplicationRoles.Administrator)]
+        [Cache(5)]
         public IActionResult GetAllUsers(string filter = null)
         {
             if(filter == null)
