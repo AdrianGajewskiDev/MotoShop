@@ -1,1 +1,30 @@
-<p>administration-panel works!</p>
+<div fxLayoutAlign="center start" class="container">
+    <div [@slideInOut]="animationState" class="form-container administration-panel">
+        <div class="side-menu" fxLayoutAlign="center start">
+            <div class="header">
+                <h1>Moto Shop</h1>
+                <div class="menu" fxLayoutAlign="start start" fxLayout="column">
+                    <div class="menu-item" fxLayoutAlign="start center">
+                        <img src="../../assets/icons/users.png" alt="users icon">
+                        <a>Users</a>
+                    </div>
+                    <div class="menu-item" fxLayoutAlign="start center">
+                        <img src="../../assets/icons/products.png" alt="users icon">
+                        <a>Products</a>
+                    </div>
+                    <div class="menu-item" fxLayoutAlign="start center">
+                        <img src="../../assets/icons/services.png" alt="users icon">
+                        <a>Services</a>
+                    </div>
+                    <div class="menu-item" fxLayoutAlign="start center">
+                        <img src="../../assets/icons/server.png" alt="users icon">
+                        <a>Server</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="top-bar" fxLayoutAlign="center center">
+            <h2>Administration dashboard</h2>
+        </div>
+    </div>
+</div>
