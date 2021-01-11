@@ -6,19 +6,19 @@
                 <div class="menu" fxLayoutAlign="start start" fxLayout="column">
                     <div class="menu-item" fxLayoutAlign="start center">
                         <img src="../../assets/icons/users.png" alt="users icon">
-                        <a (click)="switchTabs('users')">Users</a>
+                        <a (click)="switchTabs('users', false)">Users</a>
                     </div>
                     <div class="menu-item" fxLayoutAlign="start center">
                         <img src="../../assets/icons/products.png" alt="users icon">
-                        <a (click)="switchTabs('products')">Products</a>
+                        <a (click)="switchTabs('products', false)">Products</a>
                     </div>
                     <div class="menu-item" fxLayoutAlign="start center">
                         <img src="../../assets/icons/services.png" alt="users icon">
-                        <a (click)="switchTabs('services')">Services</a>
+                        <a (click)="switchTabs('services', false)">Services</a>
                     </div>
                     <div class="menu-item" fxLayoutAlign="start center">
                         <img src="../../assets/icons/server.png" alt="users icon">
-                        <a (click)="switchTabs('server')">Server</a>
+                        <a (click)="switchTabs('server', false)">Server</a>
                     </div>
                 </div>
             </div>
@@ -38,8 +38,9 @@
                     <!-- Position Column -->
                     <ng-container matColumnDef="Id">
                         <th mat-header-cell *matHeaderCellDef> ID </th>
-                        <td mat-cell *matCellDef="let element" #tooltip="matTooltip" [matTooltip]="element.Id"
-                            [matTooltipPosition]="tooltipPosition" matTooltipHideDelay="1000"
+                        <td mat-cell *matCellDef="let element" #tooltip="matTooltip" class="table-item"
+                            (click)="switchTabs('userDetails', true); setCurrentUser(element.Id)"
+                            [matTooltip]="element.Id" [matTooltipPosition]="tooltipPosition" matTooltipHideDelay="1000"
                             matTooltipClass="example-tooltip-red">
                             {{element.Id.substring(0,8)}}... </td>
                     </ng-container>
@@ -47,21 +48,22 @@
                     <!-- Name Column -->
                     <ng-container matColumnDef="Username">
                         <th mat-header-cell *matHeaderCellDef> Username </th>
-                        <td mat-cell *matCellDef="let element"> {{element.UserName.substring(0,10)}} </td>
+                        <td mat-cell *matCellDef="let element" class="table-item"> {{element.UserName.substring(0,10)}}
+                        </td>
                     </ng-container>
 
                     <!-- Weight Column -->
                     <ng-container matColumnDef="Name">
                         <th mat-header-cell *matHeaderCellDef> Name </th>
-                        <td mat-cell *matCellDef="let element"> {{element.Name.substring(0,8)}} </td>
+                        <td mat-cell *matCellDef="let element" class="table-item"> {{element.Name.substring(0,8)}} </td>
                     </ng-container>
 
                     <!-- Symbol Column -->
                     <ng-container matColumnDef="Email">
                         <th mat-header-cell *matHeaderCellDef> Email </th>
-                        <td mat-cell *matCellDef="let element" #tooltip="matTooltip" [matTooltip]="element.Email"
-                            [matTooltipPosition]="tooltipPosition" matTooltipHideDelay="1000"
-                            matTooltipClass="example-tooltip-red">
+                        <td mat-cell class="table-item" *matCellDef="let element" #tooltip="matTooltip"
+                            [matTooltip]="element.Email" [matTooltipPosition]="tooltipPosition"
+                            matTooltipHideDelay="1000" matTooltipClass="example-tooltip-red">
                             {{element.Email.substring(0,8)}}... </td>
                     </ng-container>
 
@@ -73,6 +75,9 @@
                         <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
                     </tr>
                 </table>
+            </section>
+            <section id="userDetails" class="section">
+                <h1>User Details</h1>
             </section>
             <section id="products" class="section">
                 <h1>Products</h1>

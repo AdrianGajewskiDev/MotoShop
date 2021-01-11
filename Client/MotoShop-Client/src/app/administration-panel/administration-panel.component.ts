@@ -17,7 +17,7 @@ import { AdministrationService } from '../shared/services/administration.service
 export class AdministrationPanelComponent implements OnInit {
 
   public animationState: "slideIn" | "slideOut" = "slideIn";
-  public tooltipPosition: TooltipPosition = 'above';
+  public tooltipPosition: TooltipPosition = 'right';
   public displayedColumns: string[] = ['Id', 'Username', 'Name', 'Email'];
 
   constructor(private service: AdministrationService,
@@ -25,12 +25,16 @@ export class AdministrationPanelComponent implements OnInit {
 
   //data
   private users: User[];
+
+  public currentSelectedUser: User;
   public dataSource;
+
   //tabs
   usersTab: Element;
   productsTab: Element;
   servicesTab: Element;
   serverTab: Element;
+  userDetailsTab: Element;
 
   private tabs: { [key: string]: Element; } = {};
 
@@ -39,17 +43,25 @@ export class AdministrationPanelComponent implements OnInit {
     this.productsTab = document.getElementById("products");
     this.servicesTab = document.getElementById("services");
     this.serverTab = document.getElementById("server");
+    this.userDetailsTab = document.getElementById("userDetails");
 
     this.tabs =
     {
       "users": this.usersTab,
       "products": this.productsTab,
       "services": this.servicesTab,
-      "server": this.serverTab
+      "server": this.serverTab,
+      "userDetails": this.userDetailsTab
     };
   }
 
-  switchTabs(tab): void {
+  setCurrentUser(id) {
+    this.currentSelectedUser = this.users.filter(x => x.Id == id)[0];
+
+    console.log(this.currentSelectedUser);
+  }
+
+  switchTabs(tab, details: boolean): void {
     this.tabs[tab].classList.add('show');
 
     Object.keys(this.tabs).forEach(element => {
@@ -57,7 +69,8 @@ export class AdministrationPanelComponent implements OnInit {
         this.tabs[element].classList.remove('show');
     });
 
-    this.getData(tab);
+    if (!details)
+      this.getData(tab);
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
