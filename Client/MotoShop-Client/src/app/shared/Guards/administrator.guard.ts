@@ -11,15 +11,13 @@ export class AdministratorGuard implements CanActivate {
         private toastr: ToastrService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-        // const result = this.service.isAdmin;
+        const result = this.service.isAdmin;
 
-        // if (result == true)
-        //     return true;
+        if (result == true)
+            return true;
 
-        // this.toastr.error("You don't have permissions to access this page")
-        // return false;
-
-        return true;
+        this.toastr.error("You don't have permissions to access this page")
+        return false;
     }
 
 }

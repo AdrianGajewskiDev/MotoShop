@@ -29,6 +29,7 @@ import { UploadService } from './shared/services/upload.service';
 import { GoogleAuthenticationModule } from './modules/google.authentication.module';
 import { ExternalSignInService } from './shared/services/externalSignIn.service';
 import { AdministrationPanelComponent } from './administration-panel/administration-panel.component';
+import { AdministrationService } from './shared/services/administration.service';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { AdministrationPanelComponent } from './administration-panel/administrat
     UserService,
     UploadService,
     ExternalSignInService,
+    AdministrationService,
     ///Interceptors
     {
       provide: HTTP_INTERCEPTORS,

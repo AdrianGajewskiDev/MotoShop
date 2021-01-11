@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { slideInOutAnimation } from 'src/app/shared/animations';
 import { passwordsMatchesValidator } from 'src/app/shared/custom-validators';
 import { FormsMapper } from 'src/app/shared/mapper/formsMapper';
-import { UserRegisterModel } from 'src/app/shared/models/user/userRegister.model';
+import { UserRegisterModel } from 'src/app/shared/models/identity/userRegister.model';
 import { IdentityService } from 'src/app/shared/services/identity.service';
-import { passwordValidators} from "../../shared/password-validators"
+import { passwordValidators } from "../../shared/password-validators"
 import { ToastrService } from "node_modules/ngx-toastr"
 import { Router } from '@angular/router';
 
@@ -17,20 +17,20 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private fb:FormBuilder,
-     private service: IdentityService,
-     private mapper: FormsMapper,
-     private toastr: ToastrService,
-     private router: Router
-    ) { }
+  constructor(private fb: FormBuilder,
+    private service: IdentityService,
+    private mapper: FormsMapper,
+    private toastr: ToastrService,
+    private router: Router
+  ) { }
 
-  public showLoadingSpinner:boolean = false;  
+  public showLoadingSpinner: boolean = false;
 
   public showRegistrationError: boolean = false;
   public registrationErrorMsg: string = "";
 
   public animationState: "slideIn" | "slideOut" = "slideIn";
-  public registerForm:FormGroup;
+  public registerForm: FormGroup;
 
   ngOnInit(): void {
 
@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
         validators: passwordsMatchesValidator
       });
   }
-  onSubmit():void{
+  onSubmit(): void {
     this.showLoadingSpinner = true;
     let model = this.mapper.map<UserRegisterModel>(new UserRegisterModel(), this.registerForm);
 
@@ -57,14 +57,12 @@ export class RegisterComponent implements OnInit {
         this.toastr.info("Your account has been created successfully. You can now sign in");
         this.router.navigateByUrl("/identity");
       },
-      (error) => 
-      {
-        if(error.status == 400)
-        {
+      (error) => {
+        if (error.status == 400) {
           this.showRegistrationError = true;
           this.registrationErrorMsg = error.error.Message
         }
       }
-      );
+    );
   }
 }

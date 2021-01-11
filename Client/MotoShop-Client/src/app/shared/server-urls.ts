@@ -7,4 +7,4 @@ export const serverUpdateUserPasswordUrl = "https://localhost:44304/api/UserAcco
 export const serverResetUserPasswordUrl = "https://localhost:44304/api/UserAccount/resetPassword"
 export const serverImageUploadUrl = "https://localhost:44304/api/upload/single"
 export const serverExternalSignInUrl = "https://localhost:44304/api/identity/externalSignIn";
-
+export const administrationGetAllUsers = "https://localhost:44304/api/administration";

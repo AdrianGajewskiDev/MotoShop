@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core"
 import { HttpClient } from "@angular/common/http"
 import { serverRegisterNewUserUrl, serverSignInUrl } from "../server-urls";
-import { UserRegisterModel } from '../models/user/userRegister.model';
-import { SignInModel } from '../models/user/signIn.model';
+import { UserRegisterModel } from '../models/identity/userRegister.model';
+import { SignInModel } from '../models/identity/signIn.model';
 import { BehaviorSubject } from "rxjs";
 
 @Injectable()

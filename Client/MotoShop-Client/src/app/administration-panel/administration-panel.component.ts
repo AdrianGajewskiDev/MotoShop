@@ -1,18 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { TooltipPosition } from '@angular/material/tooltip';
+import { ToastrService } from 'ngx-toastr';
 import { slideInOutAnimation } from '../shared/animations';
+import { AllUsersModel } from '../shared/models/administration/allUsers.model';
+import { User } from '../shared/models/administration/user.model';
+import { AdministrationService } from '../shared/services/administration.service';
 
 @Component({
   selector: 'app-administration-panel',
   templateUrl: './administration-panel.component.html',
   styleUrls: ["administration.component.sass"],
-  animations: [slideInOutAnimation]
+  animations: [slideInOutAnimation],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AdministrationPanelComponent implements OnInit {
 
   public animationState: "slideIn" | "slideOut" = "slideIn";
+  public tooltipPosition: TooltipPosition = 'above';
+  public displayedColumns: string[] = ['Id', 'Username', 'Name', 'Email'];
 
-  constructor() { }
+  constructor(private service: AdministrationService,
+    private toastr: ToastrService) { }
 
+  //data
+  private users: User[];
+  public dataSource;
   //tabs
   usersTab: Element;
   productsTab: Element;
@@ -43,6 +56,46 @@ export class AdministrationPanelComponent implements OnInit {
       if (element != tab)
         this.tabs[element].classList.remove('show');
     });
+
+    this.getData(tab);
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+  getData(tab: string) {
+
+    switch (tab) {
+      case 'users':
+        {
+          if (this.users == null)
+            this.service.getAllUsers().subscribe(
+              (res: AllUsersModel) => {
+                this.users = res.Users
+                this.dataSource = new MatTableDataSource(this.users);
+              },
+              error => {
+                this.toastr.error(error.message);
+              }
+            );
+        }
+        break;
+      case 'products':
+        {
+
+        }
+        break;
+      case 'services':
+        {
+
+        }
+        break;
+      case 'server':
+        {
+
+        }
+        break;
+    }
   }
 
 }

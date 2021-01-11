@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { slideInOutAnimation } from 'src/app/shared/animations';
 import { FormsMapper } from 'src/app/shared/mapper/formsMapper';
-import { SignInModel } from 'src/app/shared/models/user/signIn.model';
+import { SignInModel } from 'src/app/shared/models/identity/signIn.model';
 import { ExternalSignInService } from 'src/app/shared/services/externalSignIn.service';
 import { IdentityService } from 'src/app/shared/services/identity.service';
 import { ExternalProviders } from "../../shared/externalProviders"

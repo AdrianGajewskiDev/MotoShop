@@ -73,7 +73,7 @@ namespace MotoShop.WebAPI.Controllers
                     Users = users
                 };
 
-                return Ok(new { data = model });
+                return Ok(model);
             }
 
             var usersData = _service.GetUsersData<string>(filter);
@@ -83,7 +83,7 @@ namespace MotoShop.WebAPI.Controllers
                 Users = usersData
             };
 
-            return Ok(new { data = dataModel });
+            return Ok(dataModel );
 
         }
     }
