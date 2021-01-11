@@ -6,25 +6,39 @@
                 <div class="menu" fxLayoutAlign="start start" fxLayout="column">
                     <div class="menu-item" fxLayoutAlign="start center">
                         <img src="../../assets/icons/users.png" alt="users icon">
-                        <a>Users</a>
+                        <a (click)="switchTabs('users')">Users</a>
                     </div>
                     <div class="menu-item" fxLayoutAlign="start center">
                         <img src="../../assets/icons/products.png" alt="users icon">
-                        <a>Products</a>
+                        <a (click)="switchTabs('products')">Products</a>
                     </div>
                     <div class="menu-item" fxLayoutAlign="start center">
                         <img src="../../assets/icons/services.png" alt="users icon">
-                        <a>Services</a>
+                        <a (click)="switchTabs('services')">Services</a>
                     </div>
                     <div class="menu-item" fxLayoutAlign="start center">
                         <img src="../../assets/icons/server.png" alt="users icon">
-                        <a>Server</a>
+                        <a (click)="switchTabs('server')">Server</a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="top-bar" fxLayoutAlign="center center">
             <h2>Administration dashboard</h2>
+        </div>
+        <div class="main-content">
+            <section id="users" class="section">
+                <h1>Users</h1>
+            </section>
+            <section id="products" class="section">
+                <h1>Products</h1>
+            </section>
+            <section id="services" class="section">
+                <h1>Services</h1>
+            </section>
+            <section id="server" class="section">
+                <h1>Server</h1>
+            </section>
         </div>
     </div>
 </div>

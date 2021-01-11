@@ -13,7 +13,36 @@ export class AdministrationPanelComponent implements OnInit {
 
   constructor() { }
 
+  //tabs
+  usersTab: Element;
+  productsTab: Element;
+  servicesTab: Element;
+  serverTab: Element;
+
+  private tabs: { [key: string]: Element; } = {};
+
   ngOnInit(): void {
+    this.usersTab = document.getElementById("users");
+    this.productsTab = document.getElementById("products");
+    this.servicesTab = document.getElementById("services");
+    this.serverTab = document.getElementById("server");
+
+    this.tabs =
+    {
+      "users": this.usersTab,
+      "products": this.productsTab,
+      "services": this.servicesTab,
+      "server": this.serverTab
+    };
+  }
+
+  switchTabs(tab): void {
+    this.tabs[tab].classList.add('show');
+
+    Object.keys(this.tabs).forEach(element => {
+      if (element != tab)
+        this.tabs[element].classList.remove('show');
+    });
   }
 
 }
