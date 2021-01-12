@@ -8,3 +8,4 @@ export const serverResetUserPasswordUrl = "https://localhost:44304/api/UserAccou
 export const serverImageUploadUrl = "https://localhost:44304/api/upload/single"
 export const serverExternalSignInUrl = "https://localhost:44304/api/identity/externalSignIn";
 export const administrationGetAllUsers = "https://localhost:44304/api/administration";
+export const serverGetAllAdvertisementsByUserIDUrl = "https://localhost:44304/api/advertisements/byUser";

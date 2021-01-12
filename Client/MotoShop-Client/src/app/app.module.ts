@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
-import { NgModule } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AngularMaterialModule } from "./modules/angular.material.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -32,6 +32,8 @@ import { AdministrationPanelComponent } from './administration/administration-pa
 import { AdministrationService } from './shared/services/administration.service';
 import { UserDetailsDialogComponent } from './administration/user-details-dialog/user-details-dialog.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { ServiceLocator } from './shared/services/locator.service';
+import { AdvertisementsService } from './shared/services/advertisements.service';
 
 @NgModule({
   declarations: [
@@ -69,6 +71,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
     UploadService,
     ExternalSignInService,
     AdministrationService,
+    AdvertisementsService,
     ///Interceptors
     {
       provide: HTTP_INTERCEPTORS,
@@ -79,4 +82,8 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
   entryComponents: [UserDetailsDialogComponent],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private injector: Injector) {
+    ServiceLocator.injector = this.injector;
+  }
+}
