@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { ToastrService } from 'ngx-toastr';
-import { slideInOutAnimation } from '../shared/animations';
-import { AllUsersModel } from '../shared/models/administration/allUsers.model';
-import { User } from '../shared/models/administration/user.model';
-import { AdministrationService } from '../shared/services/administration.service';
+import { slideInOutAnimation } from '../../shared/animations';
+import { AllUsersModel } from '../../shared/models/administration/allUsers.model';
+import { User } from '../../shared/models/administration/user.model';
+import { AdministrationService } from '../../shared/services/administration.service';
+import { UserDetailsDialogComponent } from '../user-details-dialog/user-details-dialog.component';
 
 @Component({
   selector: 'app-administration-panel',
@@ -21,12 +23,11 @@ export class AdministrationPanelComponent implements OnInit {
   public displayedColumns: string[] = ['Id', 'Username', 'Name', 'Email'];
 
   constructor(private service: AdministrationService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService, private dialog: MatDialog) { }
 
   //data
   private users: User[];
 
-  public currentSelectedUser: User;
   public dataSource;
 
   //tabs
@@ -34,7 +35,6 @@ export class AdministrationPanelComponent implements OnInit {
   productsTab: Element;
   servicesTab: Element;
   serverTab: Element;
-  userDetailsTab: Element;
 
   private tabs: { [key: string]: Element; } = {};
 
@@ -43,7 +43,6 @@ export class AdministrationPanelComponent implements OnInit {
     this.productsTab = document.getElementById("products");
     this.servicesTab = document.getElementById("services");
     this.serverTab = document.getElementById("server");
-    this.userDetailsTab = document.getElementById("userDetails");
 
     this.tabs =
     {
@@ -51,14 +50,21 @@ export class AdministrationPanelComponent implements OnInit {
       "products": this.productsTab,
       "services": this.servicesTab,
       "server": this.serverTab,
-      "userDetails": this.userDetailsTab
     };
   }
 
-  setCurrentUser(id) {
-    this.currentSelectedUser = this.users.filter(x => x.Id == id)[0];
+  goToUserDetails(id) {
+    let currentUser = this.users.filter(x => x.Id == id)[0];
 
-    console.log(this.currentSelectedUser);
+
+    this.dialog.open(UserDetailsDialogComponent, {
+      minWidth: '900px',
+      minHeight: '800px',
+      direction: 'ltr',
+      data: {
+        User: currentUser
+      }
+    });
   }
 
   switchTabs(tab, details: boolean): void {

@@ -28,8 +28,10 @@ import { ForgotPasswordComponent } from './identity/forgot-password/forgot-passw
 import { UploadService } from './shared/services/upload.service';
 import { GoogleAuthenticationModule } from './modules/google.authentication.module';
 import { ExternalSignInService } from './shared/services/externalSignIn.service';
-import { AdministrationPanelComponent } from './administration-panel/administration-panel.component';
+import { AdministrationPanelComponent } from './administration/administration-panel/administration-panel.component';
 import { AdministrationService } from './shared/services/administration.service';
+import { UserDetailsDialogComponent } from './administration/user-details-dialog/user-details-dialog.component';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { AdministrationService } from './shared/services/administration.service'
     UserProfileComponent,
     ConfirmationComponent,
     ForgotPasswordComponent,
-    AdministrationPanelComponent
+    AdministrationPanelComponent,
+    UserDetailsDialogComponent
   ],
   imports: [
     AngularMaterialModule,
@@ -73,6 +76,7 @@ import { AdministrationService } from './shared/services/administration.service'
       multi: true
     }
   ],
+  entryComponents: [UserDetailsDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AdministrationPanelComponent } from './administration-panel/administration-panel.component';
+import { AdministrationPanelComponent } from './administration/administration-panel/administration-panel.component';
 import { HomeComponent } from './home/home.component';
 import { ConfirmationComponent } from './identity/confirmation-component/confirmation-component.component';
 import { ForgotPasswordComponent } from './identity/forgot-password/forgot-password.component';
