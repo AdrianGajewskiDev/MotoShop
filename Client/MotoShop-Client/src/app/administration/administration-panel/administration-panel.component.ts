@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { ToastrService } from 'ngx-toastr';
+import { buildProfileImagePath } from 'src/app/shared/Helpers/buildProfileImagePath';
 import { slideInOutAnimation } from '../../shared/animations';
 import { AllUsersModel } from '../../shared/models/administration/allUsers.model';
 import { User } from '../../shared/models/administration/user.model';
@@ -54,15 +55,30 @@ export class AdministrationPanelComponent implements OnInit {
   }
 
   goToUserDetails(id) {
-    let currentUser = this.users.filter(x => x.Id == id)[0];
 
+    const currentUser = this.users.filter(x => x.Id == id)[0];
+    let data: User = new User();
+
+    data.Email = currentUser.Email;
+    data.EmailConfirmed = currentUser.EmailConfirmed;
+    data.Id = currentUser.Id;
+    data.ImageUrl = currentUser.ImageUrl;
+    data.IsExternal = currentUser.IsExternal;
+    data.LastName = currentUser.LastName;
+    data.Name = currentUser.Name;
+    data.UserName = currentUser.UserName;
+
+    if (!data.IsExternal)
+      data.ImageUrl = buildProfileImagePath(data.ImageUrl);
+
+    console.log(data);
 
     this.dialog.open(UserDetailsDialogComponent, {
       minWidth: '900px',
       minHeight: '800px',
       direction: 'ltr',
       data: {
-        User: currentUser
+        User: data
       }
     });
   }

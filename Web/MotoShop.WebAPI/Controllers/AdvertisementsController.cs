@@ -9,6 +9,7 @@ using MotoShop.WebAPI.Attributes;
 using MotoShop.WebAPI.Helpers;
 using MotoShop.WebAPI.Models.Requests;
 using MotoShop.WebAPI.Models.Response;
+using MotoShop.WebAPI.Models.Response.Advertisements;
 using MotoShop.WebAPI.Models.Response.ItemsController;
 
 namespace MotoShop.WebAPI.Controllers
@@ -26,7 +27,7 @@ namespace MotoShop.WebAPI.Controllers
             _applicationUserService = applicationUserService;
         }
 
-        [HttpGet("All")]
+        [HttpGet()]
         [Cache(5)]
         public ActionResult<ApiResponse<AllAdvertisementsResponseModel>> GetAllAdvertisements()
         {
@@ -49,7 +50,7 @@ namespace MotoShop.WebAPI.Controllers
             return Ok(responseModel);
         }
 
-        [HttpPost("Add")]
+        [HttpPost()]
         [ClearCache()]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> AddAdvertisement([ FromBody]NewAdvertisementRequestModel newAdvertisementRequestModel)
@@ -83,6 +84,23 @@ namespace MotoShop.WebAPI.Controllers
                 return Ok();
 
             return BadRequest(StaticMessages.SomethingWentWrong);
+        }
+
+        [HttpGet("byUser/{userID}")]
+        public IActionResult GetAllByUserID(string userID)
+        {
+            var advertisements = _advertisementService.GetAllAdvertisementsByAuthorId(userID);
+
+            if (advertisements == null)
+                return NotFound(StaticMessages.NotFound("Advertisements", "user id", userID));
+
+
+            var responseModel = new AllAdvertisementsByUserIDResponseModel
+            {
+                Advertisements = advertisements
+            };
+
+            return Ok(responseModel);
         }
     }
 }

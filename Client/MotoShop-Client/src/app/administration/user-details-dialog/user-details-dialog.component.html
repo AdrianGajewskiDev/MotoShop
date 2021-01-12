@@ -1,14 +1,25 @@
-<h2 mat-dialog-title>Install Angular</h2>
+<h2 mat-dialog-title>Users Details: {{data.User.Id}}</h2>
 <mat-dialog-content class="mat-typography">
     <div class="upper-content" fxLayout='row'>
-        <div class="image"></div>
-        <div class="data"></div>
+        <div class="image">
+            <img [src]="data.User.ImageUrl" alt="Profile image">
+        </div>
+        <div class="data">
+            <h1>{{data.User.Name}} {{data.User.LastName}}</h1>
+            <h2>{{data.User.UserName}}</h2>
+            <h3>{{data.User.Email}}</h3>
+            <mat-checkbox [disabled]='true' [checked]='data.User.EmailConfirmed' class="example-margin">Email Verified
+            </mat-checkbox>
+            <div class="actions">
+                <button mat-button mat-raised-button color="primary">Add Role</button>
+                <button mat-button mat-raised-button color="accent">Delete User</button>
+            </div>
+        </div>
     </div>
     <div class="bottom-content">
 
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Ok</button>
 </mat-dialog-actions>

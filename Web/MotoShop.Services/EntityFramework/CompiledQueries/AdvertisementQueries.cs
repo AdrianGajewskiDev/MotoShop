@@ -25,6 +25,6 @@ namespace MotoShop.Services.EntityFramework.CompiledQueries
 
         public static Func<ApplicationDatabaseContext, string, IEnumerable<Advertisement>> GetAllAdvertisementsByAuthorId =
             EF.CompileQuery((ApplicationDatabaseContext ctx, string userID) => 
-                    GetAll(ctx).Where(x => x.AuthorID == userID));
+                    ctx.Advertisements.Where(x => x.AuthorID == userID).Include(x => x.ShopItem));
     }
 }
