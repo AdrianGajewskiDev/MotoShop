@@ -8,7 +8,7 @@ import { slideInOutAnimation } from '../../shared/animations';
 import { AllUsersModel } from '../../shared/models/administration/allUsers.model';
 import { User } from '../../shared/models/administration/user.model';
 import { AdministrationService } from '../../shared/services/administration.service';
-import { UserDetailsDialogComponent } from '../user-details-dialog/user-details-dialog.component';
+import { UserDetailsDialogComponent } from '../../Dialogs/user-details-dialog/user-details-dialog.component';
 
 @Component({
   selector: 'app-administration-panel',

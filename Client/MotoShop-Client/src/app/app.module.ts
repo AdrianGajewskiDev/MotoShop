@@ -30,10 +30,11 @@ import { GoogleAuthenticationModule } from './modules/google.authentication.modu
 import { ExternalSignInService } from './shared/services/externalSignIn.service';
 import { AdministrationPanelComponent } from './administration/administration-panel/administration-panel.component';
 import { AdministrationService } from './shared/services/administration.service';
-import { UserDetailsDialogComponent } from './administration/user-details-dialog/user-details-dialog.component';
+import { UserDetailsDialogComponent } from './Dialogs/user-details-dialog/user-details-dialog.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { ServiceLocator } from './shared/services/locator.service';
 import { AdvertisementsService } from './shared/services/advertisements.service';
+import { AddRoleToUserDialogComponent } from './Dialogs/add-role-to-user-dialog/add-role-to-user-dialog.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { AdvertisementsService } from './shared/services/advertisements.service'
     ConfirmationComponent,
     ForgotPasswordComponent,
     AdministrationPanelComponent,
-    UserDetailsDialogComponent
+    UserDetailsDialogComponent,
+    AddRoleToUserDialogComponent
   ],
   imports: [
     AngularMaterialModule,
@@ -79,7 +81,10 @@ import { AdvertisementsService } from './shared/services/advertisements.service'
       multi: true
     }
   ],
-  entryComponents: [UserDetailsDialogComponent],
+  entryComponents: [
+    UserDetailsDialogComponent,
+    AddRoleToUserDialogComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

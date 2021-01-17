@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Add Role to User</h1>
+<div mat-dialog-content>
+    <h4>Select a Role</h4>
+    <mat-form-field appearance="fill">
+        <mat-label>Choose an option</mat-label>
+        <select matNativeControl [(ngModel)]="data.Role">
+            <option value="" selected></option>
+            <option value="Administrator">Administrator</option>
+            <option value="NormalUser">Normal User</option>
+        </select>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-button [mat-dialog-close]="data.Role" cdkFocusInitial>Ok</button>
+</div>
