@@ -34,7 +34,6 @@ namespace MotoShop.Services.Implementation
             _emailSenderService = emailSenderService;
             _imageUploadService = imageUploadService;
         }
-
         public async Task<ApplicationUser> GetUserByEmail(string email) => await _userManager.FindByEmailAsync(email);
         public async Task<ApplicationUser> GetUserByID(string id) => await _userManager.FindByIdAsync(id);
         public async Task<ApplicationUser> GetUserByUserName(string username) => await _userManager.FindByNameAsync(username);
@@ -293,22 +292,33 @@ namespace MotoShop.Services.Implementation
 
             return false;
         }
-
         public async Task<bool> UserExists(string email, string username)
         {
             var user = await GetUserByEmail(email);
 
             return user != null;
         }
-
         public async Task<bool> IsAdmin(string userID)
         {
             return await _userManager.IsInRoleAsync(await GetUserByID(userID), ApplicationRoles.Administrator);
         }
-
         public async Task<IEnumerable<string>> GetUserRolesAsync(string userID)
         {
             return await _userManager.GetRolesAsync(await GetUserByID(userID));
+        }
+
+        public async Task<bool> DeleteUser(string userID)
+        {
+            var user = await GetUserByID(userID);
+
+            if (!await UserExists(user.Email, user.UserName))
+                return false;
+
+            _dbContext.Users.Remove(user);
+
+            var result = await _dbContext.SaveChangesAsync();
+
+            return result > 0;
         }
     }
 }

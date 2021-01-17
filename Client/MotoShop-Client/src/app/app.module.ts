@@ -35,6 +35,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { ServiceLocator } from './shared/services/locator.service';
 import { AdvertisementsService } from './shared/services/advertisements.service';
 import { AddRoleToUserDialogComponent } from './Dialogs/add-role-to-user-dialog/add-role-to-user-dialog.component';
+import { ConfirmationDialogComponent } from './Dialogs/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { AddRoleToUserDialogComponent } from './Dialogs/add-role-to-user-dialog/
     ForgotPasswordComponent,
     AdministrationPanelComponent,
     UserDetailsDialogComponent,
-    AddRoleToUserDialogComponent
+    AddRoleToUserDialogComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     AngularMaterialModule,
@@ -83,7 +85,8 @@ import { AddRoleToUserDialogComponent } from './Dialogs/add-role-to-user-dialog/
   ],
   entryComponents: [
     UserDetailsDialogComponent,
-    AddRoleToUserDialogComponent
+    AddRoleToUserDialogComponent,
+    ConfirmationDialogComponent
   ],
   bootstrap: [AppComponent]
 })

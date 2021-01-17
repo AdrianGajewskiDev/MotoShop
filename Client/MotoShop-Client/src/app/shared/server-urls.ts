@@ -10,3 +10,4 @@ export const serverExternalSignInUrl = "https://localhost:44304/api/identity/ext
 export const administrationGetAllUsers = "https://localhost:44304/api/administration";
 export const serverGetAllAdvertisementsByUserIDUrl = "https://localhost:44304/api/advertisements/byUser";
 export const administrationAddRoleToUserUrls = "https://localhost:44304/api/administration/addRole";
+export const administrationDeleteUserUrls = "https://localhost:44304/api/administration/";

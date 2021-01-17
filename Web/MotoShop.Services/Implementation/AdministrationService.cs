@@ -90,5 +90,10 @@ namespace MotoShop.Services.Implementation
 
         }
         public async Task<bool> IsInRole(ApplicationUser user, string role) => await _userManager.IsInRoleAsync(user, role);
+
+        public async Task<bool> RoleExists(string role)
+        {
+            return await _roleManager.RoleExistsAsync(role);
+        }
     }
 }

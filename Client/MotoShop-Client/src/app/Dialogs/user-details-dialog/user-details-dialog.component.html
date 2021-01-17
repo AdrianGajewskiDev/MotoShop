@@ -1,3 +1,4 @@
+<app-loading-spinner *ngIf="showLoadingSpinner == true"></app-loading-spinner>
 <h2 mat-dialog-title>Users Details: {{data.User.Id}}</h2>
 <mat-dialog-content class="mat-typography">
     <div class="upper-content" fxLayout='row'>
@@ -12,7 +13,8 @@
             </mat-checkbox>
             <div class="actions">
                 <button mat-button mat-raised-button color="primary" (click)="addRole(data.User.Id)">Add Role</button>
-                <button mat-button mat-raised-button color="accent">Delete User</button>
+                <button mat-button mat-raised-button color="accent" (click)="deleteUser(data.User.Id)">Delete
+                    User</button>
             </div>
         </div>
     </div>

@@ -1,0 +1,8 @@
+<div fxLayoutAlign="center center" fxLayout='column'>
+    <p>{{data.message}}</p>
+    <div fxLayout='row' class="actions">
+        <button mat-button mat-raised-button color="accent" (click)="excute()">Ok</button>
+        <button mat-button mat-raised-button color="warm" (click)="cancel()" cdkFocusInitial>Cancel</button>
+    </div>
+
+</div>

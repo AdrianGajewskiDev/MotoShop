@@ -7,6 +7,7 @@ using MotoShop.Services.Services;
 using MotoShop.WebAPI.Attributes;
 using MotoShop.WebAPI.Helpers;
 using MotoShop.WebAPI.Models.Request;
+using MotoShop.WebAPI.Models.Requests.Administration;
 using MotoShop.WebAPI.Models.Response.Administration;
 using System.Threading.Tasks;
 
@@ -85,6 +86,46 @@ namespace MotoShop.WebAPI.Controllers
 
             return Ok(dataModel );
 
+        }
+
+        [HttpPost("addRole")]
+        [Authorize(Roles = ApplicationRoles.Administrator)]
+        [ClearCache]
+        public async Task<IActionResult> AddRole(AddRoleRequestModel model)
+        {
+            if (model == null)
+                return BadRequest(StaticMessages.WasNull(nameof(model)));
+
+            if (!await _service.RoleExists(model.Role))
+                return NotFound(StaticMessages.NotFound("Role", "Role", model.Role));
+
+            var user = await _applicationUserService.GetUserByID(model.UserID);
+
+            if(user == null)
+                return NotFound(StaticMessages.NotFound("User", "ID", model.UserID));
+
+            var result = await _service.AddRoleToUser(user, model.Role);
+
+            if (result == true)
+                return Ok();
+
+            return BadRequest(StaticMessages.SomethingWentWrong);
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize(Roles = ApplicationRoles.Administrator)]
+        [ClearCache]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                return BadRequest(StaticMessages.WasNull(id));
+
+            var result = await _applicationUserService.DeleteUser(id);
+
+            if(result == true)
+                return Ok();
+
+            return BadRequest(StaticMessages.SomethingWentWrong);
         }
     }
 }

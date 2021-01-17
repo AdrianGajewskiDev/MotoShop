@@ -22,6 +22,7 @@ namespace MotoShop.Services.Services
         Task<bool> ConfirmUserEmailAsync(ApplicationUser user, string token);
         Task<bool> UpdatePasswordAsync(ApplicationUser user,string token, string newPassword);
         Task<bool> AddUserProfileImageAsync(string userID, string path);
+        Task<bool> DeleteUser(string userID);
         Task<string> SignInAsync(string data, string password, UserSignInVariant variant);
         Task<IEnumerable<string>> GetUserRolesAsync(string userID);
         string GenerateConfirmationLink(string token, string userID, string newData, UpdateDataType updateDataType);

@@ -7,8 +7,9 @@ import { ResetUserPassword } from '../models/user/resetUserPassword';
 import { UpdateUserPasswordModel } from '../models/user/updateUserPassword.model';
 import { UpdateUserProfileDataModel } from '../models/user/updateUserProfileData.model';
 import { UserProfileDataModel } from '../models/user/userProfileData.model';
-import { serverResetUserPasswordUrl, serverUserProfileDetailsUrl, serverUpdateUserProfileUrl, serverUpdateUserPasswordUrl, administrationGetAllUsers, administrationAddRoleToUserUrls } from '../server-urls';
+import { serverResetUserPasswordUrl, serverUserProfileDetailsUrl, serverUpdateUserProfileUrl, serverUpdateUserPasswordUrl, administrationGetAllUsers, administrationAddRoleToUserUrls, administrationDeleteUserUrls } from '../server-urls';
 import { IdentityService } from './identity.service';
+import { AddRoleModel } from '../models/administration/addRole.model';
 
 @Injectable()
 export class UserService {
@@ -32,11 +33,15 @@ export class UserService {
     }
 
     addRole(userId: string, role: string) {
-        var data = {
-            "UserID": userId,
-            "Role": role
+        var data: AddRoleModel = {
+            UserID: userId,
+            Role: role
         }
         return this.httpClient.post(administrationAddRoleToUserUrls, data);
+    }
+
+    deleteUser(id: string) {
+        return this.httpClient.delete(administrationDeleteUserUrls + id);
     }
 
     get isAdmin(): boolean {

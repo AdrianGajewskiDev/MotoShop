@@ -9,6 +9,7 @@ import { AdvertisementsService } from 'src/app/shared/services/advertisements.se
 import { ServiceLocator } from 'src/app/shared/services/locator.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { AddRoleToUserDialogComponent } from '../add-role-to-user-dialog/add-role-to-user-dialog.component';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 interface DialogData {
   User: User;
@@ -29,6 +30,8 @@ export class UserDetailsDialogComponent implements OnInit {
   }
   public displayedColumns: string[] = ['Id', 'Title', 'Price', 'Placed'];
   public dataSource;
+
+  public showLoadingSpinner = false;
 
   adService: AdvertisementsService;
   toastr: ToastrService;
@@ -52,6 +55,7 @@ export class UserDetailsDialogComponent implements OnInit {
   }
 
   addRole(id: string) {
+    this.showLoadingSpinner = true;
     let role = "";
     const dialogReference = this.dialog.open(AddRoleToUserDialogComponent,
       {
@@ -60,7 +64,49 @@ export class UserDetailsDialogComponent implements OnInit {
 
     dialogReference.afterClosed().subscribe(res => {
       role = res;
-      this.userService.addRole(id, role);
+      this.userService.addRole(id, role).subscribe(
+        () => {
+          this.showLoadingSpinner = false;
+          this.toastr.info(`Role ${role} added to user`, "Success!");
+        },
+        error => {
+          console.log(error.error);
+
+          this.showLoadingSpinner = false;
+          this.toastr.error(error.error);
+        }
+      );
     });
+  }
+
+  deleteUser(id: string) {
+    this.dialog.open(ConfirmationDialogComponent, {
+      width: '250px',
+      data:
+      {
+        func: (s) => {
+          if (s == false) {
+            this.deleteUserCallback(id)
+          }
+        },
+        run: false,
+        message: "Are you sure deleting this user?"
+      }
+    });
+  }
+
+  deleteUserCallback(id: string): void {
+    this.showLoadingSpinner = true;
+    this.userService.deleteUser(id).subscribe(
+      (res) => {
+        this.showLoadingSpinner = false;
+        this.toastr.info(`User with id ${id} was successfully deleted!`, "Success!");
+        window.location.reload();
+      },
+      error => {
+        this.showLoadingSpinner = false;
+        this.toastr.error(error.error);
+      }
+    );
   }
 }
