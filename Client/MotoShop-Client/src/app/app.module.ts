@@ -36,6 +36,7 @@ import { ServiceLocator } from './shared/services/locator.service';
 import { AdvertisementsService } from './shared/services/advertisements.service';
 import { AddRoleToUserDialogComponent } from './Dialogs/add-role-to-user-dialog/add-role-to-user-dialog.component';
 import { ConfirmationDialogComponent } from './Dialogs/confirmation-dialog/confirmation-dialog.component';
+import { AdvertisementDetailsDialogComponent } from './Dialogs/advertisement-details-dialog/advertisement-details-dialog.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { ConfirmationDialogComponent } from './Dialogs/confirmation-dialog/confi
     AdministrationPanelComponent,
     UserDetailsDialogComponent,
     AddRoleToUserDialogComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    AdvertisementDetailsDialogComponent
   ],
   imports: [
     AngularMaterialModule,
@@ -86,7 +88,8 @@ import { ConfirmationDialogComponent } from './Dialogs/confirmation-dialog/confi
   entryComponents: [
     UserDetailsDialogComponent,
     AddRoleToUserDialogComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    AdvertisementDetailsDialogComponent
   ],
   bootstrap: [AppComponent]
 })

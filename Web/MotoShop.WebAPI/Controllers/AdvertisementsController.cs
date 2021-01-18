@@ -20,16 +20,18 @@ namespace MotoShop.WebAPI.Controllers
     {
         private readonly IAdvertisementService _advertisementService;
         private readonly IApplicationUserService _applicationUserService;
+        private readonly IShopItemsService _shopItemService;
 
-        public AdvertisementsController(IAdvertisementService advertisementService, IApplicationUserService applicationUserService)
+        public AdvertisementsController(IAdvertisementService advertisementService, IApplicationUserService applicationUserService, IShopItemsService shopItemService)
         {
             _advertisementService = advertisementService;
             _applicationUserService = applicationUserService;
+            _shopItemService = shopItemService;
         }
 
         [HttpGet()]
         [Cache(5)]
-        public ActionResult<ApiResponse<AllAdvertisementsResponseModel>> GetAllAdvertisements()
+        public ActionResult<AllAdvertisementsResponseModel> GetAllAdvertisements()
         {
             IEnumerable<Advertisement> advertisements = _advertisementService.GetAll();
 
@@ -101,6 +103,53 @@ namespace MotoShop.WebAPI.Controllers
             };
 
             return Ok(responseModel);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var advertisement = _advertisementService.GetAdvertisementById(id);
+
+            if (advertisement == null)
+                return NotFound(StaticMessages.NotFound("Advertisement", "ID", id));
+
+            switch (advertisement.ShopItem.ItemType)
+            {
+                case "Car":
+                    {
+                        var model = new AdvertisementDetailsResponseModel<Car>
+                        {
+                            Author = advertisement.Author,
+                            AuthorID = advertisement.AuthorID,
+                            Description = advertisement.Description,
+                            ID = advertisement.ID,
+                            Placed = advertisement.Placed,
+                            ShopItem = _shopItemService.GetCarItem(advertisement.ShopItem.ID),
+                            Title = advertisement.Title
+                        };
+
+                        return Ok(model);
+
+                    }
+                case "Motocycle":
+                    {
+                        var model = new AdvertisementDetailsResponseModel<Motocycle>
+                        {
+                            Author = advertisement.Author,
+                            AuthorID = advertisement.AuthorID,
+                            Description = advertisement.Description,
+                            ID = advertisement.ID,
+                            Placed = advertisement.Placed,
+                            ShopItem = _shopItemService.GetMotocycleItem(advertisement.ShopItem.ID),
+                            Title = advertisement.Title
+                        };
+
+                        return Ok(model);
+
+                    }
+            }
+
+            return BadRequest(StaticMessages.SomethingWentWrong);
         }
     }
 }

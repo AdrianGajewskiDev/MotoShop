@@ -1,6 +1,5 @@
 ﻿using MotoShop.Data.Models.Constants;
 using MotoShop.Data.Models.Store;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MotoShop.Services.Services
@@ -12,5 +11,7 @@ namespace MotoShop.Services.Services
         Task<bool> AddItemAsync(int advertisementID, ShopItem item);
         Task<bool> UpdateItemAsync(int itemID, ShopItem updatedItem);
         ShopItem GetItemByID(int id, ItemType type);
+        Car GetCarItem(int id);
+        Motocycle GetMotocycleItem(int id);
     }
 }

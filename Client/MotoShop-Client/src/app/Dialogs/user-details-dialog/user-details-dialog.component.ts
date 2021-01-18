@@ -9,6 +9,7 @@ import { AdvertisementsService } from 'src/app/shared/services/advertisements.se
 import { ServiceLocator } from 'src/app/shared/services/locator.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { AddRoleToUserDialogComponent } from '../add-role-to-user-dialog/add-role-to-user-dialog.component';
+import { AdvertisementDetailsDialogComponent } from '../advertisement-details-dialog/advertisement-details-dialog.component';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 interface DialogData {
@@ -95,5 +96,14 @@ export class UserDetailsDialogComponent implements OnInit {
         this.toastr.error(error.error);
       }
     );
+  }
+
+  goToAdvertDetails(id: number) {
+    this.dialog.open(AdvertisementDetailsDialogComponent, {
+      width: '250 px',
+      data: {
+        AdvertisementID: id
+      }
+    });
   }
 }

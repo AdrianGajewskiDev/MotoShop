@@ -13,12 +13,10 @@ namespace MotoShop.Services.Implementation
     public class ShopItemsService : IShopItemsService
     {
         private readonly ApplicationDatabaseContext _context;
-
         public ShopItemsService(ApplicationDatabaseContext context)
         {
             _context = context;
         }
-
         public async Task<bool> AddItemAsync(int advertisementID, ShopItem item)
         {
             Advertisement advertisement = AdvertisementQueries.GetByID(_context, advertisementID);
@@ -43,14 +41,15 @@ namespace MotoShop.Services.Implementation
 
             return false;
         }
-
         public void DeleteItem(ShopItem item)
         {
             _context.Remove(item);
             _context.SaveChanges();
         }
-
-
+        public Car GetCarItem(int id)
+        {
+            return _context.Cars.FirstOrDefault(x => x.ID == id);
+        }
         public ShopItem GetItemByAdvertisement(int advertisementID)
         {
             var item = AdvertisementQueries.GetByID(_context,advertisementID).ShopItem;
@@ -68,7 +67,6 @@ namespace MotoShop.Services.Implementation
 
             return null;
         }
-
         public ShopItem GetItemByID(int id, ItemType type)
         {
             switch (type)
@@ -83,7 +81,10 @@ namespace MotoShop.Services.Implementation
 
             return _context.Cars.Where(x => x.ID == id).FirstOrDefault();
         }
-
+        public Motocycle GetMotocycleItem(int id)
+        {
+            return _context.Motocycles.FirstOrDefault(x => x.ID == id);
+        }
         public async Task<bool> UpdateItemAsync(int itemID, ShopItem updatedItem)
         {
             var item = GetItemByID(itemID, Enum.Parse<ItemType>(updatedItem.ItemType));

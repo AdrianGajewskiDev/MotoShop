@@ -1,7 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Advertisement } from "../models/advertisements/advertisement.model";
-import { serverGetAllAdvertisementsByUserIDUrl } from "../server-urls";
+import { AdvertisementDetailsModel } from "../models/advertisements/advertisementDetails.model";
+import { serverGetAllAdvertisementsByUserIDUrl, serverGetAllAdvertisementsUrl } from "../server-urls";
 
 @Injectable()
 export class AdvertisementsService {
@@ -9,5 +10,9 @@ export class AdvertisementsService {
 
     getAllByUserID(id: string) {
         return this.httpClient.get<Advertisement[]>(serverGetAllAdvertisementsByUserIDUrl + "/" + id);
+    }
+
+    getByID(id: number) {
+        return this.httpClient.get<AdvertisementDetailsModel>(serverGetAllAdvertisementsUrl + id);
     }
 }
