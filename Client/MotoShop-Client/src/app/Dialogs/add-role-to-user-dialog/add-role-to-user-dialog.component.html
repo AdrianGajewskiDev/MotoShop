@@ -3,7 +3,7 @@
     <h4>Select a Role</h4>
     <mat-form-field appearance="fill">
         <mat-label>Choose an option</mat-label>
-        <select matNativeControl [(ngModel)]="data.Role">
+        <select matNativeControl [(ngModel)]="role">
             <option value="" selected></option>
             <option value="Administrator">Administrator</option>
             <option value="NormalUser">Normal User</option>
@@ -12,5 +12,5 @@
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">No Thanks</button>
-    <button mat-button [mat-dialog-close]="data.Role" cdkFocusInitial>Ok</button>
+    <button mat-button cdkFocusInitial (click)="submit()">Ok</button>
 </div>

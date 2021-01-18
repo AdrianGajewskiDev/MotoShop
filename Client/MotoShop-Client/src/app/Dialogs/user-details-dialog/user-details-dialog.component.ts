@@ -56,27 +56,14 @@ export class UserDetailsDialogComponent implements OnInit {
 
   addRole(id: string) {
     this.showLoadingSpinner = true;
-    let role = "";
-    const dialogReference = this.dialog.open(AddRoleToUserDialogComponent,
+    this.dialog.open(AddRoleToUserDialogComponent,
       {
         width: '250px',
+        data: {
+          UserID: id
+        }
       });
 
-    dialogReference.afterClosed().subscribe(res => {
-      role = res;
-      this.userService.addRole(id, role).subscribe(
-        () => {
-          this.showLoadingSpinner = false;
-          this.toastr.info(`Role ${role} added to user`, "Success!");
-        },
-        error => {
-          console.log(error.error);
-
-          this.showLoadingSpinner = false;
-          this.toastr.error(error.error);
-        }
-      );
-    });
   }
 
   deleteUser(id: string) {
