@@ -1,4 +1,3 @@
-<app-loading-spinner *ngIf="showLoadingSpinner == true"></app-loading-spinner>
 <h2 mat-dialog-title>Users Details: {{data.User.Id}}</h2>
 <mat-dialog-content class="mat-typography">
     <div class="upper-content" fxLayout='row'>
@@ -19,6 +18,8 @@
         </div>
     </div>
     <div class="bottom-content">
+        <mat-spinner *ngIf="showLoadingSpinner == true" class="progressSpinner"></mat-spinner>
+
         <mat-form-field>
             <mat-label>Filter</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>

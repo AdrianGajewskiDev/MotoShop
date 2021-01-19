@@ -30,6 +30,7 @@ export class AdministrationPanelComponent implements OnInit {
   private users: User[];
 
   public dataSource;
+  public showLoadingSpinner: boolean = false;
 
   //tabs
   usersTab: Element;
@@ -99,17 +100,21 @@ export class AdministrationPanelComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   getData(tab: string) {
-
+    this.showLoadingSpinner = true;
     switch (tab) {
       case 'users':
         {
-          if (this.users == null)
+          if (this.users != null)
+            this.showLoadingSpinner = false;
+          else
             this.service.getAllUsers().subscribe(
               (res: AllUsersModel) => {
+                this.showLoadingSpinner = false;
                 this.users = res.Users
                 this.dataSource = new MatTableDataSource(this.users);
               },
               error => {
+                this.showLoadingSpinner = false;
                 this.toastr.error(error.message);
               }
             );

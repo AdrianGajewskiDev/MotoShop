@@ -27,6 +27,7 @@
             <h2>Administrator dashboard</h2>
         </div>
         <div class="main-content">
+            <mat-spinner *ngIf="showLoadingSpinner == true" class="progressSpinner"></mat-spinner>
             <section id="users" class="section">
                 <mat-form-field>
                     <mat-label>Filter</mat-label>

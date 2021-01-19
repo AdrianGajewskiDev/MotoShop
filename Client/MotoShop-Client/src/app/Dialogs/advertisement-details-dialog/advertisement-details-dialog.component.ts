@@ -3,6 +3,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AdvertisementDetailsModel } from 'src/app/shared/models/advertisements/advertisementDetails.model';
 import { AdvertisementsService } from 'src/app/shared/services/advertisements.service';
 import { ServiceLocator } from 'src/app/shared/services/locator.service';
+import { Motocycle } from "../../shared/models/advertisements/Items/motocycle.model"
+import { Car } from "../../shared/models/advertisements/Items/car.model"
 
 interface DialogData {
   AdvertisementID: number;
@@ -24,7 +26,6 @@ export class AdvertisementDetailsDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.advertisementsService.getByID(this.data.AdvertisementID).subscribe((res) => {
-      console.log(res);
       this.model = res;
     }, error => { console.log(error); });
   }

@@ -1,5 +1,6 @@
 ﻿using MotoShop.Data.Models.Store;
 using MotoShop.Data.Models.User;
+using MotoShop.WebAPI.Models.Response.UserAccount;
 using System;
 
 namespace MotoShop.WebAPI.Models.Response.Advertisements
@@ -11,7 +12,7 @@ namespace MotoShop.WebAPI.Models.Response.Advertisements
         public string Description { get; set; }
         public DateTime Placed { get; set; }
         public string AuthorID { get; set; }
-        public ApplicationUser Author { get; set; }
+        public UserAccountDetailsResponseModel Author { get; set; }
         public T ShopItem { get; set; }
     }
 }

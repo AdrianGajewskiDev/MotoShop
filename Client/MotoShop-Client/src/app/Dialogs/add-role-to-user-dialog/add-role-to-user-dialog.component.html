@@ -2,6 +2,7 @@
 <div mat-dialog-content>
     <h4>Select a Role</h4>
     <mat-form-field appearance="fill">
+        <mat-spinner *ngIf="showLoadingSpinner == true" class="progressSpinner"></mat-spinner>
         <mat-label>Choose an option</mat-label>
         <select matNativeControl [(ngModel)]="role">
             <option value="" selected></option>

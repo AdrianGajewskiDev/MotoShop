@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MotoShop.Data.Models.Store;
@@ -11,6 +12,7 @@ using MotoShop.WebAPI.Models.Requests;
 using MotoShop.WebAPI.Models.Response;
 using MotoShop.WebAPI.Models.Response.Advertisements;
 using MotoShop.WebAPI.Models.Response.ItemsController;
+using MotoShop.WebAPI.Models.Response.UserAccount;
 
 namespace MotoShop.WebAPI.Controllers
 {
@@ -21,12 +23,15 @@ namespace MotoShop.WebAPI.Controllers
         private readonly IAdvertisementService _advertisementService;
         private readonly IApplicationUserService _applicationUserService;
         private readonly IShopItemsService _shopItemService;
+        private readonly IMapper _mapper;
 
-        public AdvertisementsController(IAdvertisementService advertisementService, IApplicationUserService applicationUserService, IShopItemsService shopItemService)
+        public AdvertisementsController(IAdvertisementService advertisementService, IApplicationUserService applicationUserService, 
+            IShopItemsService shopItemService, IMapper mapper)
         {
             _advertisementService = advertisementService;
             _applicationUserService = applicationUserService;
             _shopItemService = shopItemService;
+            _mapper = mapper;
         }
 
         [HttpGet()]
@@ -119,7 +124,7 @@ namespace MotoShop.WebAPI.Controllers
                     {
                         var model = new AdvertisementDetailsResponseModel<Car>
                         {
-                            Author = advertisement.Author,
+                            Author = _mapper.Map<UserAccountDetailsResponseModel>(advertisement.Author),
                             AuthorID = advertisement.AuthorID,
                             Description = advertisement.Description,
                             ID = advertisement.ID,
@@ -135,7 +140,7 @@ namespace MotoShop.WebAPI.Controllers
                     {
                         var model = new AdvertisementDetailsResponseModel<Motocycle>
                         {
-                            Author = advertisement.Author,
+                            Author = _mapper.Map<UserAccountDetailsResponseModel>(advertisement.Author),
                             AuthorID = advertisement.AuthorID,
                             Description = advertisement.Description,
                             ID = advertisement.ID,

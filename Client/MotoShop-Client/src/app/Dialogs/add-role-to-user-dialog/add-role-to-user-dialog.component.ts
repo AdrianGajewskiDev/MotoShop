@@ -22,19 +22,22 @@ export class AddRoleToUserDialogComponent implements OnInit {
   }
 
   public role: string;
+  public showLoadingSpinner = false;
 
   userService: UserService;
   toastr: ToastrService;
 
   submit() {
-
+    this.showLoadingSpinner = true;
     if (this.role != null && this.data.UserID != null) {
       this.userService.addRole(this.data.UserID, this.role).subscribe(
         () => {
+          this.showLoadingSpinner = false;
           this.toastr.info(`Role ${this.role} added to user`, "Success!");
           this.dialogRef.close();
         },
         error => {
+          this.showLoadingSpinner = false;
           console.log(error.error);
           this.toastr.error(error.error);
         }
