@@ -100,7 +100,8 @@ export class UserDetailsDialogComponent implements OnInit {
 
   goToAdvertDetails(id: number) {
     this.dialog.open(AdvertisementDetailsDialogComponent, {
-      width: '250 px',
+      width: '1000px',
+      height: '600px',
       data: {
         AdvertisementID: id
       }

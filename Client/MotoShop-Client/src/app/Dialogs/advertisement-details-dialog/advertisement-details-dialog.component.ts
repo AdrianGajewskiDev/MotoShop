@@ -5,6 +5,8 @@ import { AdvertisementsService } from 'src/app/shared/services/advertisements.se
 import { ServiceLocator } from 'src/app/shared/services/locator.service';
 import { Motocycle } from "../../shared/models/advertisements/Items/motocycle.model"
 import { Car } from "../../shared/models/advertisements/Items/car.model"
+import { ItemType } from "../../shared/Helpers/item.type"
+
 
 interface DialogData {
   AdvertisementID: number;
@@ -23,11 +25,20 @@ export class AdvertisementDetailsDialogComponent implements OnInit {
 
   model: AdvertisementDetailsModel;
   advertisementsService: AdvertisementsService;
+  itemType: ItemType;
+  item: "Car" | "Motocycle" = "Car";
 
   ngOnInit(): void {
     this.advertisementsService.getByID(this.data.AdvertisementID).subscribe((res) => {
       this.model = res;
+      if (this.model.ShopItem.ItemType == "Motocycle") {
+        this.item = "Motocycle";
+        this.itemType = this.model.ShopItem as Motocycle;
+      }
+      else {
+        this.item = "Car";
+        this.itemType = this.model.ShopItem as Car;
+      }
     }, error => { console.log(error); });
   }
-
 }
