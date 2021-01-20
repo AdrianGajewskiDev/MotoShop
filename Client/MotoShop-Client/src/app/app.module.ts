@@ -37,6 +37,7 @@ import { AdvertisementsService } from './shared/services/advertisements.service'
 import { AddRoleToUserDialogComponent } from './Dialogs/add-role-to-user-dialog/add-role-to-user-dialog.component';
 import { ConfirmationDialogComponent } from './Dialogs/confirmation-dialog/confirmation-dialog.component';
 import { AdvertisementDetailsDialogComponent } from './Dialogs/advertisement-details-dialog/advertisement-details-dialog.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { AdvertisementDetailsDialogComponent } from './Dialogs/advertisement-det
     ExternalSignInService,
     AdministrationService,
     AdvertisementsService,
+    DatePipe,
     ///Interceptors
     {
       provide: HTTP_INTERCEPTORS,

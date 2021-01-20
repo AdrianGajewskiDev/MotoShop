@@ -1,4 +1,4 @@
-import {ShopItem} from "./shopItem.model"
+import { ShopItem } from "./shopItem.model"
 
 export interface Advertisement {
     ID: number;

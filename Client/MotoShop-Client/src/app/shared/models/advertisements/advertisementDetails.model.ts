@@ -4,7 +4,7 @@ export class AdvertisementDetailsModel {
     ID: number;
     Title: string;
     Description: string;
-    Placed: Date;
+    Placed: string;
     AuthorID: string;
     Author: UserProfileDataModel;
     ShopItem: any;
