@@ -12,3 +12,4 @@ export const serverGetAllAdvertisementsByUserIDUrl = "https://localhost:44304/ap
 export const administrationAddRoleToUserUrls = "https://localhost:44304/api/administration/addRole";
 export const administrationDeleteUserUrls = "https://localhost:44304/api/administration/";
 export const serverGetAllAdvertisementsUrl = "https://localhost:44304/api/advertisements/";
+export const serverDeleteAdvertisementUrl = "https://localhost:44304/api/advertisements/";

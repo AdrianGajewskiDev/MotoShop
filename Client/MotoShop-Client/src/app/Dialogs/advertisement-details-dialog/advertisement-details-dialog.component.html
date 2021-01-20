@@ -29,7 +29,7 @@
             </ul>
             <div class="actions">
                 <button mat-button mat-raised-button color="primary">Edit</button>
-                <button mat-button mat-raised-button color="warn">Delete</button>
+                <button mat-button mat-raised-button color="warn" (click)="deleteAd()">Delete</button>
             </div>
         </div>
     </div>
@@ -71,6 +71,36 @@
             <li class="details-item">
                 <p class="details-item-A">FuelConsumption (l/100km)</p>
                 <p class="details-item-B">{{car.FuelConsumption}}</p>
+            </li>
+        </ul>
+        <ul *ngIf="item == 'Motocycle'" class="details-list">
+            <li class="details-item">
+                <p class="details-item-A">Motocycle Brand</p>
+                <p class="details-item-B">{{motocycle.MotocycleBrand }}</p>
+            </li>
+            <li class="details-item">
+                <p class="details-item-A">Motocycle Model</p>
+                <p class="details-item-B">{{motocycle.MotocycleModel}}</p>
+            </li>
+            <li class="details-item">
+                <p class="details-item-A">Fuel</p>
+                <p class="details-item-B">{{motocycle.Fuel}}</p>
+            </li>
+            <li class="details-item">
+                <p class="details-item-A">Production Year</p>
+                <p class="details-item-B">{{motocycle.YearOfProduction}}</p>
+            </li>
+            <li class="details-item">
+                <p class="details-item-A">Cubic Capacity (m3)</p>
+                <p class="details-item-B">{{motocycle.CubicCapacity}}</p>
+            </li>
+            <li class="details-item">
+                <p class="details-item-A">HP</p>
+                <p class="details-item-B">{{motocycle.HorsePower}}</p>
+            </li>
+            <li class="details-item">
+                <p class="details-item-A">FuelConsumption (l/100km)</p>
+                <p class="details-item-B">{{motocycle.FuelConsumption}}</p>
             </li>
         </ul>
     </div>

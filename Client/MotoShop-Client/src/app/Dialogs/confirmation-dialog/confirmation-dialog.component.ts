@@ -23,6 +23,7 @@ export class ConfirmationDialogComponent implements OnInit {
   excute() {
     this.data.run = false;
     this.data.func(this.data.run);
+    this.dialogRef.close();
   }
 
   cancel() {

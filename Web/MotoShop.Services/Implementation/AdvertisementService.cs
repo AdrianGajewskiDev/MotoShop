@@ -35,6 +35,9 @@ namespace MotoShop.Services.Implementation
         {
             var ad = GetAdvertisementById(advertisementID);
 
+            if (ad == null)
+                return;
+
             switch (ad.ShopItem.ItemType)
             {
                 case "Car":

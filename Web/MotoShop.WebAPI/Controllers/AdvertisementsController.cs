@@ -111,6 +111,7 @@ namespace MotoShop.WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
+        [Cache(5)]
         public IActionResult GetById(int id)
         {
             var advertisement = _advertisementService.GetAdvertisementById(id);
@@ -156,5 +157,15 @@ namespace MotoShop.WebAPI.Controllers
 
             return BadRequest(StaticMessages.SomethingWentWrong);
         }
+
+        [HttpDelete("{id}")]
+        [ClearCache]
+        public IActionResult DeleteAdvertisement(int id)
+        {
+            _advertisementService.DeleteAdvertisement(id);
+
+            return Ok(StaticMessages.Deleted("Advertisement"));
+        }
+
     }
 }

@@ -14,6 +14,6 @@
         public static string InvalidSignInData(string prefix) => $"Invalid {prefix} or password ";
         public static string NotExist(string type, string data, object value) => $"{type} with {data} of {value} does not exist!!";
         public static string FailedToUpdate(string data) => $"Something went wrong while trying to update the {data}";
-        public static string Deleted(string data) => $"{data} was successfully deleted";
+        public static string Deleted(string data) => $"-{data} was successfully deleted";
     }
 }
