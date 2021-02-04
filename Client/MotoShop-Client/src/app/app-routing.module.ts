@@ -48,7 +48,7 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard],
   },
   {
-    path: "confirmation/:type",
+    path: "confirmation/:type?",
     component: ConfirmationComponent
   },
   {
