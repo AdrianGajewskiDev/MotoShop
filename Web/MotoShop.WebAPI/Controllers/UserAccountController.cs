@@ -155,6 +155,7 @@ namespace MotoShop.WebAPI.Controllers
 
             if(result == true)
             {
+                //TODO: this is throwing a NullReferenceException when callback is for email confirmation principle
                 BrowserLauncher.Launch(_configuration["ApplicationUrls:Client"] + $"confirmation/{dataType.ToLower()}");
                 await _cachingService.ClearCache(new string[1] {userID});
                 return Ok(new { message =  message});

@@ -21,7 +21,8 @@ namespace MotoShop.WebAPI.Controllers
         private readonly IApplicationUserService _applicationUserService;
         private readonly IMapper _mapper;
 
-        public AdministrationController(IAdministrationService service, IApplicationUserService applicationUserService, IMapper mapper)
+        public AdministrationController(IAdministrationService service, IApplicationUserService applicationUserService, 
+            IMapper mapper)
         {
             _service = service;
             _applicationUserService = applicationUserService;
@@ -29,7 +30,6 @@ namespace MotoShop.WebAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = ApplicationRoles.Administrator)]
         public async Task<IActionResult> CreateAdmin(UserRegisterRequestModel model)
         {
             if((await _applicationUserService.UserExists(model.Email, model.UserName)))
@@ -50,6 +50,7 @@ namespace MotoShop.WebAPI.Controllers
             if(newUser != null)
             {
                 await _service.CreateAdminAsync(newUser);
+                await _applicationUserService.SendAccountConfirmationMessageAsync(newUser);
 
                 return Ok(StaticMessages.Created(ApplicationRoles.Administrator));
             }

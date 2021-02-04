@@ -10,8 +10,8 @@ using MotoShop.Data.Database_Context;
 namespace MotoShop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    [Migration("20201001135440_changed entity values on Advertisement Model")]
-    partial class changedentityvaluesonAdvertisementModel
+    [Migration("20210204142159_Init database")]
+    partial class Initdatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -170,6 +170,9 @@ namespace MotoShop.Data.Migrations
                     b.Property<DateTime>("Placed")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ShopItemID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
@@ -178,6 +181,8 @@ namespace MotoShop.Data.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("AuthorID");
+
+                    b.HasIndex("ShopItemID");
 
                     b.ToTable("Advertisements");
                 });
@@ -189,12 +194,6 @@ namespace MotoShop.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AdvertisementID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -202,19 +201,16 @@ namespace MotoShop.Data.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ItemType")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("OwnerID")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)")
-                        .HasMaxLength(20);
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("AdvertisementID")
-                        .IsUnique();
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("ShopItem");
 
@@ -238,6 +234,12 @@ namespace MotoShop.Data.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsExternal")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
@@ -299,8 +301,7 @@ namespace MotoShop.Data.Migrations
                     b.HasBaseType("MotoShop.Data.Models.Store.ShopItem");
 
                     b.Property<float>("Acceleration")
-                        .HasColumnType("real")
-                        .HasMaxLength(10);
+                        .HasColumnType("real");
 
                     b.Property<string>("CarBrand")
                         .IsRequired()
@@ -318,8 +319,7 @@ namespace MotoShop.Data.Migrations
                         .HasMaxLength(50);
 
                     b.Property<float>("CubicCapacity")
-                        .HasColumnType("real")
-                        .HasMaxLength(10);
+                        .HasColumnType("real");
 
                     b.Property<string>("Fuel")
                         .IsRequired()
@@ -327,36 +327,69 @@ namespace MotoShop.Data.Migrations
                         .HasMaxLength(20);
 
                     b.Property<int>("FuelConsumption")
-                        .HasColumnType("int")
-                        .HasMaxLength(10);
+                        .HasColumnType("int");
 
                     b.Property<string>("Gearbox")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("HorsePower")
-                        .HasColumnType("int")
-                        .HasMaxLength(10);
+                        .HasColumnType("int");
 
                     b.Property<float>("Lenght")
-                        .HasColumnType("real")
-                        .HasMaxLength(10);
+                        .HasColumnType("real");
 
                     b.Property<int>("NumberOfDoors")
-                        .HasColumnType("int")
-                        .HasMaxLength(10);
+                        .HasColumnType("int");
 
                     b.Property<int>("NumberOfSeats")
-                        .HasColumnType("int")
-                        .HasMaxLength(10);
+                        .HasColumnType("int");
 
                     b.Property<float>("Width")
-                        .HasColumnType("real")
-                        .HasMaxLength(10);
+                        .HasColumnType("real");
 
                     b.Property<DateTime>("YearOfProduction")
                         .HasColumnType("datetime2");
 
                     b.HasDiscriminator().HasValue("Car");
+                });
+
+            modelBuilder.Entity("MotoShop.Data.Models.Store.Motocycle", b =>
+                {
+                    b.HasBaseType("MotoShop.Data.Models.Store.ShopItem");
+
+                    b.Property<float>("Acceleration")
+                        .HasColumnType("real");
+
+                    b.Property<float>("CubicCapacity")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Fuel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<int>("FuelConsumption")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HorsePower")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Lenght")
+                        .HasColumnType("real");
+
+                    b.Property<string>("MotocycleBrand")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MotocycleModel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Width")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("YearOfProduction")
+                        .HasColumnType("datetime2");
+
+                    b.HasDiscriminator().HasValue("Motocycle");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -413,21 +446,12 @@ namespace MotoShop.Data.Migrations
             modelBuilder.Entity("MotoShop.Data.Models.Store.Advertisement", b =>
                 {
                     b.HasOne("MotoShop.Data.Models.User.ApplicationUser", "Author")
-                        .WithMany("Advertisements")
+                        .WithMany()
                         .HasForeignKey("AuthorID");
-                });
 
-            modelBuilder.Entity("MotoShop.Data.Models.Store.ShopItem", b =>
-                {
-                    b.HasOne("MotoShop.Data.Models.Store.Advertisement", null)
-                        .WithOne("ShopItem")
-                        .HasForeignKey("MotoShop.Data.Models.Store.ShopItem", "AdvertisementID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MotoShop.Data.Models.User.ApplicationUser", null)
-                        .WithMany("ShopItems")
-                        .HasForeignKey("ApplicationUserId");
+                    b.HasOne("MotoShop.Data.Models.Store.ShopItem", "ShopItem")
+                        .WithMany()
+                        .HasForeignKey("ShopItemID");
                 });
 #pragma warning restore 612, 618
         }

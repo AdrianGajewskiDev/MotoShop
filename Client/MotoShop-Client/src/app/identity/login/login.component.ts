@@ -53,6 +53,8 @@ export class LoginComponent implements OnInit {
         });
       },
       (error) => {
+        console.log(error);
+        
         this.showLoadingSpinner = false;
         if (error.status == 404) {
           this.showErrorMessage = true;
