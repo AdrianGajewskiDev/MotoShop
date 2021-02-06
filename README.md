@@ -2,6 +2,8 @@
 A automotive shop made using Asp.Net Core and Angular 9.
 
 # Technologies Used:
+ * ASP.Net Core
+ * Angular 9
  * JWT
  * AutoMapper
  * Angular Material
