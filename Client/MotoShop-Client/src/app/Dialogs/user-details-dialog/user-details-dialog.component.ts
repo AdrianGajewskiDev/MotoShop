@@ -56,7 +56,6 @@ export class UserDetailsDialogComponent implements OnInit {
   }
 
   addRole(id: string) {
-    this.showLoadingSpinner = true;
     this.dialog.open(AddRoleToUserDialogComponent,
       {
         width: '250px',

@@ -154,7 +154,7 @@ namespace MotoShop.Services.Implementation
                         break;
                 }
             }
-
+            _dbContext.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             var result = await _dbContext.SaveChangesAsync();
             if (result < 0)
                 return new UpdateResult

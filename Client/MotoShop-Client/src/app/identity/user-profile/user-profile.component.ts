@@ -95,6 +95,7 @@ export class UserProfileComponent implements OnInit {
       },
       error => {
         if (error.status == 400) {
+          this.showLoadingSpinner = false;
           this.showUpdatingError = true;
           this.errorMessage = error.error.Message;
         }
