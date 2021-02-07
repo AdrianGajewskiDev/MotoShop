@@ -86,6 +86,7 @@ namespace MotoShop.WebAPI.Extensions
             services.AddSingleton<ICachingService, CachingService>();
             services.AddSingleton<IEmailSenderService, EmailSender>();
             services.AddSingleton<IImageUploadService, ImageUploader>();
+            services.AddSingleton<DatabaseSeeder>();
             return services;
         }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MotoShop.Data.Database_Context;
 using MotoShop.Data.Helpers;
@@ -154,7 +155,7 @@ namespace MotoShop.Services.Implementation
                         break;
                 }
             }
-            _dbContext.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _dbContext.Entry(user).State = EntityState.Modified;
             var result = await _dbContext.SaveChangesAsync();
             if (result < 0)
                 return new UpdateResult

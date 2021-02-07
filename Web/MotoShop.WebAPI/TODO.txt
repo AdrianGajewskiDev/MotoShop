@@ -1,0 +1,6 @@
+﻿--2/7/2021
+ -Backend 
+  * Seed database with dummy data
+ -Frontend
+  * Finish the administrator panel (atleast the Users and Products Sections)
+--

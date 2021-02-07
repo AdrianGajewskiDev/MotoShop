@@ -128,5 +128,14 @@ namespace MotoShop.WebAPI.Controllers
 
             return BadRequest(StaticMessages.SomethingWentWrong);
         }
+
+        [HttpGet("seedDb")]
+        [Authorize(Roles = ApplicationRoles.Administrator)]
+        public async Task<IActionResult> SeedDatabase([FromServices] DatabaseSeeder databaseSeeder)
+        {
+            await databaseSeeder.AddAdvertisementToDatabase();
+
+            return Ok();
+        }
     }
 }
