@@ -13,6 +13,7 @@ using MotoShop.WebAPI.Authorization;
 using MotoShop.WebAPI.AutoMapper.Profiles;
 using MotoShop.WebAPI.Configurations;
 using MotoShop.WebAPI.Helpers;
+using MotoShop.WebAPI.Helpers.Database;
 using MotoShop.WebAPI.Token_Providers;
 using System;
 using System.Text;
@@ -77,8 +78,9 @@ namespace MotoShop.WebAPI.Extensions
             services.AddTransient<IAdvertisementService, AdvertisementService>();
             services.AddTransient<IShopItemsService, ShopItemsService>();
             services.AddTransient<IExternalLoginProviderService, ExternalLoginProviderService>();
-            services.AddTransient<DatabaseSeeder>();
             services.AddTransient<IAdministrationService, AdministrationService>();
+            services.AddTransient<DatabaseSeeder>();
+
 
             //Singletons
             services.AddSingleton<JsonWebTokenWriter>();
@@ -86,7 +88,7 @@ namespace MotoShop.WebAPI.Extensions
             services.AddSingleton<ICachingService, CachingService>();
             services.AddSingleton<IEmailSenderService, EmailSender>();
             services.AddSingleton<IImageUploadService, ImageUploader>();
-            services.AddSingleton<DatabaseSeeder>();
+
             return services;
         }
 

@@ -58,6 +58,8 @@ export class RegisterComponent implements OnInit {
         this.router.navigateByUrl("/identity");
       },
       (error) => {
+        console.log(error);
+
         if (error.status == 400) {
           this.showRegistrationError = true;
           this.registrationErrorMsg = error.error.Message

@@ -6,6 +6,7 @@ using MotoShop.Services.HelperModels;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Attributes;
 using MotoShop.WebAPI.Helpers;
+using MotoShop.WebAPI.Helpers.Database;
 using MotoShop.WebAPI.Models.Request;
 using MotoShop.WebAPI.Models.Requests.Administration;
 using MotoShop.WebAPI.Models.Response.Administration;
@@ -129,11 +130,18 @@ namespace MotoShop.WebAPI.Controllers
             return BadRequest(StaticMessages.SomethingWentWrong);
         }
 
-        [HttpGet("seedDb")]
+        /// <summary>
+        /// This method should be only used to put dummy data to database
+        /// just to have to data to work with
+        /// </summary>
+        /// <param name="databaseSeeder"></param>
+        /// <returns></returns>
+        [HttpPost("seedDb")]
         [Authorize(Roles = ApplicationRoles.Administrator)]
         public async Task<IActionResult> SeedDatabase([FromServices] DatabaseSeeder databaseSeeder)
         {
-            await databaseSeeder.AddAdvertisementToDatabase();
+
+           // await databaseSeeder.AddAdvertisements();
 
             return Ok();
         }

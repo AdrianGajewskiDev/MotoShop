@@ -12,7 +12,6 @@ using MotoShop.WebAPI.Models.Requests;
 using MotoShop.WebAPI.Token_Providers;
 using Serilog;
 using System;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MotoShop.WebAPI.Controllers

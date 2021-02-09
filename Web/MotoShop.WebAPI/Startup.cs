@@ -45,15 +45,14 @@ namespace MotoShop.Web
 
 
             services.Configure<GoogleAuthOptions>(Configuration.GetSection("GoogleAuthentication"));
-
             services.AddCors(setup =>
             {
                 setup.AddPolicy("DevPolicy", configure =>
                 {
-                    configure.AllowAnyOrigin()
+                    configure.WithOrigins("http://localhost:4200")
                                 .AllowAnyMethod()
                                 .AllowAnyHeader()
-                                .SetIsOriginAllowed((host) => true);
+                                .AllowCredentials();
                 });
             });
 
@@ -70,7 +69,6 @@ namespace MotoShop.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors("DevPolicy");
 
             if (env.IsDevelopment())
             {
@@ -90,6 +88,8 @@ namespace MotoShop.Web
             {
                 ExceptionHandler = new ExceptionHandlerMidleware().HandleException
             });
+
+            app.UseCors("DevPolicy");
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();
