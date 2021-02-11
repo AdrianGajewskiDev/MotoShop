@@ -8,6 +8,11 @@ interface DialogData {
   AdvertisementModel: Advertisement;
 }
 
+interface UpdateDataResult {
+  Key: string;
+  Content: string | number;
+}
+
 @Component({
   selector: 'app-edit-advertisement-dialog',
   templateUrl: './edit-advertisement-dialog.component.html',
@@ -23,14 +28,12 @@ export class EditAdvertisementDialogComponent implements OnInit {
   public editAdForm: FormGroup;
   public editItemForm: FormGroup;
 
+  private closing: boolean = false;
   private formBuilder: FormBuilder;
 
   ngOnInit(): void {
-
+    this.closing = false;
     this.model = this.data.AdvertisementModel;
-
-    console.log(this.model);
-
     this.editItemForm = this.formBuilder.group(
       {
         "itemID": new FormControl({ value: this.model.ShopItem.ID, disabled: true }),
@@ -42,11 +45,74 @@ export class EditAdvertisementDialogComponent implements OnInit {
     this.editAdForm = this.formBuilder.group(
       {
         "id": new FormControl({ value: this.model.ID, disabled: true }),
-        "authorID": new FormControl({ value: this.model.AuthorID, disabled: true }, Validators.required),
         "title": new FormControl({ value: this.model.Title, disabled: false }, Validators.required),
+        "authorID": new FormControl({ value: this.model.AuthorID, disabled: true }, Validators.required),
         "description": new FormControl({ value: this.model.Description, disabled: false }, Validators.required),
         "placed": new FormControl({ value: this.model.Placed, disabled: false }, Validators.required),
       });
   }
 
+  cancel(): void {
+    this.closing = true;
+    this.dialogRef.close();
+  }
+
+  apply(): void {
+    if (this.closing == true)
+      return;
+
+    let updatedAdvert: Advertisement =
+    {
+      AuthorID: this.model.AuthorID,
+      Description: this.editAdForm.get('description').value,
+      ID: this.model.ID,
+      Placed: this.editAdForm.get('placed').value,
+      Title: this.editAdForm.get('title').value,
+      ShopItem: {
+        ID: this.model.ShopItem.ID,
+        ImageUrl: this.editItemForm.get('imageUrl').value,
+        ItemType: this.model.ShopItem.ItemType,
+        OwnerID: this.model.ShopItem.OwnerID,
+        Price: this.editItemForm.get('price').value
+      }
+    };
+
+    let dataToUpdate = this.determineDataToUpdate(this.model, updatedAdvert);
+  }
+
+  determineDataToUpdate(model: Advertisement, newModel: Advertisement): UpdateDataResult[] {
+    let oldProperties: Record<number, UpdateDataResult> =
+    {
+      0: { Key: "title", Content: model.Title },
+      1: { Key: "description", Content: model.Description },
+      2: { Key: "placed", Content: model.Placed },
+      3: { Key: "price", Content: model.ShopItem.Price },
+      4: { Key: "imageUrl", Content: model.ShopItem.ImageUrl }
+    };
+
+    let newProperties: Record<number, UpdateDataResult> =
+    {
+      0: { Key: "title", Content: newModel.Title },
+      1: { Key: "description", Content: newModel.Description },
+      2: { Key: "placed", Content: newModel.Placed },
+      3: { Key: "price", Content: newModel.ShopItem.Price },
+      4: { Key: "imageUrl", Content: newModel.ShopItem.ImageUrl }
+    };
+
+    let results: UpdateDataResult[] = [];
+
+    for (let i = 0; i < 5; i++) {
+      if (oldProperties[i].Content != newProperties[i].Content) {
+        results.push(
+          {
+            Key: newProperties[i].Key,
+            Content: newProperties[i].Content
+          })
+      }
+      else
+        continue;
+    }
+
+    return results;
+  }
 }

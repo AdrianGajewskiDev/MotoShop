@@ -1,6 +1,6 @@
 import { ShopItem } from "./shopItem.model"
 
-export interface Advertisement {
+export class Advertisement {
     ID: number;
     Title: string;
     Description: string;

@@ -1,4 +1,4 @@
-<form [formGroup]="editAdForm">
+<form [formGroup]="editAdForm" (ngSubmit)="apply()">
     <p>Advertisement Details</p>
     <mat-form-field class="example-full-width">
         <mat-label>ID</mat-label>
@@ -40,7 +40,7 @@
         </mat-form-field>
     </form>
     <div class="actions" fxLayoutAlign="end center">
-        <button mat-button mat-raised-button color="warm">Cancel</button>
-        <button mat-button mat-raised-button color="accent">Apply</button>
+        <button mat-button mat-raised-button color="warm" (click)="cancel()">Cancel</button>
+        <button mat-button mat-raised-button color="accent" type="submit">Apply</button>
     </div>
 </form>

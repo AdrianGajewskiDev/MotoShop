@@ -72,8 +72,6 @@ export class AdministrationPanelComponent implements OnInit {
     if (!data.IsExternal)
       data.ImageUrl = buildImagePath(data.ImageUrl);
 
-    console.log(data);
-
     this.dialog.open(UserDetailsDialogComponent, {
       minWidth: '900px',
       minHeight: '800px',
