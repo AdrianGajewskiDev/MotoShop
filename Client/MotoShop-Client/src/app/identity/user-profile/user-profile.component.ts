@@ -10,7 +10,7 @@ import { UserProfileDataModel } from 'src/app/shared/models/user/userProfileData
 import { passwordValidators } from 'src/app/shared/password-validators';
 import { UserService } from 'src/app/shared/services/user.service';
 import { isEmpty } from '../../shared/Helpers/formGroupHelpers'
-import { buildProfileImagePath } from "../../shared/Helpers/buildProfileImagePath"
+import { buildImagePath } from "../../shared/Helpers/buildProfileImagePath"
 import { UploadService } from 'src/app/shared/services/upload.service';
 import { Router } from '@angular/router';
 
@@ -57,7 +57,7 @@ export class UserProfileComponent implements OnInit {
         if (this.userData.IsExternal)
           this.imageUrl = this.userData.ImageUrl;
         else
-          this.imageUrl = buildProfileImagePath(this.userData.ImageUrl);
+          this.imageUrl = buildImagePath(this.userData.ImageUrl);
       },
       (error) => {
 

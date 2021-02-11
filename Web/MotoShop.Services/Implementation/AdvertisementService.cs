@@ -23,7 +23,7 @@ namespace MotoShop.Services.Implementation
                 throw new ArgumentNullException();
 
 
-            await _context.Advertisements.AddAsync(advertisement);
+            _context.Advertisements.Add(advertisement);
 
             if (await _context.SaveChangesAsync() > 0)
                 return true;
@@ -33,6 +33,7 @@ namespace MotoShop.Services.Implementation
 
         public void DeleteAdvertisement(int advertisementID)
         {
+            
             var ad = GetAdvertisementById(advertisementID);
 
             if (ad == null)

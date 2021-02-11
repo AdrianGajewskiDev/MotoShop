@@ -70,7 +70,7 @@ namespace MotoShop.WebAPI.Controllers
             Advertisement advertisement = new Advertisement
             {
                 Author = await _applicationUserService.GetUserByID(userID),
-                AuthorID =userID,
+                AuthorID = userID,
                 Description = newAdvertisementRequestModel.Description,
                 Placed = DateTime.Now,
                 Title = newAdvertisementRequestModel.Title
@@ -165,6 +165,7 @@ namespace MotoShop.WebAPI.Controllers
             _advertisementService.DeleteAdvertisement(id);
 
             return Ok(StaticMessages.Deleted("Advertisement"));
+
         }
 
     }

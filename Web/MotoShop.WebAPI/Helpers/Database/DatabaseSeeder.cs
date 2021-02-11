@@ -2,6 +2,7 @@
 using MotoShop.Data.Models.Store;
 using MotoShop.Services.Services;
 using System;
+using System.Threading.Tasks;
 
 namespace MotoShop.WebAPI.Helpers.Database
 {
@@ -9,16 +10,11 @@ namespace MotoShop.WebAPI.Helpers.Database
     {
         private readonly ApplicationDatabaseContext _dbContext;
         private readonly IApplicationUserService _userService;
-        private readonly IAdvertisementService _adService;
-        private readonly IShopItemsService _shopItemService;
 
-        public DatabaseSeeder(ApplicationDatabaseContext dbContext, IApplicationUserService userService,
-            IAdvertisementService adService, IShopItemsService shopItemService)
+        public DatabaseSeeder(ApplicationDatabaseContext dbContext, IApplicationUserService userService)
         {
             _dbContext = dbContext;
             _userService = userService;
-            _adService = adService;
-            _shopItemService = shopItemService;
         }
 
         private string[] _carBrands = 
@@ -56,7 +52,7 @@ namespace MotoShop.WebAPI.Helpers.Database
         private string[] _Gearbox = { "Manual", "Automatic", "SemiAuto"}; 
         private string[] _carBodyTypes = { "Sedan", "Coupe", "SUV", "Combi"};
 
-        public async void AddAdvertisements(string userID, int count) 
+        public async Task AddAdvertisements(string userID, int count) 
         {
             for(int i = 0; i <= count; i++)
             {
@@ -71,7 +67,7 @@ namespace MotoShop.WebAPI.Helpers.Database
                 var carName = _carBrands[carNameIndex];
                 var carBody = _carBodyTypes[carBodyTypeIndex];
                 var carFuel = _fuels[carFuelIndex];
-                var carGearbox = _fuels[carGearboxIndex];
+                var carGearbox = _Gearbox[carGearboxIndex];
 
                 var item = new Car
                 {
@@ -95,20 +91,23 @@ namespace MotoShop.WebAPI.Helpers.Database
                     YearOfProduction = new DateTime(rnd.Next(2000, 2021), rnd.Next(1, 12), rnd.Next(1, 31))
                 };
 
+                _dbContext.Cars.Add(item);
+
                 var descriptionTemplate = $"I'm selling a {carName}, with {item.HorsePower} HP. It's a {item.CarType} with {item.NumberOfDoors} doors. The price is {item.Price}";
 
                 var advertisement = new Advertisement
                 {
                     AuthorID = userID,
-                    Author = await _userService.GetUserByID(userID),
                     Description = descriptionTemplate,
                     Placed = DateTime.Now,
                     Title = $"Selling a {carName}",
                     ShopItem = item
                 };
 
-                _dbContext.Add(advertisement);
+                _dbContext.Advertisements.Add(advertisement);
+                
             }
+
             _dbContext.SaveChanges();
         }
     }

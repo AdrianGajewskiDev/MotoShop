@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { ToastrService } from 'ngx-toastr';
-import { buildProfileImagePath } from 'src/app/shared/Helpers/buildProfileImagePath';
+import { buildImagePath } from 'src/app/shared/Helpers/buildProfileImagePath';
 import { slideInOutAnimation } from '../../shared/animations';
 import { AllUsersModel } from '../../shared/models/administration/allUsers.model';
 import { User } from '../../shared/models/administration/user.model';
@@ -70,7 +70,7 @@ export class AdministrationPanelComponent implements OnInit {
     data.UserName = currentUser.UserName;
 
     if (!data.IsExternal)
-      data.ImageUrl = buildProfileImagePath(data.ImageUrl);
+      data.ImageUrl = buildImagePath(data.ImageUrl);
 
     console.log(data);
 

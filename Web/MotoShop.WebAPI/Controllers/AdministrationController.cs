@@ -10,6 +10,8 @@ using MotoShop.WebAPI.Helpers.Database;
 using MotoShop.WebAPI.Models.Request;
 using MotoShop.WebAPI.Models.Requests.Administration;
 using MotoShop.WebAPI.Models.Response.Administration;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MotoShop.WebAPI.Controllers
@@ -140,8 +142,16 @@ namespace MotoShop.WebAPI.Controllers
         [Authorize(Roles = ApplicationRoles.Administrator)]
         public async Task<IActionResult> SeedDatabase([FromServices] DatabaseSeeder databaseSeeder)
         {
+            var users = _service.GetAllUsers();
 
-           // await databaseSeeder.AddAdvertisements();
+
+            foreach (ApplicationUser user in users)
+            {
+                if (user.UserName.Equals("Admin"))
+                    continue;
+                else
+                    await databaseSeeder.AddAdvertisements(user.Id, 15);
+            }
 
             return Ok();
         }

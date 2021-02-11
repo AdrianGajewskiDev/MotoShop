@@ -9,6 +9,9 @@ import { ItemType } from "../../shared/Helpers/item.type"
 import { DatePipe } from '@angular/common';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { ToastrService } from 'ngx-toastr';
+import { buildImagePath } from 'src/app/shared/Helpers/buildProfileImagePath';
+import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
+import { EditAdvertisementDialogComponent } from '../edit-advertisement-dialog/edit-advertisement-dialog.component';
 
 
 interface DialogData {
@@ -38,6 +41,7 @@ export class AdvertisementDetailsDialogComponent implements OnInit {
   item: string = "";
   car: Car;
   motocycle: Motocycle;
+  imageUrl: string;
 
   ngOnInit(): void {
     this.advertisementsService.getByID(this.data.AdvertisementID).subscribe((res) => {
@@ -53,6 +57,7 @@ export class AdvertisementDetailsDialogComponent implements OnInit {
         this.car.YearOfProduction = this.datePipe.transform(this.car.YearOfProduction, "yyyy-MM")
 
       }
+      this.imageUrl = buildImagePath(this.model.ShopItem.ImageUrl);
       this.model.Placed = this.datePipe.transform(this.model.Placed, "yyyy-MM-dd");
     }, error => { console.log(error); });
   }
@@ -64,7 +69,7 @@ export class AdvertisementDetailsDialogComponent implements OnInit {
       {
         func: (s) => {
           if (s == false) {
-            this.deleteAdCallback(this.model.ID)
+            this.deleteAddCallback(this.model.ID)
           }
         },
         run: false,
@@ -73,15 +78,17 @@ export class AdvertisementDetailsDialogComponent implements OnInit {
     });
   }
 
-  deleteAdCallback(id) {
+  deleteAddCallback(id) {
     this.advertisementsService.delete(this.model.ID).subscribe(res => {
       this.toastr.info(`Advertisement with id of ${this.model.ID} was successfully deleted!!`)
       window.location.reload();
     },
       error => {
-        console.log(error);
-
         this.toastr.error(`Cannot delete advertisement with id of ${this.model.ID}`)
       });
+  }
+
+  editAdvert() {
+    this.dialog.open(EditAdvertisementDialogComponent);
   }
 }

@@ -38,6 +38,7 @@ import { AddRoleToUserDialogComponent } from './Dialogs/add-role-to-user-dialog/
 import { ConfirmationDialogComponent } from './Dialogs/confirmation-dialog/confirmation-dialog.component';
 import { AdvertisementDetailsDialogComponent } from './Dialogs/advertisement-details-dialog/advertisement-details-dialog.component';
 import { DatePipe } from '@angular/common';
+import { EditAdvertisementDialogComponent } from './Dialogs/edit-advertisement-dialog/edit-advertisement-dialog.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { DatePipe } from '@angular/common';
     UserDetailsDialogComponent,
     AddRoleToUserDialogComponent,
     ConfirmationDialogComponent,
-    AdvertisementDetailsDialogComponent
+    AdvertisementDetailsDialogComponent,
+    EditAdvertisementDialogComponent,
   ],
   imports: [
     AngularMaterialModule,
@@ -91,7 +93,8 @@ import { DatePipe } from '@angular/common';
     UserDetailsDialogComponent,
     AddRoleToUserDialogComponent,
     ConfirmationDialogComponent,
-    AdvertisementDetailsDialogComponent
+    AdvertisementDetailsDialogComponent,
+    EditAdvertisementDialogComponent
   ],
   bootstrap: [AppComponent]
 })

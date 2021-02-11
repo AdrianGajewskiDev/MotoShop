@@ -1,5 +1,5 @@
 import { serverBaseUrl } from "../server-urls"
 
-export function buildProfileImagePath(imagePath) {
+export function buildImagePath(imagePath) {
     return serverBaseUrl + imagePath;
 }
