@@ -168,5 +168,13 @@ namespace MotoShop.WebAPI.Controllers
 
         }
 
+        [HttpPut()]
+        [ClearCache]
+        public async Task<IActionResult> UpdateAdvertisement(UpdateAdvertisementRequestModel model)
+        {
+
+
+            return Ok();
+        }
     }
 }

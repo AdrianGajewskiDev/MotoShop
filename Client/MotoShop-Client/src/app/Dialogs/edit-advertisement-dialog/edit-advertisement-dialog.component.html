@@ -1,4 +1,5 @@
 <form [formGroup]="editAdForm" (ngSubmit)="apply()">
+    <mat-spinner *ngIf="showLoadingSpinner == true" class="progressSpinner"></mat-spinner>
     <p>Advertisement Details</p>
     <mat-form-field class="example-full-width">
         <mat-label>ID</mat-label>

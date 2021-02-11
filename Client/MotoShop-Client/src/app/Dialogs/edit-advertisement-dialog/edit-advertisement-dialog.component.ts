@@ -2,13 +2,14 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Advertisement } from 'src/app/shared/models/advertisements/advertisement.model';
+import { AdvertisementsService } from 'src/app/shared/services/advertisements.service';
 import { ServiceLocator } from 'src/app/shared/services/locator.service';
 
 interface DialogData {
   AdvertisementModel: Advertisement;
 }
 
-interface UpdateDataResult {
+export interface UpdateDataResult {
   Key: string;
   Content: string | number;
 }
@@ -22,14 +23,17 @@ export class EditAdvertisementDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<EditAdvertisementDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
     this.formBuilder = ServiceLocator.injector.get(FormBuilder);
+    this.service = ServiceLocator.injector.get(AdvertisementsService);
   }
 
   public model: Advertisement;
   public editAdForm: FormGroup;
   public editItemForm: FormGroup;
+  public showLoadingSpinner = false;
 
   private closing: boolean = false;
   private formBuilder: FormBuilder;
+  private service: AdvertisementsService;
 
   ngOnInit(): void {
     this.closing = false;
@@ -61,6 +65,8 @@ export class EditAdvertisementDialogComponent implements OnInit {
     if (this.closing == true)
       return;
 
+    this.showLoadingSpinner = true;
+
     let updatedAdvert: Advertisement =
     {
       AuthorID: this.model.AuthorID,
@@ -78,6 +84,20 @@ export class EditAdvertisementDialogComponent implements OnInit {
     };
 
     let dataToUpdate = this.determineDataToUpdate(this.model, updatedAdvert);
+
+    this.service.update(dataToUpdate).subscribe(
+      res => {
+        this.disableLoadingSpinner();
+        this.cancel();
+      },
+      error => {
+        this.disableLoadingSpinner();
+        console.log(error)
+      });
+  }
+
+  disableLoadingSpinner() {
+    this.showLoadingSpinner = false;
   }
 
   determineDataToUpdate(model: Advertisement, newModel: Advertisement): UpdateDataResult[] {

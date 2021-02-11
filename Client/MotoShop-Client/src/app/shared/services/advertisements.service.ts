@@ -1,8 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { UpdateDataResult } from "src/app/Dialogs/edit-advertisement-dialog/edit-advertisement-dialog.component";
 import { Advertisement } from "../models/advertisements/advertisement.model";
 import { AdvertisementDetailsModel } from "../models/advertisements/advertisementDetails.model";
-import { serverDeleteAdvertisementUrl, serverGetAllAdvertisementsByUserIDUrl, serverGetAllAdvertisementsUrl } from "../server-urls";
+import { serverDeleteAdvertisementUrl, serverGetAllAdvertisementsByUserIDUrl, serverGetAllAdvertisementsUrl, serverUpdateAdvertisementUrl } from "../server-urls";
 
 @Injectable()
 export class AdvertisementsService {
@@ -18,5 +19,13 @@ export class AdvertisementsService {
 
     delete(id: number) {
         return this.httpClient.delete(serverDeleteAdvertisementUrl + id);
+    }
+
+    update(data: UpdateDataResult[]) {
+
+        let updateDataModel = {
+            dataModels: data
+        }
+        return this.httpClient.put(serverUpdateAdvertisementUrl, updateDataModel);
     }
 }
