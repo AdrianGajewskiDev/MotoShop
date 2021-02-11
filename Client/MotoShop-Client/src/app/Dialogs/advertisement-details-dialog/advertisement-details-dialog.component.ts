@@ -10,8 +10,8 @@ import { DatePipe } from '@angular/common';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { ToastrService } from 'ngx-toastr';
 import { buildImagePath } from 'src/app/shared/Helpers/buildProfileImagePath';
-import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 import { EditAdvertisementDialogComponent } from '../edit-advertisement-dialog/edit-advertisement-dialog.component';
+import { Advertisement } from 'src/app/shared/models/advertisements/advertisement.model';
 
 
 interface DialogData {
@@ -89,6 +89,21 @@ export class AdvertisementDetailsDialogComponent implements OnInit {
   }
 
   editAdvert() {
-    this.dialog.open(EditAdvertisementDialogComponent);
+    let advertisement: Advertisement =
+    {
+      AuthorID: this.model.AuthorID,
+      Description: this.model.Description,
+      ID: this.model.ID,
+      Placed: this.model.Placed,
+      ShopItem: this.model.ShopItem,
+      Title: this.model.Title
+    };
+
+    this.dialog.open(EditAdvertisementDialogComponent, {
+      data: {
+        AdvertisementModel: advertisement
+      },
+      width: '500px'
+    });
   }
 }

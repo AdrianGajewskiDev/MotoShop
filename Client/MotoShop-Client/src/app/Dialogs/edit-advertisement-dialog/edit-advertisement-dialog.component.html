@@ -1,1 +1,46 @@
-<p>edit-advertisement-dialog works!</p>
+<form [formGroup]="editAdForm">
+    <p>Advertisement Details</p>
+    <mat-form-field class="example-full-width">
+        <mat-label>ID</mat-label>
+        <input type="text" matInput formControlName="id">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Author ID</mat-label>
+        <input type="text" matInput formControlName="authorID">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Title</mat-label>
+        <input type="text" matInput formControlName="title">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Description</mat-label>
+        <textarea type="description" matInput formControlName="description"></textarea>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Placed</mat-label>
+        <input type="text" matInput formControlName="placed">
+    </mat-form-field>
+    <p>Item Details</p>
+    <form [formGroup]="editItemForm">
+        <mat-form-field class="example-full-width">
+            <mat-label>Item ID</mat-label>
+            <input type="text" matInput formControlName="itemID">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Price</mat-label>
+            <input type="text" matInput formControlName="price">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Item Type</mat-label>
+            <input type="text" matInput formControlName="itemType">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Image Url</mat-label>
+            <input type="text" matInput formControlName="imageUrl">
+        </mat-form-field>
+    </form>
+    <div class="actions" fxLayoutAlign="end center">
+        <button mat-button mat-raised-button color="warm">Cancel</button>
+        <button mat-button mat-raised-button color="accent">Apply</button>
+    </div>
+</form>

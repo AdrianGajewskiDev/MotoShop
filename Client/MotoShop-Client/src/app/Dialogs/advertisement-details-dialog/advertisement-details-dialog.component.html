@@ -1,8 +1,7 @@
 <div class="ad-container" fxLayout="row">
     <div class="left-content">
         <div class="upper-section" fxLayoutAlign="start center" fx>
-            <img [src]="imageUrl"
-                alt="Item Image">
+            <img [src]="imageUrl" alt="Item Image">
             <div class="item-overview" fxLayoutAlign='start start' fxLayout="column">
                 <h1>{{model.Title}}</h1>
                 <p>{{model.Description}}</p>
@@ -28,7 +27,7 @@
                 </li>
             </ul>
             <div class="actions">
-                <button mat-button mat-raised-button color="primary">Edit</button>
+                <button mat-button mat-raised-button color="primary" (click)="editAdvert()">Edit</button>
                 <button mat-button mat-raised-button color="warn" (click)="deleteAd()">Delete</button>
             </div>
         </div>
