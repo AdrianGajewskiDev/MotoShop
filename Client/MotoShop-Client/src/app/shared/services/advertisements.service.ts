@@ -21,11 +21,11 @@ export class AdvertisementsService {
         return this.httpClient.delete(serverDeleteAdvertisementUrl + id);
     }
 
-    update(data: UpdateDataResult[]) {
+    update(data: UpdateDataResult[], id: number) {
 
         let updateDataModel = {
             dataModels: data
         }
-        return this.httpClient.put(serverUpdateAdvertisementUrl, updateDataModel);
+        return this.httpClient.put(serverUpdateAdvertisementUrl + id, updateDataModel);
     }
 }

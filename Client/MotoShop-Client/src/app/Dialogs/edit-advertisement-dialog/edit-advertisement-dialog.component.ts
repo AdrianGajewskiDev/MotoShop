@@ -85,7 +85,7 @@ export class EditAdvertisementDialogComponent implements OnInit {
 
     let dataToUpdate = this.determineDataToUpdate(this.model, updatedAdvert);
 
-    this.service.update(dataToUpdate).subscribe(
+    this.service.update(dataToUpdate, this.model.ID).subscribe(
       res => {
         this.disableLoadingSpinner();
         this.cancel();

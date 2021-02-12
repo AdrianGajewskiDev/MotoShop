@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using MotoShop.Data.Models.Store;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Attributes;
+using MotoShop.WebAPI.Extensions;
 using MotoShop.WebAPI.Helpers;
 using MotoShop.WebAPI.Models.Requests;
 using MotoShop.WebAPI.Models.Response;
@@ -175,7 +176,8 @@ namespace MotoShop.WebAPI.Controllers
             if (model.DataModels.Length <= 0)
                 return BadRequest(StaticMessages.Empty("There is no any data to update"));
 
-            _advertisementService.UpdateAdvertisement();
+            var originalAdvertisement = _advertisementService.GetAdvertisementById(id);
+            var advertisement = _mapper.MapFromCollection<Advertisement>(model.DataModels, originalAdvertisement);
 
             return Ok();
         }
