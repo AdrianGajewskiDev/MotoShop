@@ -168,11 +168,14 @@ namespace MotoShop.WebAPI.Controllers
 
         }
 
-        [HttpPut()]
+        [HttpPut("{id}")]
         [ClearCache]
-        public async Task<IActionResult> UpdateAdvertisement(UpdateAdvertisementRequestModel model)
+        public async Task<IActionResult> UpdateAdvertisement(int id, [FromBody] UpdateAdvertisementRequestModel model)
         {
+            if (model.DataModels.Length <= 0)
+                return BadRequest(StaticMessages.Empty("There is no any data to update"));
 
+            _advertisementService.UpdateAdvertisement();
 
             return Ok();
         }

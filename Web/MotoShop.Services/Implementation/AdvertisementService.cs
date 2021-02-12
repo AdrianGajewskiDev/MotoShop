@@ -1,4 +1,5 @@
-﻿using MotoShop.Data.Database_Context;
+﻿using Microsoft.EntityFrameworkCore;
+using MotoShop.Data.Database_Context;
 using MotoShop.Data.Models.Store;
 using MotoShop.Services.EntityFramework.CompiledQueries;
 using MotoShop.Services.Services;
@@ -69,6 +70,25 @@ namespace MotoShop.Services.Implementation
         public IEnumerable<Advertisement> GetAllAdvertisementsByAuthorId(string authorID)
         {
             return AdvertisementQueries.GetAllAdvertisementsByAuthorId(_context, authorID);
+        }
+
+        public async Task<bool> UpdateAdvertisementAsync(int id, string dataType, string content)
+        {
+            return false;
+        }
+
+        public async Task<bool> UpdateAdvertisementAsync(int id, Advertisement advertisement)
+        {
+            var ad = GetAdvertisementById(id);
+
+            if (ad.ID != advertisement.ID)
+                return false;
+
+            ad = advertisement;
+            _context.Entry(ad).State = EntityState.Modified;
+            var result = await _context.SaveChangesAsync();
+
+            return result > 0;
         }
     }
 }
