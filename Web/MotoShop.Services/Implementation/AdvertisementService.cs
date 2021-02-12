@@ -12,12 +12,13 @@ namespace MotoShop.Services.Implementation
     public class AdvertisementService : IAdvertisementService
     {
         private readonly ApplicationDatabaseContext _context;
+        private readonly IShopItemsService _shopItemsService;
 
-        public AdvertisementService(ApplicationDatabaseContext context)
+        public AdvertisementService(ApplicationDatabaseContext context, IShopItemsService shopItemsService)
         {
             _context = context;
+            _shopItemsService = shopItemsService;
         }
-
         public async Task<bool> AddAdvertisementAsync(Advertisement advertisement)
         {
             if (advertisement == null)
@@ -31,7 +32,6 @@ namespace MotoShop.Services.Implementation
 
             return false;
         }
-
         public void DeleteAdvertisement(int advertisementID)
         {
             
@@ -55,37 +55,34 @@ namespace MotoShop.Services.Implementation
 
             _context.SaveChanges();
         }
-
         public Advertisement GetAdvertisementById(int id, bool includeAuthorAndItem = true)
         {
             return AdvertisementQueries.GetByID(_context, id);
         }
-
-
         public IEnumerable<Advertisement> GetAll()
         {
             return AdvertisementQueries.GetAll(_context);
         }
-
         public IEnumerable<Advertisement> GetAllAdvertisementsByAuthorId(string authorID)
         {
             return AdvertisementQueries.GetAllAdvertisementsByAuthorId(_context, authorID);
         }
 
-        public async Task<bool> UpdateAdvertisementAsync(int id, string dataType, string content)
+        public async Task<bool> UpdateAdvertisementAsync(int id, Advertisement newAdvertisement, Advertisement oldAdvertisement)
         {
-            return false;
-        }
-
-        public async Task<bool> UpdateAdvertisementAsync(int id, Advertisement advertisement)
-        {
-            var ad = GetAdvertisementById(id);
-
-            if (ad.ID != advertisement.ID)
+            if (oldAdvertisement.ID != newAdvertisement.ID)
                 return false;
 
-            ad = advertisement;
-            _context.Entry(ad).State = EntityState.Modified;
+            oldAdvertisement.Description = newAdvertisement.Description;
+            oldAdvertisement.Title = newAdvertisement.Title;
+            oldAdvertisement.Placed= newAdvertisement.Placed;
+
+            var shopItemUpdateResult = await _shopItemsService.UpdateItemAsync(oldAdvertisement.ShopItem.ID, newAdvertisement.ShopItem);
+
+            if (shopItemUpdateResult == false)
+                return false;
+
+            _context.Entry(oldAdvertisement).State = EntityState.Modified;
             var result = await _context.SaveChangesAsync();
 
             return result > 0;

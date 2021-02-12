@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MotoShop.WebAPI.Models.Requests;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,9 +20,16 @@ namespace MotoShop.WebAPI.Extensions
             {
                 foreach (var data in sourceCollection)
                 {
+                  
                     if (prop.Name.ToLower().Equals(data.Key))
                     {
-                        prop.SetValue(typeInstance, data.Content);
+                        if (prop.PropertyType == typeof(String))
+                            prop.SetValue(typeInstance, data.Content);
+                        else
+                        {
+                            var convertedData = Convert.ToInt32(data.Content);
+                            prop.SetValue(typeInstance, convertedData);
+                        }
 
                         break;
                     }

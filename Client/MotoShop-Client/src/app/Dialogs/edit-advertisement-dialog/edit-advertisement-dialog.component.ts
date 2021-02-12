@@ -89,6 +89,7 @@ export class EditAdvertisementDialogComponent implements OnInit {
       res => {
         this.disableLoadingSpinner();
         this.cancel();
+        window.location.reload();
       },
       error => {
         this.disableLoadingSpinner();

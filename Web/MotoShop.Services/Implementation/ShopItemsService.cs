@@ -89,7 +89,12 @@ namespace MotoShop.Services.Implementation
         {
             var item = GetItemByID(itemID, Enum.Parse<ItemType>(updatedItem.ItemType));
 
-            _context.Update<ShopItem>(updatedItem);
+            item.ImageUrl = updatedItem.ImageUrl;
+            item.ItemType = updatedItem.ItemType;
+            item.Price = updatedItem.Price;
+
+
+            _context.Entry(item).State = EntityState.Modified;
 
             if (await _context.SaveChangesAsync() > 0)
                 return true;

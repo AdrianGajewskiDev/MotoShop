@@ -35,7 +35,7 @@ namespace MotoShop.Tests.Services
         {
             DbContextOptionsBuilder<ApplicationDatabaseContext> dbContextOptions = new DbContextOptionsBuilder<ApplicationDatabaseContext>().UseSqlServer(_connectionString);
             ApplicationDatabaseContext context = new ApplicationDatabaseContext(dbContextOptions.Options);
-            IAdvertisementService service = new AdvertisementService(context);
+            IAdvertisementService service = new AdvertisementService(context, null);
             IShopItemsService shopItemService = new ShopItemsService(context);
 
 
@@ -70,7 +70,7 @@ namespace MotoShop.Tests.Services
 
             var result = await shopItemService.AddItemAsync(advertisement.ID, moto);
 
-            var advert = new AdvertisementService(context).GetAdvertisementById(advertisement.ID);
+            var advert = new AdvertisementService(context, null).GetAdvertisementById(advertisement.ID);
 
 
             Assert.True(result);
@@ -86,7 +86,7 @@ namespace MotoShop.Tests.Services
             DbContextOptionsBuilder<ApplicationDatabaseContext> dbContextOptions = new DbContextOptionsBuilder<ApplicationDatabaseContext>().UseSqlServer(_connectionString);
             ApplicationDatabaseContext context = new ApplicationDatabaseContext(dbContextOptions.Options);
             IShopItemsService shopItemService = new ShopItemsService(context);
-            IAdvertisementService service = new AdvertisementService(context);
+            IAdvertisementService service = new AdvertisementService(context, null);
 
             var item = shopItemService.GetItemByID(16, ItemType.Car);
 

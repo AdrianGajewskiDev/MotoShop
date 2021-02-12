@@ -178,8 +178,14 @@ namespace MotoShop.WebAPI.Controllers
 
             var originalAdvertisement = _advertisementService.GetAdvertisementById(id);
             var advertisement = _mapper.MapFromCollection<Advertisement>(model.DataModels, originalAdvertisement);
+            advertisement.ShopItem = _mapper.MapFromCollection<ShopItem>(model.DataModels, originalAdvertisement.ShopItem);
 
-            return Ok();
+            var result = await _advertisementService.UpdateAdvertisementAsync(id, advertisement, originalAdvertisement);
+
+            if (result == true)
+                return Ok(StaticMessages.Updated("Advertisement"));
+                
+            return BadRequest(StaticMessages.SomethingWentWrong);
         }
     }
 }

@@ -17,6 +17,7 @@ namespace MotoShop.WebAPI.Helpers
         public static string NotExist(string type, string data, object value) => _serialize( $"{type} with {data} of {value} does not exist!!");
         public static string FailedToUpdate(string data) =>_serialize( $"Something went wrong while trying to update the {data}");
         public static string Deleted(string data) => _serialize($"-{data} was successfully deleted");
+        public static string Updated(string data) => _serialize($"-{data} was successfully updated");
         public static string Empty(string text) => _serialize(text);
 
         private static string _serialize(string value) => JsonConvert.SerializeObject(value);

@@ -13,8 +13,7 @@ namespace MotoShop.Services.Services
         IEnumerable<Advertisement> GetAll();
 
         Task<bool> AddAdvertisementAsync(Advertisement advertisement);
-        Task<bool> UpdateAdvertisementAsync(int id, string dataType, string content);
-        Task<bool> UpdateAdvertisementAsync(int id, Advertisement advertisement);
+        Task<bool> UpdateAdvertisementAsync(int id, Advertisement newAdvertisement, Advertisement oldAdvertisement);
         void DeleteAdvertisement(int advertisementID);
 
     }

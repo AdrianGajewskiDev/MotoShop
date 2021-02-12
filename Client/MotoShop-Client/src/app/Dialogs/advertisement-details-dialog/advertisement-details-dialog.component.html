@@ -5,13 +5,13 @@
             <div class="item-overview" fxLayoutAlign='start start' fxLayout="column">
                 <h1>{{model.Title}}</h1>
                 <p>{{model.Description}}</p>
-                <span><strong>Price:</strong> 2200$</span>
+                <span><strong>Price:</strong> {{model.ShopItem.Price}}$</span>
             </div>
         </div>
         <div class="lower-section">
             <ul class="author-details-section">
                 <li>
-                    <p>Author: {{model.Author.Name}}</p>
+                    <p>Author: {{model.Author.Name}} {{model.Author.LastName}}</p>
                 </li>
                 <li>
                     <p>AuthorID: {{model.AuthorID}}</p>
