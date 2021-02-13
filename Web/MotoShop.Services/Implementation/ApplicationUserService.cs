@@ -321,5 +321,10 @@ namespace MotoShop.Services.Implementation
 
             return result > 0;
         }
+
+        public async Task<TResult> GetUserData<TResult>(string userID, Func<ApplicationUser, TResult> selectExpression)
+        {
+            return selectExpression(await GetUserByID(userID));
+        }
     }
 }

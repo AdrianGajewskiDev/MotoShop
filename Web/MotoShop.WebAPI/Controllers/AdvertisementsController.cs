@@ -14,6 +14,7 @@ using MotoShop.WebAPI.Models.Response;
 using MotoShop.WebAPI.Models.Response.Advertisements;
 using MotoShop.WebAPI.Models.Response.ItemsController;
 using MotoShop.WebAPI.Models.Response.UserAccount;
+using SendGrid.Helpers.Mail;
 
 namespace MotoShop.WebAPI.Controllers
 {
@@ -24,15 +25,17 @@ namespace MotoShop.WebAPI.Controllers
         private readonly IAdvertisementService _advertisementService;
         private readonly IApplicationUserService _applicationUserService;
         private readonly IShopItemsService _shopItemService;
+        private readonly IEmailSenderService _emailSender;
         private readonly IMapper _mapper;
 
-        public AdvertisementsController(IAdvertisementService advertisementService, IApplicationUserService applicationUserService, 
-            IShopItemsService shopItemService, IMapper mapper)
+        public AdvertisementsController(IAdvertisementService advertisementService, IApplicationUserService applicationUserService,
+            IShopItemsService shopItemService, IMapper mapper, IEmailSenderService emailSender)
         {
             _advertisementService = advertisementService;
             _applicationUserService = applicationUserService;
             _shopItemService = shopItemService;
             _mapper = mapper;
+            _emailSender = emailSender;
         }
 
         [HttpGet()]
@@ -61,7 +64,7 @@ namespace MotoShop.WebAPI.Controllers
         [HttpPost()]
         [ClearCache()]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> AddAdvertisement([ FromBody]NewAdvertisementRequestModel newAdvertisementRequestModel)
+        public async Task<IActionResult> AddAdvertisement([FromBody] NewAdvertisementRequestModel newAdvertisementRequestModel)
         {
             if (newAdvertisementRequestModel == null)
                 return BadRequest($"{nameof(newAdvertisementRequestModel)} was null");
@@ -169,6 +172,7 @@ namespace MotoShop.WebAPI.Controllers
 
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         [ClearCache]
         public async Task<IActionResult> UpdateAdvertisement(int id, [FromBody] UpdateAdvertisementRequestModel model)
@@ -182,11 +186,27 @@ namespace MotoShop.WebAPI.Controllers
 
             var result = await _advertisementService.UpdateAdvertisementAsync(id, advertisement, originalAdvertisement);
 
-            //TODO: Inform owner about the changes 
-
             if (result == true)
+            {
+                var userID = User.FindFirst(x => x.Type == "UserID").Value;
+
+                if (!_advertisementService.IsOwner(userID, originalAdvertisement))
+                {
+                    var userEmail = await _applicationUserService.GetUserData(advertisement.AuthorID, x => x.Email);
+
+                    string messageTemplate = $"Administrator changed some part of your advertisement: {advertisement.Title}. Changes: ";
+
+                    foreach (var change in model.DataModels)
+                    {
+                        messageTemplate += change.Key;
+                    }
+
+                    await _emailSender.SendStandardMessageAsync(new EmailAddress(userEmail), "Advertisement Update", messageTemplate);
+                }
+
                 return Ok(StaticMessages.Updated("Advertisement"));
-                
+            }
+
             return BadRequest(StaticMessages.SomethingWentWrong);
         }
     }

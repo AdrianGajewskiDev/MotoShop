@@ -52,7 +52,7 @@ export class EditAdvertisementDialogComponent implements OnInit {
         "title": new FormControl({ value: this.model.Title, disabled: false }, Validators.required),
         "authorID": new FormControl({ value: this.model.AuthorID, disabled: true }, Validators.required),
         "description": new FormControl({ value: this.model.Description, disabled: false }, Validators.required),
-        "placed": new FormControl({ value: this.model.Placed, disabled: false }, Validators.required),
+        "placed": new FormControl({ value: this.model.Placed, disabled: true }, Validators.required),
       });
   }
 

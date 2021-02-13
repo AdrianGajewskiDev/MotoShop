@@ -1,6 +1,7 @@
 ﻿using MotoShop.Data.Helpers;
 using MotoShop.Data.Models.User;
 using MotoShop.Services.HelperModels;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -24,10 +25,12 @@ namespace MotoShop.Services.Services
         Task<bool> AddUserProfileImageAsync(string userID, string path);
         Task<bool> DeleteUser(string userID);
         Task<string> SignInAsync(string data, string password, UserSignInVariant variant);
+        Task<TResult> GetUserData<TResult>(string userID, Func<ApplicationUser, TResult> selectExpression);
         Task<IEnumerable<string>> GetUserRolesAsync(string userID);
         string GenerateConfirmationLink(string token, string userID, string newData, UpdateDataType updateDataType);
         string EncodeToken(string token);
         string DecodeToken(string token);
+
 
     }
 }

@@ -19,7 +19,6 @@ namespace MotoShop.Services.Implementation
             _configuration = configuration;
             _configuration.GetSection("EmailCredentials").Bind(motoShopEmailAdress);
         }
-
         public async Task<bool> SendConfirmationEmailAsync(EmailAddress recipient, string subject, string verificationLink, EmailType mailType)
         {
             var client = new SendGridClient(API_KEY);
@@ -44,6 +43,19 @@ namespace MotoShop.Services.Implementation
             var response = await client.SendEmailAsync(msg);
 
             if (response.StatusCode == System.Net.HttpStatusCode.Accepted)
+                return true;
+
+            return false;
+        }
+        public async Task<bool> SendStandardMessageAsync(EmailAddress recipient, string subject, string content)
+        {
+            var client = new SendGridClient(API_KEY);
+
+            var msg = MailHelper.CreateSingleEmail(motoShopEmailAdress, recipient, subject, content, string.Empty);
+
+            var result = await client.SendEmailAsync(msg);
+
+            if (result.StatusCode == System.Net.HttpStatusCode.Accepted)
                 return true;
 
             return false;

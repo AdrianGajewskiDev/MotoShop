@@ -12,6 +12,11 @@ namespace MotoShop.Services.Services
         IEnumerable<Advertisement> GetAllAdvertisementsByAuthorId(string authorID);
         IEnumerable<Advertisement> GetAll();
 
+        bool IsOwner(string userID, Advertisement ad) 
+        {
+            return ad.AuthorID == userID;
+        }
+
         Task<bool> AddAdvertisementAsync(Advertisement advertisement);
         Task<bool> UpdateAdvertisementAsync(int id, Advertisement newAdvertisement, Advertisement oldAdvertisement);
         void DeleteAdvertisement(int advertisementID);
