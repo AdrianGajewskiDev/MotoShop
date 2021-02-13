@@ -54,7 +54,6 @@ export class AdministrationPanelComponent implements OnInit {
       "server": this.serverTab,
     };
   }
-
   goToUserDetails(id) {
 
     const currentUser = this.users.filter(x => x.Id == id)[0];
@@ -81,8 +80,8 @@ export class AdministrationPanelComponent implements OnInit {
       }
     });
   }
-
   switchTabs(tab, details: boolean): void {
+    this.showLoadingSpinner = false;
     this.tabs[tab].classList.add('show');
 
     Object.keys(this.tabs).forEach(element => {
@@ -134,6 +133,19 @@ export class AdministrationPanelComponent implements OnInit {
         }
         break;
     }
+  }
+
+  seedDatabase() {
+    this.showLoadingSpinner = true;
+
+    this.service.seedDb().subscribe(() => {
+      this.showLoadingSpinner = false;
+      this.toastr.info("Successfully added items to database");
+    },
+      error => {
+        this.showLoadingSpinner = false;
+        this.toastr.error(error)
+      });
   }
 
 }

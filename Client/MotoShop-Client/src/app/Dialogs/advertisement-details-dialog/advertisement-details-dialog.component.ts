@@ -46,6 +46,7 @@ export class AdvertisementDetailsDialogComponent implements OnInit {
   ngOnInit(): void {
     this.advertisementsService.getByID(this.data.AdvertisementID).subscribe((res) => {
       this.model = res;
+      console.log(res)
       if (this.model.ShopItem.ItemType == "Motocycle") {
         this.item = "Motocycle";
         this.motocycle = this.model.ShopItem as Motocycle;

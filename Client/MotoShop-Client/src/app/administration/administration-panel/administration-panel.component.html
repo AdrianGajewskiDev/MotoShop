@@ -10,7 +10,7 @@
                     </div>
                     <div class="menu-item" fxLayoutAlign="start center">
                         <img src="../../assets/icons/products.png" alt="users icon">
-                        <a (click)="switchTabs('products', false)">Products</a>
+                        <a (click)="switchTabs('products', true)">Products</a>
                     </div>
                     <div class="menu-item" fxLayoutAlign="start center">
                         <img src="../../assets/icons/services.png" alt="users icon">
@@ -73,7 +73,14 @@
                 </table>
             </section>
             <section id="products" class="section">
-                <h1>Products</h1>
+                <div class="products-container" fxLayoutAlign="center center" fxLayout="column">
+                    <div class="products-cards">
+                        <button>All</button>
+                        <button>Cars</button>
+                        <button>Motocycles</button>
+                    </div>
+                    <button mat-button mat-raised-button color="primary" (click)="seedDatabase()">Seed Database</button>
+                </div>
             </section>
             <section id="services" class="section">
                 <h1>Services</h1>

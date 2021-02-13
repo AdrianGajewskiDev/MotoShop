@@ -136,7 +136,7 @@ namespace MotoShop.WebAPI.Controllers
         /// </summary>
         /// <param name="databaseSeeder"></param>
         /// <returns></returns>
-        [HttpPost("seedDb")]
+        [HttpGet("seedDb")]
         [Authorize(Roles = ApplicationRoles.Administrator)]
         public async Task<IActionResult> SeedDatabase([FromServices] DatabaseSeeder databaseSeeder)
         {

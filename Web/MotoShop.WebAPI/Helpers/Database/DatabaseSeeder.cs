@@ -119,7 +119,7 @@ namespace MotoShop.WebAPI.Helpers.Database
 
                 var rnd = new Random();
 
-                var motocycleNameIndex = rnd.Next(0, _carBrands.Length);
+                var motocycleNameIndex = rnd.Next(0, _motoBrands.Length);
                 var motocycleFuelIndex = rnd.Next(0, _fuels.Length);
 
                 var motocycleName = _motoBrands[motocycleNameIndex];
@@ -133,7 +133,7 @@ namespace MotoShop.WebAPI.Helpers.Database
                     FuelConsumption = rnd.Next(5, 20),
                     HorsePower = rnd.Next(100, 1000),
                     ImageUrl = @"wwwroot/resources/images/CarImage.jpg",
-                    ItemType = "Car",
+                    ItemType = "Motocycle",
                     Lenght = rnd.Next(3, 6),
                     OwnerID = userID,
                     Price = rnd.Next(0, 10000),
