@@ -13,7 +13,6 @@ namespace MotoShop.Services.Implementation
     {
         private readonly ApplicationDatabaseContext _context;
         private readonly IShopItemsService _shopItemsService;
-
         public AdvertisementService(ApplicationDatabaseContext context, IShopItemsService shopItemsService)
         {
             _context = context;
@@ -67,7 +66,6 @@ namespace MotoShop.Services.Implementation
         {
             return AdvertisementQueries.GetAllAdvertisementsByAuthorId(_context, authorID);
         }
-
         public async Task<bool> UpdateAdvertisementAsync(int id, Advertisement newAdvertisement, Advertisement oldAdvertisement)
         {
             if (oldAdvertisement.ID != newAdvertisement.ID)

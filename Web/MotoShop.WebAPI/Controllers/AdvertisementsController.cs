@@ -182,6 +182,8 @@ namespace MotoShop.WebAPI.Controllers
 
             var result = await _advertisementService.UpdateAdvertisementAsync(id, advertisement, originalAdvertisement);
 
+            //TODO: Inform owner about the changes 
+
             if (result == true)
                 return Ok(StaticMessages.Updated("Advertisement"));
                 

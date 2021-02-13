@@ -37,8 +37,6 @@ namespace MotoShop.WebAPI.Extensions
                     {
                         var dataToCopy = originalObjectProperties.Where(x => x.Name == prop.Name).First();
                         prop.SetValue(typeInstance, dataToCopy.GetValue(originalObject));
-
-                        break;
                     }
                 }
             }
