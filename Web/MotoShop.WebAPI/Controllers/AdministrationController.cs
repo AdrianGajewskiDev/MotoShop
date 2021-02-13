@@ -10,8 +10,6 @@ using MotoShop.WebAPI.Helpers.Database;
 using MotoShop.WebAPI.Models.Request;
 using MotoShop.WebAPI.Models.Requests.Administration;
 using MotoShop.WebAPI.Models.Response.Administration;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MotoShop.WebAPI.Controllers
@@ -134,7 +132,7 @@ namespace MotoShop.WebAPI.Controllers
 
         /// <summary>
         /// This method should be only used to put dummy data to database
-        /// just to have to data to work with
+        /// just to have any data to work with
         /// </summary>
         /// <param name="databaseSeeder"></param>
         /// <returns></returns>
@@ -150,7 +148,7 @@ namespace MotoShop.WebAPI.Controllers
                 if (user.UserName.Equals("Admin"))
                     continue;
                 else
-                    await databaseSeeder.AddAdvertisements(user.Id, 15);
+                    await databaseSeeder.AddAdvertisementsWithMotocycles(user.Id, 15);
             }
 
             return Ok();
