@@ -128,13 +128,15 @@ namespace MotoShop.WebAPI.Helpers.Database
                 var item = new Motocycle
                 {
                     Acceleration = rnd.Next(0, 10),
-                    CubicCapacity = rnd.Next(500, 5000),
+                    CubicCapacity = rnd.Next(100, 500),
                     Fuel = motocycleFuel,
                     FuelConsumption = rnd.Next(5, 20),
                     HorsePower = rnd.Next(100, 1000),
                     ImageUrl = @"wwwroot/resources/images/CarImage.jpg",
+                    MotocycleBrand = motocycleName,
+                    MotocycleModel = motocycleName + " Model",
                     ItemType = "Motocycle",
-                    Lenght = rnd.Next(3, 6),
+                    Lenght = rnd.Next(1, 4),
                     OwnerID = userID,
                     Price = rnd.Next(0, 10000),
                     Width = 2,
