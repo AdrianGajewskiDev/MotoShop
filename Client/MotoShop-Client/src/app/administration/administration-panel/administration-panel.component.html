@@ -73,13 +73,14 @@
                 </table>
             </section>
             <section id="products" class="section">
-                <div class="products-container" fxLayoutAlign="center center" fxLayout="column">
-                    <div class="products-cards">
-                        <button>All</button>
-                        <button>Cars</button>
-                        <button>Motocycles</button>
+                <div class="products-container" fxLayoutAlign="start center" fxLayout="column">
+                    <div class="products-cards-btns">
+                        <button mat-button mat-raised-button color="basic">All</button>
+                        <button mat-button mat-raised-button color="basic">Cars</button>
+                        <button mat-button mat-raised-button color="basic">Motocycles</button>
+                        <button mat-button mat-raised-button color="warn" (click)="seedDatabase()">Seed
+                            Database</button>
                     </div>
-                    <button mat-button mat-raised-button color="primary" (click)="seedDatabase()">Seed Database</button>
                 </div>
             </section>
             <section id="services" class="section">

@@ -9,6 +9,8 @@ import { AllUsersModel } from '../../shared/models/administration/allUsers.model
 import { User } from '../../shared/models/administration/user.model';
 import { AdministrationService } from '../../shared/services/administration.service';
 import { UserDetailsDialogComponent } from '../../Dialogs/user-details-dialog/user-details-dialog.component';
+import { ConfirmationComponent } from 'src/app/identity/confirmation-component/confirmation-component.component';
+import { ConfirmationDialogComponent } from 'src/app/Dialogs/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-administration-panel',
@@ -136,8 +138,24 @@ export class AdministrationPanelComponent implements OnInit {
   }
 
   seedDatabase() {
-    this.showLoadingSpinner = true;
+    this.dialog.open(ConfirmationDialogComponent, {
+      width: '250px',
+      data:
+      {
+        func: (s) => {
+          if (s == false) {
+            this.seedDatabaseCallback()
+          }
+        },
+        run: false,
+        message: "Are you sure you want to add items to database? This action cannot be undo"
+      }
+    })
+  }
 
+
+  seedDatabaseCallback() {
+    this.showLoadingSpinner = true;
     this.service.seedDb().subscribe(() => {
       this.showLoadingSpinner = false;
       this.toastr.info("Successfully added items to database");
@@ -147,5 +165,4 @@ export class AdministrationPanelComponent implements OnInit {
         this.toastr.error(error)
       });
   }
-
 }
