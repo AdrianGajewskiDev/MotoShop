@@ -40,7 +40,7 @@ namespace MotoShop.WebAPI.Controllers
 
         [HttpGet()]
         [Cache(5)]
-        public ActionResult<AllAdvertisementsResponseModel> GetAllAdvertisements()
+        public IActionResult GetAllAdvertisements()
         {
             IEnumerable<Advertisement> advertisements = _advertisementService.GetAll();
 
@@ -52,13 +52,7 @@ namespace MotoShop.WebAPI.Controllers
                 Advertisements = advertisements
             };
 
-            ApiResponse<AllAdvertisementsResponseModel> responseModel = new ApiResponse<AllAdvertisementsResponseModel>
-            {
-                HttpStatusCode = System.Net.HttpStatusCode.OK,
-                ResponseContent = model
-            };
-
-            return Ok(responseModel);
+            return Ok(model);
         }
 
         [HttpPost()]

@@ -14,7 +14,7 @@ export class AdvertisementsService {
     }
 
     getByID(id: number) {
-        return this.httpClient.get<AdvertisementDetailsModel>(serverGetAllAdvertisementsUrl + id);
+        return this.httpClient.get<AdvertisementDetailsModel>(serverGetAllAdvertisementsUrl + "/" + id);
     }
 
     delete(id: number) {
@@ -27,5 +27,9 @@ export class AdvertisementsService {
             dataModels: data
         }
         return this.httpClient.put(serverUpdateAdvertisementUrl + id, updateDataModel);
+    }
+
+    getAll() {
+        return this.httpClient.get<Advertisement[]>(serverGetAllAdvertisementsUrl);
     }
 }

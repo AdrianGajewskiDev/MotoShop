@@ -11,6 +11,8 @@ import { AdministrationService } from '../../shared/services/administration.serv
 import { UserDetailsDialogComponent } from '../../Dialogs/user-details-dialog/user-details-dialog.component';
 import { ConfirmationComponent } from 'src/app/identity/confirmation-component/confirmation-component.component';
 import { ConfirmationDialogComponent } from 'src/app/Dialogs/confirmation-dialog/confirmation-dialog.component';
+import { Advertisement } from 'src/app/shared/models/advertisements/advertisement.model';
+import { AdvertisementsService } from 'src/app/shared/services/advertisements.service';
 
 @Component({
   selector: 'app-administration-panel',
@@ -26,10 +28,13 @@ export class AdministrationPanelComponent implements OnInit {
   public displayedColumns: string[] = ['Id', 'Username', 'Name', 'Email'];
 
   constructor(private service: AdministrationService,
+    private advertisementService: AdvertisementsService,
     private toastr: ToastrService, private dialog: MatDialog) { }
 
   //data
   private users: User[];
+  private advertisements;
+  private currentAdvertisements: Advertisement[] = [];
 
   public dataSource;
   public showLoadingSpinner: boolean = false;
@@ -121,7 +126,21 @@ export class AdministrationPanelComponent implements OnInit {
         break;
       case 'products':
         {
+          if (this.advertisements != null)
+            this.showLoadingSpinner = false;
+          else
+            this.advertisementService.getAll().subscribe(
+              (res: any) => {
+                this.advertisements = res.Advertisements;
+                this.showLoadingSpinner = false;
+                this.currentAdvertisements = this.setCurrentAdvertisementToShow("Car");
+                console.log(this.currentAdvertisements);
 
+              },
+              error => {
+                this.showLoadingSpinner = false;
+                this.toastr.error(error.message);
+              });
         }
         break;
       case 'services':
@@ -164,5 +183,20 @@ export class AdministrationPanelComponent implements OnInit {
         this.showLoadingSpinner = false;
         this.toastr.error(error)
       });
+  }
+
+  setCurrentAdvertisementToShow(itemType: string): Advertisement[] | null {
+    if (!this.advertisements)
+      return null;
+
+    let ads: Advertisement[] = [];
+    console.log(this.advertisements);
+
+    if (itemType == "All")
+      ads = this.advertisements;
+    else
+      ads = this.advertisements.filter(x => x.ShopItem.ItemType == itemType);
+
+    return ads;
   }
 }

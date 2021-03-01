@@ -18,7 +18,7 @@ export const administrationSeedDatabaseUrls = "https://localhost:44304/api/admin
 
 //advertisements
 export const serverGetAllAdvertisementsByUserIDUrl = "https://localhost:44304/api/advertisements/byUser";
-export const serverGetAllAdvertisementsUrl = "https://localhost:44304/api/advertisements/";
+export const serverGetAllAdvertisementsUrl = "https://localhost:44304/api/advertisements";
 export const serverDeleteAdvertisementUrl = "https://localhost:44304/api/advertisements/";
 export const serverUpdateAdvertisementUrl = "https://localhost:44304/api/advertisements/";
 
