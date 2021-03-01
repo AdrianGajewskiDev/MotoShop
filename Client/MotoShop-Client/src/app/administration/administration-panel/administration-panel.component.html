@@ -75,9 +75,12 @@
             <section id="products" class="section">
                 <div class="products-container" fxLayoutAlign="start center" fxLayout="column">
                     <div class="products-cards-btns">
-                        <button mat-button mat-raised-button color="basic">All</button>
-                        <button mat-button mat-raised-button color="basic">Cars</button>
-                        <button mat-button mat-raised-button color="basic">Motocycles</button>
+                        <button mat-button mat-raised-button color="basic"
+                            (click)="setCurrentAdvertisementToShow('All')">All</button>
+                        <button mat-button mat-raised-button color="basic"
+                            (click)="setCurrentAdvertisementToShow('Car')">Cars</button>
+                        <button mat-button mat-raised-button color="basic"
+                            (click)="setCurrentAdvertisementToShow('Motocycle')">Motocycles</button>
                         <button mat-button mat-raised-button color="warn" (click)="seedDatabase()">Seed
                             Database</button>
                     </div>

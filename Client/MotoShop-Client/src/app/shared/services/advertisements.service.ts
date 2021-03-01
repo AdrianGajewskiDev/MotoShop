@@ -30,6 +30,6 @@ export class AdvertisementsService {
     }
 
     getAll() {
-        return this.httpClient.get<Advertisement[]>(serverGetAllAdvertisementsUrl);
+        return this.httpClient.get(serverGetAllAdvertisementsUrl);
     }
 }

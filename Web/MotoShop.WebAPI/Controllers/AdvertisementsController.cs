@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -39,20 +40,22 @@ namespace MotoShop.WebAPI.Controllers
         }
 
         [HttpGet()]
-        [Cache(5)]
-        public IActionResult GetAllAdvertisements()
+        public ActionResult<PaginatedResponse<IEnumerable<Advertisement>>> GetAllAdvertisements([FromQuery] int page, [FromQuery] int pageSize)
         {
             IEnumerable<Advertisement> advertisements = _advertisementService.GetAll();
 
             if (advertisements == null)
                 return NotFound(StaticMessages.NotFound("advertisements"));
 
-            var model = new AllAdvertisementsResponseModel
+            var paginatedResult = PaginatedResult.Create(advertisements, pageSize, page);
+
+            var responseModel = new PaginatedResponse<IEnumerable<Advertisement>>
             {
-                Advertisements = advertisements
+                Content = paginatedResult,
+                TotalPages = advertisements.Count() / pageSize
             };
 
-            return Ok(model);
+            return Ok(responseModel);
         }
 
         [HttpPost()]

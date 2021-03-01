@@ -134,8 +134,6 @@ export class AdministrationPanelComponent implements OnInit {
                 this.advertisements = res.Advertisements;
                 this.showLoadingSpinner = false;
                 this.currentAdvertisements = this.setCurrentAdvertisementToShow("Car");
-                console.log(this.currentAdvertisements);
-
               },
               error => {
                 this.showLoadingSpinner = false;
@@ -155,7 +153,6 @@ export class AdministrationPanelComponent implements OnInit {
         break;
     }
   }
-
   seedDatabase() {
     this.dialog.open(ConfirmationDialogComponent, {
       width: '250px',
@@ -171,8 +168,6 @@ export class AdministrationPanelComponent implements OnInit {
       }
     })
   }
-
-
   seedDatabaseCallback() {
     this.showLoadingSpinner = true;
     this.service.seedDb().subscribe(() => {
@@ -184,19 +179,13 @@ export class AdministrationPanelComponent implements OnInit {
         this.toastr.error(error)
       });
   }
-
   setCurrentAdvertisementToShow(itemType: string): Advertisement[] | null {
     if (!this.advertisements)
       return null;
 
-    let ads: Advertisement[] = [];
-    console.log(this.advertisements);
-
     if (itemType == "All")
-      ads = this.advertisements;
+      return this.advertisements;
     else
-      ads = this.advertisements.filter(x => x.ShopItem.ItemType == itemType);
-
-    return ads;
+      return this.advertisements.filter(x => x.ShopItem.ItemType == itemType);
   }
 }
