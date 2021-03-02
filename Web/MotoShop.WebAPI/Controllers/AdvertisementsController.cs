@@ -40,22 +40,33 @@ namespace MotoShop.WebAPI.Controllers
         }
 
         [HttpGet()]
-        public ActionResult<PaginatedResponse<IEnumerable<Advertisement>>> GetAllAdvertisements([FromQuery] int page, [FromQuery] int pageSize)
+        [Cache(5)]
+        public ActionResult<PaginatedResponse<IEnumerable<Advertisement>>> GetAllAdvertisements([FromQuery] int? page, [FromQuery] int? pageSize)
         {
             IEnumerable<Advertisement> advertisements = _advertisementService.GetAll();
 
             if (advertisements == null)
                 return NotFound(StaticMessages.NotFound("advertisements"));
 
-            var paginatedResult = PaginatedResult.Create(advertisements, pageSize, page);
-
-            var responseModel = new PaginatedResponse<IEnumerable<Advertisement>>
+            if( page is not null && pageSize is not null )
             {
-                Content = paginatedResult,
-                TotalPages = advertisements.Count() / pageSize
+                var paginatedResult = PaginatedResult.Create(advertisements, (int)pageSize, (int)page);
+
+                var responseModel = new PaginatedResponse<IEnumerable<Advertisement>>
+                {
+                    Content = paginatedResult,
+                    TotalPages = advertisements.Count() / (int)pageSize
+                };
+
+                return Ok(responseModel);
+            }
+
+            var response = new AllAdvertisementsResponseModel
+            {
+                Advertisements = advertisements
             };
 
-            return Ok(responseModel);
+            return Ok(response);      
         }
 
         [HttpPost()]

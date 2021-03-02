@@ -13,6 +13,7 @@ import { ConfirmationComponent } from 'src/app/identity/confirmation-component/c
 import { ConfirmationDialogComponent } from 'src/app/Dialogs/confirmation-dialog/confirmation-dialog.component';
 import { Advertisement } from 'src/app/shared/models/advertisements/advertisement.model';
 import { AdvertisementsService } from 'src/app/shared/services/advertisements.service';
+import { AdvertisementDetailsDialogComponent } from 'src/app/Dialogs/advertisement-details-dialog/advertisement-details-dialog.component';
 
 @Component({
   selector: 'app-administration-panel',
@@ -34,7 +35,7 @@ export class AdministrationPanelComponent implements OnInit {
   //data
   private users: User[];
   private advertisements;
-  private currentAdvertisements: Advertisement[] = [];
+  public currentAdvertisements: Advertisement[] = [];
 
   public dataSource;
   public showLoadingSpinner: boolean = false;
@@ -44,6 +45,11 @@ export class AdministrationPanelComponent implements OnInit {
   productsTab: Element;
   servicesTab: Element;
   serverTab: Element;
+
+  //products paginator data
+  public pageNumber = 1;
+  public perPage = 15;
+  public totalPages;
 
   private tabs: { [key: string]: Element; } = {};
 
@@ -129,16 +135,7 @@ export class AdministrationPanelComponent implements OnInit {
           if (this.advertisements != null)
             this.showLoadingSpinner = false;
           else
-            this.advertisementService.getAll().subscribe(
-              (res: any) => {
-                this.advertisements = res.Advertisements;
-                this.showLoadingSpinner = false;
-                this.currentAdvertisements = this.setCurrentAdvertisementToShow("Car");
-              },
-              error => {
-                this.showLoadingSpinner = false;
-                this.toastr.error(error.message);
-              });
+            this.getAdvertisements(this.perPage, this.pageNumber);
         }
         break;
       case 'services':
@@ -187,5 +184,48 @@ export class AdministrationPanelComponent implements OnInit {
       return this.advertisements;
     else
       return this.advertisements.filter(x => x.ShopItem.ItemType == itemType);
+  }
+  nextPage() {
+    if (this.pageNumber >= this.totalPages)
+      return;
+    else {
+      this.pageNumber += 1;
+      console.log(this.pageNumber);
+      this.getAdvertisements(this.perPage, this.pageNumber);
+      console.log();
+    }
+  }
+  previousPage() {
+    if (this.pageNumber == 1)
+      return;
+    else {
+      this.pageNumber -= 1;
+      this.getAdvertisements(this.perPage, this.pageNumber);
+    }
+  }
+  getAdvertisements(perPage: number, pageNumber: number) {
+    this.advertisementService.getAll(perPage, pageNumber).subscribe(
+      (res: any) => {
+        +
+          console.log(res);
+
+        this.advertisements = res.Content;
+        this.showLoadingSpinner = false;
+        this.currentAdvertisements = this.setCurrentAdvertisementToShow("All");
+        this.totalPages = res.TotalPages;
+      },
+      error => {
+        this.showLoadingSpinner = false;
+        this.toastr.error(error.message);
+      });
+  }
+  goToDetails(id) {
+    this.dialog.open(AdvertisementDetailsDialogComponent, {
+      width: '1000px',
+      height: '600px',
+      data: {
+        AdvertisementID: id
+      }
+    });
   }
 }

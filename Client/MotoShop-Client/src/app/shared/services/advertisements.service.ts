@@ -29,7 +29,12 @@ export class AdvertisementsService {
         return this.httpClient.put(serverUpdateAdvertisementUrl + id, updateDataModel);
     }
 
-    getAll() {
-        return this.httpClient.get(serverGetAllAdvertisementsUrl);
+    getAll(perPage?: number, pageNumber?: number) {
+        if (!perPage && !pageNumber)
+            return this.httpClient.get(serverGetAllAdvertisementsUrl);
+        else {
+            return this.httpClient.get(serverGetAllAdvertisementsUrl + "?page=" + pageNumber + "&pageSize=" + perPage);
+        }
     }
+
 }

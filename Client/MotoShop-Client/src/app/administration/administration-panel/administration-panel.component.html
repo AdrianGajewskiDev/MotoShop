@@ -84,6 +84,30 @@
                         <button mat-button mat-raised-button color="warn" (click)="seedDatabase()">Seed
                             Database</button>
                     </div>
+                    <table class="products-table">
+                        <tr class="table-header">
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>AuthorID</th>
+                        </tr>
+                        <tr class="table-content" *ngFor="let ad of currentAdvertisements" (click)="goToDetails(ad.ID)">
+                            <td>
+                                {{ad.ID}}
+                            </td>
+                            <td>
+                                {{ad.Title}}
+                            </td>
+                            <td>
+                                {{ad.AuthorID}}
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="paginator">
+                        <button mat-button mat-raised-button color="basic" (click)="previousPage()">Previous
+                            Page</button>
+                        <p>{{pageNumber}}-{{totalPages}}</p>
+                        <button mat-button mat-raised-button color="warn" (click)="nextPage()">Next Page</button>
+                    </div>
                 </div>
             </section>
             <section id="services" class="section">
