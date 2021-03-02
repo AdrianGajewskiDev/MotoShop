@@ -32,6 +32,8 @@ export class AdvertisementDetailsDialogComponent implements OnInit {
     this.toastr = ServiceLocator.injector.get(ToastrService);
   }
 
+  closing: boolean = false;
+
   dialog: MatDialog;
   toastr: ToastrService;
   model: AdvertisementDetailsModel;
@@ -63,6 +65,9 @@ export class AdvertisementDetailsDialogComponent implements OnInit {
   }
 
   deleteAd() {
+    if (this.closing == true)
+      return;
+
     this.dialog.open(ConfirmationDialogComponent, {
       width: '250px',
       data:
@@ -79,6 +84,9 @@ export class AdvertisementDetailsDialogComponent implements OnInit {
   }
 
   deleteAddCallback(id) {
+    if (this.closing == true)
+      return;
+
     this.advertisementsService.delete(this.model.ID).subscribe(res => {
       this.toastr.info(`Advertisement with id of ${this.model.ID} was successfully deleted!!`)
       window.location.reload();
@@ -105,5 +113,10 @@ export class AdvertisementDetailsDialogComponent implements OnInit {
       },
       width: '500px'
     });
+  }
+
+  cancel() {
+    this.closing = true;
+    this.dialogRef.close();
   }
 }
