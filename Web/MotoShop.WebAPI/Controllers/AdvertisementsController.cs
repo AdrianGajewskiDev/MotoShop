@@ -52,10 +52,15 @@ namespace MotoShop.WebAPI.Controllers
             {
                 var paginatedResult = PaginatedResult.Create(advertisements, (int)pageSize, (int)page);
 
+                float itemsCount = advertisements.Count();
+                float size = (int)pageSize;
+
+                float totalPages = itemsCount / size;
+
                 var responseModel = new PaginatedResponse<IEnumerable<Advertisement>>
                 {
                     Content = paginatedResult,
-                    TotalPages = advertisements.Count() / (int)pageSize
+                    TotalPages = (int)Math.Round(totalPages)
                 };
 
                 return Ok(responseModel);
