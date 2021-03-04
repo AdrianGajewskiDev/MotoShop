@@ -39,6 +39,7 @@ namespace MotoShop.Web
                 .AddEntityFrameworkStores<ApplicationDatabaseContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddHealthChecks();
             services.AddAuthenticationExtension(Configuration);
             services.AddAutoMapper(typeof(Startup))
                 .SetUpAutoMapper();
@@ -98,6 +99,7 @@ namespace MotoShop.Web
             {
                 endpoints.MapControllers();
                 endpoints.MapControllerRoute(name: "default", pattern: "api/{controller}/{action?}/{params?}");
+                endpoints.MapHealthChecks("/serverHealth");
             });
         }
     }
