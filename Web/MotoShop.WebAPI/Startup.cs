@@ -39,7 +39,9 @@ namespace MotoShop.Web
                 .AddEntityFrameworkStores<ApplicationDatabaseContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddHealthChecks();
+            services.AddHealthChecks()
+                .AddDbContextCheck<ApplicationDatabaseContext>();
+
             services.AddAuthenticationExtension(Configuration);
             services.AddAutoMapper(typeof(Startup))
                 .SetUpAutoMapper();
