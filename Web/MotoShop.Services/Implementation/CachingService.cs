@@ -1,9 +1,12 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using MotoShop.Data.Models.User;
+using MotoShop.Services.Redis;
 using MotoShop.Services.Services;
 using Newtonsoft.Json;
+using ServiceStack.Redis;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MotoShop.Services.Implementation
@@ -39,12 +42,33 @@ namespace MotoShop.Services.Implementation
             }
         }
 
+        public RedisConnectionResult Connected(string host, int port)
+        {
+            try
+            {
+                using(var client = new RedisClient(host,port))
+                {
+                    var response = client.Info;
+
+                    if(response is not null && response.Any())
+                    {
+                        return RedisConnectionResult.ConnectionSucceeded("Connected");
+                    }
+
+                    return RedisConnectionResult.ConnectionFailed("Failed to connect with redis.");
+                }
+            }
+            catch(Exception ex)
+            {
+                return RedisConnectionResult.ConnectionFailed($"Failed to connect with redis. Exception of type {ex.GetType().FullName} was thrown. Message: {ex.Message}");
+            }
+        }
+
         public async Task<string> GetCachedResponseAsync(string key)
         {
             var cachedResponse = await _distributedCache.GetStringAsync(key);
 
             return (string.IsNullOrEmpty(cachedResponse)) ? null : cachedResponse;
-
         }
 
     }

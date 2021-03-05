@@ -57,6 +57,3 @@ namespace MotoShop.WebAPI.Controllers
 
     }
 }
-
-//database check => make call to /serverHealth and grab the DatabaseHealthCheckResult
-//some service check => make call to /serverHealth and grab the SomeServiceCheckResult

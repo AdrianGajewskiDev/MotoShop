@@ -16,6 +16,7 @@ using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using MotoShop.Services.HelperModels;
+using MotoShop.WebAPI.HealthChecks;
 
 namespace MotoShop.Web
 {
@@ -40,7 +41,8 @@ namespace MotoShop.Web
                 .AddDefaultTokenProviders();
 
             services.AddHealthChecks()
-                .AddDbContextCheck<ApplicationDatabaseContext>();
+                .AddDbContextCheck<ApplicationDatabaseContext>()
+                .AddCheck<RedisConnectionHealthCheck>("RedisConnection");
 
             services.AddAuthenticationExtension(Configuration);
             services.AddAutoMapper(typeof(Startup))
