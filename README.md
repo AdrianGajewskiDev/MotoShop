@@ -10,6 +10,7 @@ A automotive shop made using Asp.Net Core and Angular 9.
  * XUnit
  * Moq
  * Google Authentication
+ * Redis
  
  # Requirements
    * Dotnet SDK
