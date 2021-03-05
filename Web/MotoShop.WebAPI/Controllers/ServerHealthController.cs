@@ -55,5 +55,35 @@ namespace MotoShop.WebAPI.Controllers
             return Ok(responseModel);
         }
 
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> RedisConnectionHealth()
+        {
+            var report = await _healthCheckService.CheckHealthAsync();
+
+            Nullable<HealthReportEntry> redisReport = report.Entries[HealthChecksConstants.RedisConnectionCheck];
+
+            if (redisReport is null)
+            {
+                var response = new HealthCheckResultResponseModel
+                {
+                    HealthCheckName = HealthChecksConstants.RedisConnectionCheck,
+                    Status = HealthStatus.Unhealthy,
+                    Description = "Cannot find a health check or something went wrong while trying to execute health check"
+                };
+
+                return NotFound(response);
+            }
+
+            var responseModel = new HealthCheckResultResponseModel
+            {
+                HealthCheckName = HealthChecksConstants.RedisConnectionCheck,
+                Status = redisReport.Value.Status,
+                Description = redisReport.Value.Description
+            };
+
+            return Ok(responseModel);
+        }
+
     }
 }

@@ -15,12 +15,10 @@ namespace MotoShop.Services.Implementation
     public class CachingService : ICachingService
     {
         private readonly IDistributedCache _distributedCache;
-
         public CachingService(IDistributedCache distributedCache)
         {
             _distributedCache = distributedCache;
         }
-
         public async Task CacheResponseAsync(string key, object obj, TimeSpan timeToLive)
         {
             if (obj is null)
@@ -33,7 +31,6 @@ namespace MotoShop.Services.Implementation
                 AbsoluteExpirationRelativeToNow = timeToLive
             });
         }
-
         public async Task ClearCache(IEnumerable<string> keys)
         {
             foreach (var key in keys)
@@ -41,7 +38,6 @@ namespace MotoShop.Services.Implementation
                 await _distributedCache.RemoveAsync(key);
             }
         }
-
         public RedisConnectionResult Connected(string host, int port)
         {
             try
@@ -63,13 +59,11 @@ namespace MotoShop.Services.Implementation
                 return RedisConnectionResult.ConnectionFailed($"Failed to connect with redis. Exception of type {ex.GetType().FullName} was thrown. Message: {ex.Message}");
             }
         }
-
         public async Task<string> GetCachedResponseAsync(string key)
         {
             var cachedResponse = await _distributedCache.GetStringAsync(key);
 
             return (string.IsNullOrEmpty(cachedResponse)) ? null : cachedResponse;
         }
-
     }
 }
