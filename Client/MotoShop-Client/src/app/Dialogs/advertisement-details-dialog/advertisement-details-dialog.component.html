@@ -1,4 +1,4 @@
-<div class="ad-container" fxLayout="row">
+<div class="ad-container" fxLayout="row" *ngIf="advertisementFound == true">
     <div class="left-content">
         <div class="upper-section" fxLayoutAlign="start center" fx>
             <img [src]="imageUrl" alt="Item Image">
@@ -104,4 +104,8 @@
             </li>
         </ul>
     </div>
+</div>
+
+<div *ngIf="advertisementFound == false">
+    Cannot find advertisement with id of {{data.AdvertisementID}}
 </div>

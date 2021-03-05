@@ -55,7 +55,6 @@ namespace MotoShop.WebAPI.Controllers
             return Ok(responseModel);
         }
 
-
         [HttpGet("[action]")]
         public async Task<IActionResult> RedisConnectionHealth()
         {

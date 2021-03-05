@@ -33,6 +33,7 @@ export class AdvertisementDetailsDialogComponent implements OnInit {
   }
 
   closing: boolean = false;
+  advertisementFound = false;
 
   dialog: MatDialog;
   toastr: ToastrService;
@@ -61,6 +62,10 @@ export class AdvertisementDetailsDialogComponent implements OnInit {
       }
       this.imageUrl = buildImagePath(this.model.ShopItem.ImageUrl);
       this.model.Placed = this.datePipe.transform(this.model.Placed, "yyyy-MM-dd");
+
+      if (this.model)
+        this.advertisementFound = true;
+
     }, error => { console.log(error); });
   }
 

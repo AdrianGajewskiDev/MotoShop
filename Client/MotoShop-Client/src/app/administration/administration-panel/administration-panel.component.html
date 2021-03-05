@@ -74,10 +74,20 @@
             </section>
             <section id="products" class="section">
                 <div class="products-container" fxLayoutAlign="start center" fxLayout="column">
-                    <div class="products-cards-btns">
-                        <button mat-button mat-raised-button color="warn" (click)="seedDatabase()">Seed
-                            Database</button>
+                    <button mat-button mat-raised-button color="warn" (click)="seedDatabase()">Seed
+                        Database</button>
+                    <div class="products-cards-btns" fxLayout="row">
+                        <mat-form-field class="search-input">
+                            <mat-label>Search by Id</mat-label>
+                            <input type="email" [(ngModel)]="searchQuery" matInput
+                                placeholder="Type advertisement id...">
+                        </mat-form-field>
+                        <button mat-mini-fab color="basic" aria-label="Example icon button with a bookmark icon"
+                            (click)="search()">
+                            <mat-icon>search</mat-icon>
+                        </button>
                     </div>
+
                     <table class="products-table">
                         <tr class="table-header">
                             <th>ID</th>
@@ -105,7 +115,7 @@
                 </div>
             </section>
             <section id="services" class="section">
-                <h1>Services</h1>
+                <h1>Services Are not implemented yet :(</h1>
             </section>
             <section id="server" class="section">
                 <h1>Server</h1>

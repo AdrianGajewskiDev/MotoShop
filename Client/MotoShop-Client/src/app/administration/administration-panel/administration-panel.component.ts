@@ -9,7 +9,6 @@ import { AllUsersModel } from '../../shared/models/administration/allUsers.model
 import { User } from '../../shared/models/administration/user.model';
 import { AdministrationService } from '../../shared/services/administration.service';
 import { UserDetailsDialogComponent } from '../../Dialogs/user-details-dialog/user-details-dialog.component';
-import { ConfirmationComponent } from 'src/app/identity/confirmation-component/confirmation-component.component';
 import { ConfirmationDialogComponent } from 'src/app/Dialogs/confirmation-dialog/confirmation-dialog.component';
 import { Advertisement } from 'src/app/shared/models/advertisements/advertisement.model';
 import { AdvertisementsService } from 'src/app/shared/services/advertisements.service';
@@ -50,6 +49,7 @@ export class AdministrationPanelComponent implements OnInit {
   public pageNumber = 1;
   public perPage = 15;
   public totalPages;
+  public searchQuery: string = "";
 
   private tabs: { [key: string]: Element; } = {};
 
@@ -140,7 +140,7 @@ export class AdministrationPanelComponent implements OnInit {
         break;
       case 'services':
         {
-
+          this.showLoadingSpinner = false;
         }
         break;
       case 'server':
@@ -225,6 +225,20 @@ export class AdministrationPanelComponent implements OnInit {
       height: '600px',
       data: {
         AdvertisementID: id
+      }
+    });
+  }
+  search() {
+    if (this.searchQuery === "" || isNaN(Number(this.searchQuery))) {
+      this.toastr.error("Invalid ID")
+      return;
+    }
+
+    this.dialog.open(AdvertisementDetailsDialogComponent, {
+      width: '1000px',
+      height: '600px',
+      data: {
+        AdvertisementID: this.searchQuery
       }
     });
   }
