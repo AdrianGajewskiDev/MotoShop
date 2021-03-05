@@ -23,4 +23,7 @@ export const serverDeleteAdvertisementUrl = "https://localhost:44304/api/adverti
 export const serverUpdateAdvertisementUrl = "https://localhost:44304/api/advertisements/";
 
 //files
-export const serverImageUploadUrl = "https://localhost:44304/api/upload/single"
+export const serverImageUploadUrl = "https://localhost:44304/api/upload/single";
+
+//server health
+export const serverOverallHealthUrl = "https://localhost:44304/api/serverHealth";

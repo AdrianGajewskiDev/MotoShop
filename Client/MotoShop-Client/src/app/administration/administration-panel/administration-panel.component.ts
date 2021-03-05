@@ -13,6 +13,7 @@ import { ConfirmationDialogComponent } from 'src/app/Dialogs/confirmation-dialog
 import { Advertisement } from 'src/app/shared/models/advertisements/advertisement.model';
 import { AdvertisementsService } from 'src/app/shared/services/advertisements.service';
 import { AdvertisementDetailsDialogComponent } from 'src/app/Dialogs/advertisement-details-dialog/advertisement-details-dialog.component';
+import { ServerHealthService } from 'src/app/shared/services/serverHealth.service';
 
 @Component({
   selector: 'app-administration-panel',
@@ -29,7 +30,8 @@ export class AdministrationPanelComponent implements OnInit {
 
   constructor(private service: AdministrationService,
     private advertisementService: AdvertisementsService,
-    private toastr: ToastrService, private dialog: MatDialog) { }
+    private toastr: ToastrService, private serverService: ServerHealthService,
+    private dialog: MatDialog) { }
 
   //data
   private users: User[];
@@ -145,7 +147,15 @@ export class AdministrationPanelComponent implements OnInit {
         break;
       case 'server':
         {
-
+          this.showLoadingSpinner = false;
+          this.serverService.getOverallHealth().subscribe((res) => {
+            this.showLoadingSpinner = false;
+            console.log(res);
+          },
+            error => {
+              this.showLoadingSpinner = false;
+              this.toastr.error(error.message);
+            })
         }
         break;
     }

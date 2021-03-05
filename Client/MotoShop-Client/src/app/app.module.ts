@@ -39,6 +39,7 @@ import { ConfirmationDialogComponent } from './Dialogs/confirmation-dialog/confi
 import { AdvertisementDetailsDialogComponent } from './Dialogs/advertisement-details-dialog/advertisement-details-dialog.component';
 import { DatePipe } from '@angular/common';
 import { EditAdvertisementDialogComponent } from './Dialogs/edit-advertisement-dialog/edit-advertisement-dialog.component';
+import { ServerHealthService } from './shared/services/serverHealth.service';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { EditAdvertisementDialogComponent } from './Dialogs/edit-advertisement-d
     AdministrationService,
     AdvertisementsService,
     DatePipe,
+    ServerHealthService,
     ///Interceptors
     {
       provide: HTTP_INTERCEPTORS,
