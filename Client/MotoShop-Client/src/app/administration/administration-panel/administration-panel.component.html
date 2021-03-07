@@ -118,7 +118,12 @@
                 <h1>Services Are not implemented yet :(</h1>
             </section>
             <section id="server" class="section">
-                <h1>Server</h1>
+                <div *ngIf="serverHealth != undefined">
+                    <div *ngFor="let entry of serverHealth.Entries" fxLayout="row">
+                        <app-server-health-item [model]="entry"></app-server-health-item>
+                    </div>
+                </div>
+
             </section>
         </div>
     </div>

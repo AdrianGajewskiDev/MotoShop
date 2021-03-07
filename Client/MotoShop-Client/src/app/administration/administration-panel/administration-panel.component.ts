@@ -14,6 +14,7 @@ import { Advertisement } from 'src/app/shared/models/advertisements/advertisemen
 import { AdvertisementsService } from 'src/app/shared/services/advertisements.service';
 import { AdvertisementDetailsDialogComponent } from 'src/app/Dialogs/advertisement-details-dialog/advertisement-details-dialog.component';
 import { ServerHealthService } from 'src/app/shared/services/serverHealth.service';
+import { HealthReportModel } from 'src/app/shared/models/server/health/HealthReport.model';
 
 @Component({
   selector: 'app-administration-panel',
@@ -52,6 +53,10 @@ export class AdministrationPanelComponent implements OnInit {
   public perPage = 15;
   public totalPages;
   public searchQuery: string = "";
+
+  //server health data
+  public serverHealth: HealthReportModel;
+
 
   private tabs: { [key: string]: Element; } = {};
 
@@ -125,10 +130,7 @@ export class AdministrationPanelComponent implements OnInit {
                 this.users = res.Users
                 this.dataSource = new MatTableDataSource(this.users);
               },
-              error => {
-                this.showLoadingSpinner = false;
-                this.toastr.error(error.message);
-              }
+              error => this.onErrorReceived(error)
             );
         }
         break;
@@ -148,14 +150,11 @@ export class AdministrationPanelComponent implements OnInit {
       case 'server':
         {
           this.showLoadingSpinner = false;
-          this.serverService.getOverallHealth().subscribe((res) => {
+          this.serverService.getOverallHealth().subscribe((res: HealthReportModel) => {
             this.showLoadingSpinner = false;
-            console.log(res);
+            this.serverHealth = res;
           },
-            error => {
-              this.showLoadingSpinner = false;
-              this.toastr.error(error.message);
-            })
+            error => this.onErrorReceived(error))
         }
         break;
     }
@@ -224,10 +223,7 @@ export class AdministrationPanelComponent implements OnInit {
         this.currentAdvertisements = this.setCurrentAdvertisementToShow("All");
         this.totalPages = res.TotalPages;
       },
-      error => {
-        this.showLoadingSpinner = false;
-        this.toastr.error(error.message);
-      });
+      error => this.onErrorReceived(error));
   }
   goToDetails(id) {
     this.dialog.open(AdvertisementDetailsDialogComponent, {
@@ -251,5 +247,9 @@ export class AdministrationPanelComponent implements OnInit {
         AdvertisementID: this.searchQuery
       }
     });
+  }
+  onErrorReceived(error) {
+    this.showLoadingSpinner = false;
+    this.toastr.error(error.message);
   }
 }

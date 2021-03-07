@@ -40,6 +40,7 @@ import { AdvertisementDetailsDialogComponent } from './Dialogs/advertisement-det
 import { DatePipe } from '@angular/common';
 import { EditAdvertisementDialogComponent } from './Dialogs/edit-advertisement-dialog/edit-advertisement-dialog.component';
 import { ServerHealthService } from './shared/services/serverHealth.service';
+import { ServerHealthItemComponent } from './administration/server-health-item/server-health-item.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { ServerHealthService } from './shared/services/serverHealth.service';
     ConfirmationDialogComponent,
     AdvertisementDetailsDialogComponent,
     EditAdvertisementDialogComponent,
+    ServerHealthItemComponent,
   ],
   imports: [
     AngularMaterialModule,

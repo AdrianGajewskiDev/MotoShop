@@ -3,6 +3,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using MotoShop.WebAPI.Helpers.HealthChecks;
 using MotoShop.WebAPI.Models.Response.HealthChecks;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MotoShop.WebAPI.Controllers
@@ -23,7 +24,18 @@ namespace MotoShop.WebAPI.Controllers
         {
             var report = await _healthCheckService.CheckHealthAsync();
 
-            return Ok(report);
+            var responseModel = new OverallHealthCheckResponseModel
+            {
+                Status = report.Status.ToString(),
+                Entries = report.Entries.Select(entry => new HealthCheckResultResponseModel 
+                {
+                    Status = entry.Value.Status,
+                    HealthCheckName = entry.Key,
+                    Description = entry.Value.Status.ToString()
+                })
+            };
+
+            return Ok(responseModel);
         }
 
         [HttpGet("[action]")]

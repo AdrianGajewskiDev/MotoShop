@@ -17,7 +17,7 @@ namespace MotoShop.WebAPI.Models.Response.HealthChecks
                     case HealthStatus.Healthy: return HealthStatus.Healthy.ToString();
                 }
 
-                return "UnknownHealthStatus";
+                return "Unknown Health Status";
             }
         }
 
