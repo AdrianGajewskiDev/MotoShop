@@ -1,3 +1,15 @@
-<p>{{model.Status}}</p>
-<p>{{model.StatusDescritpion}}</p>
-<p>{{model.HealthCheckName}}</p>
+<div class="health-item">
+    <div class="example-card" [ngClass]="(model.Status == 2)? 'healthy':'unhealthy'">
+        <div class="header" fxLayoutAlign="center center">
+            <h1>{{model.HealthCheckName}}</h1>
+        </div>
+        <div class="cnt" fxLayoutAlign="center center">
+            <p>
+                {{model.StatusDescritpion}}
+            </p>
+        </div>
+        <div fxLayoutAlign="center center">
+            <button mat-button mat-raised-button color="basic">Details</button>
+        </div>
+    </div>
+</div>

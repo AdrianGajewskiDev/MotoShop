@@ -14,6 +14,16 @@ export class ServerHealthItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-  }
+    let splitedWords = this.model.HealthCheckName.split(/(?=[A-Z])/);
 
+    let newHealthCheckName: string = "";
+
+    splitedWords.forEach(element => {
+      element = element.replace(",", " ");
+
+      newHealthCheckName += " " + element;
+    });
+
+    this.model.HealthCheckName = newHealthCheckName;
+  }
 }
