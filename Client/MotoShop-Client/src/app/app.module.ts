@@ -31,7 +31,6 @@ import { ExternalSignInService } from './shared/services/externalSignIn.service'
 import { AdministrationPanelComponent } from './administration/administration-panel/administration-panel.component';
 import { AdministrationService } from './shared/services/administration.service';
 import { UserDetailsDialogComponent } from './Dialogs/user-details-dialog/user-details-dialog.component';
-import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { ServiceLocator } from './shared/services/locator.service';
 import { AdvertisementsService } from './shared/services/advertisements.service';
 import { AddRoleToUserDialogComponent } from './Dialogs/add-role-to-user-dialog/add-role-to-user-dialog.component';
@@ -41,6 +40,7 @@ import { DatePipe } from '@angular/common';
 import { EditAdvertisementDialogComponent } from './Dialogs/edit-advertisement-dialog/edit-advertisement-dialog.component';
 import { ServerHealthService } from './shared/services/serverHealth.service';
 import { ServerHealthItemComponent } from './administration/server-health-item/server-health-item.component';
+import { ServerHealthItemDetailsDialogComponent } from './Dialogs/server-health-item-details-dialog/server-health-item-details-dialog.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +62,8 @@ import { ServerHealthItemComponent } from './administration/server-health-item/s
     AdvertisementDetailsDialogComponent,
     EditAdvertisementDialogComponent,
     ServerHealthItemComponent,
+    ServerHealthItemDetailsDialogComponent
+
   ],
   imports: [
     AngularMaterialModule,
@@ -98,7 +100,8 @@ import { ServerHealthItemComponent } from './administration/server-health-item/s
     AddRoleToUserDialogComponent,
     ConfirmationDialogComponent,
     AdvertisementDetailsDialogComponent,
-    EditAdvertisementDialogComponent
+    EditAdvertisementDialogComponent,
+    ServerHealthItemDetailsDialogComponent
   ],
   bootstrap: [AppComponent]
 })

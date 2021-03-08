@@ -31,7 +31,7 @@ namespace MotoShop.WebAPI.Controllers
                 {
                     Status = entry.Value.Status,
                     HealthCheckName = entry.Key,
-                    Description = entry.Value.Status.ToString()
+                    Description = entry.Value.Description
                 })
             };
 

@@ -53,6 +53,7 @@ export class AdministrationPanelComponent implements OnInit {
   public perPage = 15;
   public totalPages;
   public searchQuery: string = "";
+  public dataType: string;
 
   //server health data
   public serverHealth: HealthReportModel;
@@ -149,7 +150,6 @@ export class AdministrationPanelComponent implements OnInit {
         break;
       case 'server':
         {
-          this.showLoadingSpinner = false;
           this.serverService.getOverallHealth().subscribe((res: HealthReportModel) => {
             this.showLoadingSpinner = false;
             this.serverHealth = res;
@@ -215,9 +215,6 @@ export class AdministrationPanelComponent implements OnInit {
   getAdvertisements(perPage: number, pageNumber: number) {
     this.advertisementService.getAll(perPage, pageNumber).subscribe(
       (res: any) => {
-        +
-          console.log(res);
-
         this.advertisements = res.Content;
         this.showLoadingSpinner = false;
         this.currentAdvertisements = this.setCurrentAdvertisementToShow("All");
@@ -251,5 +248,9 @@ export class AdministrationPanelComponent implements OnInit {
   onErrorReceived(error) {
     this.showLoadingSpinner = false;
     this.toastr.error(error.message);
+  }
+
+  refresh() {
+    this.getData("server");
   }
 }

@@ -74,8 +74,6 @@
             </section>
             <section id="products" class="section">
                 <div class="products-container" fxLayoutAlign="start center" fxLayout="column">
-                    <button mat-button mat-raised-button color="warn" (click)="seedDatabase()">Seed
-                        Database</button>
                     <div class="products-cards-btns" fxLayout="row">
                         <mat-form-field class="search-input">
                             <mat-label>Search by Id</mat-label>
@@ -86,6 +84,13 @@
                             (click)="search()">
                             <mat-icon>search</mat-icon>
                         </button>
+                        <mat-form-field class="dataType-input">
+                            <mat-label>Data Type</mat-label>
+                            <select matNativeControl [(ngModel)]="dataType">
+                                <option value="Id" selected>Id</option>
+                                <option value="Title">Title</option>
+                            </select>
+                        </mat-form-field>
                     </div>
 
                     <table class="products-table">
@@ -122,7 +127,12 @@
                     <app-server-health-item *ngFor="let entry of serverHealth.Entries" [model]="entry">
                     </app-server-health-item>
                 </div>
-
+                <div fxLayout="row" class="serverHealth-actions">
+                    <button mat-button mat-raised-button color="warn" (click)="seedDatabase()">Seed
+                        Database</button>
+                    <button mat-button mat-raised-button color="basic" (click)="refresh()">
+                        Refresh</button>
+                </div>
             </section>
         </div>
     </div>

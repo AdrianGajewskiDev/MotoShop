@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ServerHealthItemDetailsDialogComponent } from 'src/app/Dialogs/server-health-item-details-dialog/server-health-item-details-dialog.component';
 import { HealthReportEntryModel } from 'src/app/shared/models/server/health/HealthReportEntry.model';
+import { ServiceLocator } from 'src/app/shared/services/locator.service';
 
 @Component({
   selector: 'app-server-health-item',
@@ -11,7 +14,11 @@ export class ServerHealthItemComponent implements OnInit {
   @Input()
   model: HealthReportEntryModel;
 
-  constructor() { }
+  private dialog: MatDialog;
+
+  constructor() {
+    this.dialog = ServiceLocator.injector.get(MatDialog);
+  }
 
   ngOnInit(): void {
     let splitedWords = this.model.HealthCheckName.split(/(?=[A-Z])/);
@@ -25,5 +32,17 @@ export class ServerHealthItemComponent implements OnInit {
     });
 
     this.model.HealthCheckName = newHealthCheckName;
+  }
+
+  goToDetails(): void {
+    this.dialog.open(ServerHealthItemDetailsDialogComponent,
+      {
+        width: "300px",
+        height: "200px",
+        data: {
+          model: this.model
+        }
+
+      });
   }
 }
