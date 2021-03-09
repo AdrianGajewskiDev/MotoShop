@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -136,43 +137,30 @@ namespace MotoShop.WebAPI.Controllers
             if (advertisement == null)
                 return NotFound(StaticMessages.NotFound("Advertisement", "ID", id));
 
-            switch (advertisement.ShopItem.ItemType)
-            {
-                case "Car":
-                    {
-                        var model = new AdvertisementDetailsResponseModel<Car>
-                        {
-                            Author = _mapper.Map<UserAccountDetailsResponseModel>(advertisement.Author),
-                            AuthorID = advertisement.AuthorID,
-                            Description = advertisement.Description,
-                            ID = advertisement.ID,
-                            Placed = advertisement.Placed,
-                            ShopItem = _shopItemService.GetCarItem(advertisement.ShopItem.ID),
-                            Title = advertisement.Title
-                        };
+            var responseModel = BuildAdDetailsResponseModel(advertisement);
 
-                        return Ok(model);
-
-                    }
-                case "Motocycle":
-                    {
-                        var model = new AdvertisementDetailsResponseModel<Motocycle>
-                        {
-                            Author = _mapper.Map<UserAccountDetailsResponseModel>(advertisement.Author),
-                            AuthorID = advertisement.AuthorID,
-                            Description = advertisement.Description,
-                            ID = advertisement.ID,
-                            Placed = advertisement.Placed,
-                            ShopItem = _shopItemService.GetMotocycleItem(advertisement.ShopItem.ID),
-                            Title = advertisement.Title
-                        };
-
-                        return Ok(model);
-
-                    }
-            }
+            if (responseModel != null)
+                return Ok(responseModel);
 
             return BadRequest(StaticMessages.SomethingWentWrong);
+        }
+
+        [HttpGet("query")]
+        public IActionResult GetByQuery([FromQuery, Required] string searchQuery)
+        {
+            var ad = _advertisementService.GetByTitle(searchQuery);
+
+            if (ad.Any())
+            {
+                var responseModel = new AdvertisementsDetailsResponseModel 
+                {
+                    Advertisements = ad.Select(advert => BuildAdDetailsResponseModel(advert))
+                };
+
+                return Ok(responseModel);
+            }
+
+            return Ok();
         }
 
         [HttpDelete("{id}")]
@@ -222,5 +210,47 @@ namespace MotoShop.WebAPI.Controllers
 
             return BadRequest(StaticMessages.SomethingWentWrong);
         }
+
+        #region Helpers
+        private AdvertisementDetailsResponseModel BuildAdDetailsResponseModel(Advertisement advertisement)
+        {
+            switch (advertisement.ShopItem.ItemType)
+            {
+                case "Car":
+                    {
+                        var model = new AdvertisementDetailsResponseModel
+                        {
+                            Author = _mapper.Map<UserAccountDetailsResponseModel>(advertisement.Author),
+                            AuthorID = advertisement.AuthorID,
+                            Description = advertisement.Description,
+                            ID = advertisement.ID,
+                            Placed = advertisement.Placed,
+                            ShopItem = _shopItemService.GetCarItem(advertisement.ShopItem.ID),
+                            Title = advertisement.Title
+                        };
+
+                        return model;
+
+                    }
+                case "Motocycle":
+                    {
+                        var model = new AdvertisementDetailsResponseModel
+                        {
+                            Author = _mapper.Map<UserAccountDetailsResponseModel>(advertisement.Author),
+                            AuthorID = advertisement.AuthorID,
+                            Description = advertisement.Description,
+                            ID = advertisement.ID,
+                            Placed = advertisement.Placed,
+                            ShopItem = _shopItemService.GetMotocycleItem(advertisement.ShopItem.ID),
+                            Title = advertisement.Title
+                        };
+
+                        return model;
+
+                    }
+            }
+            return null;
+        }
+        #endregion
     }
 }

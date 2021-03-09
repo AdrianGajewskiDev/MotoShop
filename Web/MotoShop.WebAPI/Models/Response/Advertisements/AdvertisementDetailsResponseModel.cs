@@ -5,7 +5,7 @@ using System;
 
 namespace MotoShop.WebAPI.Models.Response.Advertisements
 {
-    public class AdvertisementDetailsResponseModel<T> where T: ShopItem
+    public class AdvertisementDetailsResponseModel
     {
         public int ID { get; set; }
         public string Title { get; set; }
@@ -13,6 +13,6 @@ namespace MotoShop.WebAPI.Models.Response.Advertisements
         public DateTime Placed { get; set; }
         public string AuthorID { get; set; }
         public UserAccountDetailsResponseModel Author { get; set; }
-        public T ShopItem { get; set; }
+        public object ShopItem { get; set; }
     }
 }

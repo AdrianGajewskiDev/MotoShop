@@ -53,7 +53,7 @@ export class AdministrationPanelComponent implements OnInit {
   public perPage = 15;
   public totalPages;
   public searchQuery: string = "";
-  public dataType: string;
+  public dataType: string = "Id"
 
   //server health data
   public serverHealth: HealthReportModel;
@@ -199,7 +199,6 @@ export class AdministrationPanelComponent implements OnInit {
       return;
     else {
       this.pageNumber += 1;
-      console.log(this.pageNumber);
       this.getAdvertisements(this.perPage, this.pageNumber);
       console.log();
     }
@@ -232,6 +231,7 @@ export class AdministrationPanelComponent implements OnInit {
     });
   }
   search() {
+
     if (this.searchQuery === "" || isNaN(Number(this.searchQuery))) {
       this.toastr.error("Invalid ID")
       return;
@@ -249,7 +249,6 @@ export class AdministrationPanelComponent implements OnInit {
     this.showLoadingSpinner = false;
     this.toastr.error(error.message);
   }
-
   refresh() {
     this.getData("server");
   }

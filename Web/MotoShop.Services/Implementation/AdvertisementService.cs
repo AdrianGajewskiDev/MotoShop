@@ -66,6 +66,10 @@ namespace MotoShop.Services.Implementation
         {
             return AdvertisementQueries.GetAllAdvertisementsByAuthorId(_context, authorID);
         }
+        public IEnumerable<Advertisement> GetByTitle(string title)
+        {
+            return AdvertisementQueries.GetByTitle(_context, title.ToLower());
+        }
         public async Task<bool> UpdateAdvertisementAsync(int id, Advertisement newAdvertisement, Advertisement oldAdvertisement)
         {
             if (oldAdvertisement.ID != newAdvertisement.ID)
