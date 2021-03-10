@@ -21,16 +21,12 @@ namespace MotoShop.Services.EntityFramework.CompiledQueries
             EF.CompileQuery((ApplicationDatabaseContext ctx) =>
             ctx.Advertisements
                 .Include(c => c.ShopItem)
+                .Include(c => c.Author)
             );
 
         public static Func<ApplicationDatabaseContext, string, IEnumerable<Advertisement>> GetAllAdvertisementsByAuthorId =
             EF.CompileQuery((ApplicationDatabaseContext ctx, string userID) =>
                     ctx.Advertisements.Where(x => x.AuthorID == userID).Include(x => x.ShopItem));
-
-        public static Func<ApplicationDatabaseContext, string, IEnumerable<Advertisement>> GetByTitle =
-            EF.CompileQuery((ApplicationDatabaseContext ctx, string title) =>
-                    ctx.Advertisements.Where(x => x.Title.ToLower() == title).
-            Include(x => x.ShopItem).
-            Include(x => x.Author));
+        
     }
 }

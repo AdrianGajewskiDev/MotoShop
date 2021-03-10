@@ -5,6 +5,8 @@ using MotoShop.Services.EntityFramework.CompiledQueries;
 using MotoShop.Services.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace MotoShop.Services.Implementation
@@ -68,7 +70,24 @@ namespace MotoShop.Services.Implementation
         }
         public IEnumerable<Advertisement> GetByTitle(string title)
         {
-            return AdvertisementQueries.GetByTitle(_context, title.ToLower());
+            title = title.ToLower();
+
+            //split, then search for all keywords and return item if contains any of the given keyword
+
+            var result = _context.Advertisements.Where(ad => ad.Title.ToLower().Contains(title))
+                .Include(x => x.Author)
+                .Include(x => x.ShopItem)
+                .ToList();
+
+            if (result.Any())
+                return result;
+
+            string[] keywords = title.Split(" ");
+
+            result = SearchByKeywords(ad => ad.Title, keywords)
+                .ToList();
+
+            return result;
         }
         public async Task<bool> UpdateAdvertisementAsync(int id, Advertisement newAdvertisement, Advertisement oldAdvertisement)
         {
@@ -88,6 +107,24 @@ namespace MotoShop.Services.Implementation
             var result = await _context.SaveChangesAsync();
 
             return result > 0;
+        }
+
+        public IQueryable<Advertisement> SearchByKeywords(Func<Advertisement, string>  selector, string[] keywords) 
+        {
+            List<Advertisement> result = new List<Advertisement>();
+
+            var all = GetAll();
+
+            foreach (var key in keywords)
+            {
+                foreach (var ad in all)
+                {
+                    if (selector(ad).ToLower().Contains(key.ToLower()))
+                        result.Add(ad);
+                }
+            }
+
+            return result.AsQueryable();
         }
     }
 }
