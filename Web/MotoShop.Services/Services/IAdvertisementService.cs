@@ -15,7 +15,7 @@ namespace MotoShop.Services.Services
         {
             return ad.AuthorID == userID;
         }
-        IEnumerable<Advertisement> GetByTitle(string title);
+        IEnumerable<Advertisement> GetByTitle(string title, ICollection<Advertisement> all);
         Task<bool> AddAdvertisementAsync(Advertisement advertisement);
         Task<bool> UpdateAdvertisementAsync(int id, Advertisement newAdvertisement, Advertisement oldAdvertisement);
         void DeleteAdvertisement(int advertisementID);

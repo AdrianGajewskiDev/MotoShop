@@ -68,23 +68,20 @@ namespace MotoShop.Services.Implementation
         {
             return AdvertisementQueries.GetAllAdvertisementsByAuthorId(_context, authorID);
         }
-        public IEnumerable<Advertisement> GetByTitle(string title)
+        public IEnumerable<Advertisement> GetByTitle(string title, ICollection<Advertisement> all)
         {
             title = title.ToLower();
 
             //split, then search for all keywords and return item if contains any of the given keyword
 
-            var result = _context.Advertisements.Where(ad => ad.Title.ToLower().Contains(title))
-                .Include(x => x.Author)
-                .Include(x => x.ShopItem)
-                .ToList();
+            var result = all.Where(ad => ad.Title.ToLower().Contains(title));
 
             if (result.Any())
                 return result;
 
             string[] keywords = title.Split(" ");
 
-            result = SearchByKeywords(ad => ad.Title, keywords)
+            result = SearchByKeywords(ad => ad.Title, keywords, all)
                 .ToList();
 
             return result;
@@ -108,12 +105,9 @@ namespace MotoShop.Services.Implementation
 
             return result > 0;
         }
-
-        public IQueryable<Advertisement> SearchByKeywords(Func<Advertisement, string>  selector, string[] keywords) 
+        public IQueryable<Advertisement> SearchByKeywords(Func<Advertisement, string>  selector, string[] keywords, ICollection<Advertisement> all) 
         {
             List<Advertisement> result = new List<Advertisement>();
-
-            var all = GetAll();
 
             foreach (var key in keywords)
             {

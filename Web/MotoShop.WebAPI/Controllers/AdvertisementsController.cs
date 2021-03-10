@@ -148,7 +148,7 @@ namespace MotoShop.WebAPI.Controllers
         [HttpGet("query")]
         public IActionResult GetByQuery([FromQuery, Required] string searchQuery)
         {
-            var ad = _advertisementService.GetByTitle(searchQuery);
+            var ad = _advertisementService.GetByTitle(searchQuery, _advertisementService.GetAll().ToList());
 
             if (ad.Any())
             {
@@ -160,7 +160,7 @@ namespace MotoShop.WebAPI.Controllers
                 return Ok(responseModel);
             }
 
-            return Ok();
+            return NotFound(StaticMessages.NotFound("Advertisement", "query", searchQuery));
         }
 
         [HttpDelete("{id}")]

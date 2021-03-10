@@ -15,7 +15,8 @@ import { Advertisement } from 'src/app/shared/models/advertisements/advertisemen
 
 
 interface DialogData {
-  AdvertisementID: number;
+  Data: number | string;
+  DataType: string;
 }
 
 @Component({
@@ -47,26 +48,33 @@ export class AdvertisementDetailsDialogComponent implements OnInit {
   imageUrl: string;
 
   ngOnInit(): void {
-    this.advertisementsService.getByID(this.data.AdvertisementID).subscribe((res) => {
-      this.model = res;
-      if (this.model.ShopItem.ItemType == "Motocycle") {
-        this.item = "Motocycle";
-        this.motocycle = this.model.ShopItem as Motocycle;
-        this.motocycle.YearOfProduction = this.datePipe.transform(this.motocycle.YearOfProduction, "yyyy")
-      }
-      else {
-        this.item = "Car";
-        this.car = this.model.ShopItem as Car;
-        this.car.YearOfProduction = this.datePipe.transform(this.car.YearOfProduction, "yyyy-MM")
 
-      }
-      this.imageUrl = buildImagePath(this.model.ShopItem.ImageUrl);
-      this.model.Placed = this.datePipe.transform(this.model.Placed, "yyyy-MM-dd");
+    switch (this.data.DataType) {
+      case "ID": {
+        this.advertisementsService.getByID(this.data.Data as number).subscribe((res) => {
+          this.model = res;
+          if (this.model.ShopItem.ItemType == "Motocycle") {
+            this.item = "Motocycle";
+            this.motocycle = this.model.ShopItem as Motocycle;
+            this.motocycle.YearOfProduction = this.datePipe.transform(this.motocycle.YearOfProduction, "yyyy")
+          }
+          else {
+            this.item = "Car";
+            this.car = this.model.ShopItem as Car;
+            this.car.YearOfProduction = this.datePipe.transform(this.car.YearOfProduction, "yyyy-MM")
 
-      if (this.model)
-        this.advertisementFound = true;
+          }
+          this.imageUrl = buildImagePath(this.model.ShopItem.ImageUrl);
+          this.model.Placed = this.datePipe.transform(this.model.Placed, "yyyy-MM-dd");
 
-    }, error => { console.log(error); });
+          if (this.model)
+            this.advertisementFound = true;
+
+        }, error => { console.log(error); });
+      } break;
+    }
+
+
   }
 
   deleteAd() {
