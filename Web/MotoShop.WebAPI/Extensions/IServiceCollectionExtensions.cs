@@ -35,9 +35,9 @@ namespace MotoShop.WebAPI.Extensions
                 IssuerSigningKey = new SymmetricSecurityKey(jwtKey),
                 ValidateIssuer = false,
                 ValidateAudience = false,
+                ValidateLifetime = true,
                 RequireExpirationTime = true,
                 ClockSkew = TimeSpan.Zero,
-                
             };
 
 

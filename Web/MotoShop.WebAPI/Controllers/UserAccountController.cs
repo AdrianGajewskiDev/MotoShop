@@ -86,7 +86,6 @@ namespace MotoShop.WebAPI.Controllers
 
         [HttpPost("changePassword")]
         [Authorize]
-
         public async Task<IActionResult> ChangePassword(NewPasswordRequestModel model)
         {
             if (model == null)
