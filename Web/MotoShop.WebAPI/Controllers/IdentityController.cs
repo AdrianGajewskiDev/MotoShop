@@ -85,7 +85,7 @@ namespace MotoShop.WebAPI.Controllers
             Log.Information($"The { userSignInRequestModel.Data} signed in");
 
             var role = await _applicationUserService.IsAdmin(userID) ? ApplicationRoles.Administrator : ApplicationRoles.NormalUser;
-            var token = _jsonWebTokenWriter.GenerateToken(_jsonWebTokenWriter.AddStandardClaims(userID, role), 5);
+            var token = _jsonWebTokenWriter.GenerateToken(_jsonWebTokenWriter.AddStandardClaims(userID, role));
 
             return Ok(new { token = token });
         }
@@ -105,7 +105,7 @@ namespace MotoShop.WebAPI.Controllers
 
             if(user != null)
             {
-                var token = _jsonWebTokenWriter.GenerateToken("UserID", user.Id, 5);
+                var token = _jsonWebTokenWriter.GenerateToken("UserID", user.Id);
 
                 return Ok(new { token = token });
             }
@@ -125,12 +125,19 @@ namespace MotoShop.WebAPI.Controllers
             if (succeeded)
             {
                 var role = await _applicationUserService.IsAdmin(user.Id) ? ApplicationRoles.Administrator : ApplicationRoles.NormalUser;
-                var token = _jsonWebTokenWriter.GenerateToken(_jsonWebTokenWriter.AddStandardClaims(user.Id, role), 5);
+                var token = _jsonWebTokenWriter.GenerateToken(_jsonWebTokenWriter.AddStandardClaims(user.Id, role));
 
                 return Ok(new { token = token });
             }
 
             return BadRequest(StaticMessages.SomethingWentWrong);
+        }
+
+
+        [HttpGet("refreshToken")]
+        public IActionResult RefreshToken()
+        {
+            return Ok();
         }
     }
 }

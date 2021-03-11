@@ -36,7 +36,8 @@ namespace MotoShop.WebAPI.Extensions
                 ValidateIssuer = false,
                 ValidateAudience = false,
                 RequireExpirationTime = true,
-                ClockSkew = TimeSpan.Zero
+                ClockSkew = TimeSpan.Zero,
+                
             };
 
 

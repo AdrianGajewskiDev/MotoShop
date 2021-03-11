@@ -12,6 +12,7 @@ namespace MotoShop.Data.Database_Context
         public DbSet<Advertisement> Advertisements { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<Motocycle> Motocycles { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

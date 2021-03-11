@@ -148,6 +148,8 @@ namespace MotoShop.WebAPI.Controllers
         [HttpGet("query")]
         public IActionResult GetByQuery([FromQuery, Required] string searchQuery)
         {
+
+            //do we need to get All advertisements everytime ?
             var ad = _advertisementService.GetByTitle(searchQuery, _advertisementService.GetAll().ToList());
 
             if (ad.Any())
