@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using MotoShop.Data.Models.User;
 using MotoShop.Services.HelperModels;
 using MotoShop.Services.Implementation;
 using MotoShop.Services.Services;
@@ -40,6 +41,7 @@ namespace MotoShop.WebAPI.Extensions
                 ClockSkew = TimeSpan.Zero,
             };
 
+            services.AddSingleton(tokentValidationParams);
 
             services.AddAuthentication(options =>
             {
@@ -81,10 +83,12 @@ namespace MotoShop.WebAPI.Extensions
             services.AddTransient<IExternalLoginProviderService, ExternalLoginProviderService>();
             services.AddTransient<IAdministrationService, AdministrationService>();
             services.AddTransient<DatabaseSeeder>();
+            services.AddTransient<IRefreshTokenGenerator<RefreshToken>, RefreshTokenGenerator>();
+            services.AddTransient<ITokenWriter, JsonWebTokenWriter>();
+            services.AddTransient<ITokenProviderService, JWTProviderService>();
 
 
             //Singletons
-            services.AddSingleton<JsonWebTokenWriter>();
             services.AddSingleton<CacheBase>();
             services.AddSingleton<ICachingService, CachingService>();
             services.AddSingleton<IEmailSenderService, EmailSender>();

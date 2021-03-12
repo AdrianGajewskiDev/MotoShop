@@ -22,16 +22,20 @@ namespace MotoShop.WebAPI.Controllers
     {
         private readonly IExternalLoginProviderService _externalLoginProviderService;
         private readonly IApplicationUserService _applicationUserService;
-        private readonly JsonWebTokenWriter _jsonWebTokenWriter;
+        private readonly ITokenWriter _jsonWebTokenWriter;
         private readonly IMapper _mapper;
+        private readonly IRefreshTokenGenerator<RefreshToken> _refreshTokenGenerator;
+        private readonly ITokenProviderService _tokenProviderService;
 
-        public IdentityController(IExternalLoginProviderService externalLoginProviderService, IApplicationUserService applicationUserService, 
-            JsonWebTokenWriter jsonWebTokenWriter, IMapper mapper)
+        public IdentityController(IExternalLoginProviderService externalLoginProviderService, IApplicationUserService applicationUserService,
+            ITokenWriter jsonWebTokenWriter, IMapper mapper, IRefreshTokenGenerator<RefreshToken> refreshTokenGenerator, ITokenProviderService tokenProviderService)
         {
             _externalLoginProviderService = externalLoginProviderService;
             _applicationUserService = applicationUserService;
             _jsonWebTokenWriter = jsonWebTokenWriter;
             _mapper = mapper;
+            _refreshTokenGenerator = refreshTokenGenerator;
+            _tokenProviderService = tokenProviderService;
         }
 
         [AllowAnonymous]
@@ -59,6 +63,7 @@ namespace MotoShop.WebAPI.Controllers
             {
                 await _applicationUserService.SendAccountConfirmationMessageAsync(await _applicationUserService.GetUserByUserName(user.UserName));
                 Log.Information($"Registered new user with id of { user.Id}");
+                _refreshTokenGenerator.Generate(user.Id);
                 return Ok(new { message = StaticMessages.Created("User")});
             }
 
@@ -69,12 +74,18 @@ namespace MotoShop.WebAPI.Controllers
         [HttpPost("signIn")]
         public async Task<IActionResult> SignIn([FromBody] UserSignInRequestModel userSignInRequestModel)
         {
+
+
             if (userSignInRequestModel == null)
                 return BadRequest(new { message = StaticMessages.WasNull(nameof(userSignInRequestModel)) });
 
             UserSignInVariant userLogInVariant = userSignInRequestModel.Data.Contains("@") ? UserSignInVariant.Email : UserSignInVariant.UserName;
 
             string userID = await _applicationUserService.SignInAsync(userSignInRequestModel.Data, userSignInRequestModel.Password, userLogInVariant);
+
+            if (_tokenProviderService.GetRefreshTokenByUserID(userID) == null)
+                _refreshTokenGenerator.Generate(userID);    
+
 
             if (string.IsNullOrEmpty(userID))
             {

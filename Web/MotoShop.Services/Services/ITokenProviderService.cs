@@ -9,9 +9,10 @@ namespace MotoShop.Services.Services
         bool CheckIfRefreshTokenExists(string userID);
         RefreshToken GetRefreshTokenByUserID(string userID);
         RefreshToken GetRefreshToken(string token);
-        RefreshTokenResult RefreshToken(string token, string userID, ITokenWriter tokenWriter);
+        RefreshTokenResult RefreshToken(string token, string tempToken, string userID);
         bool RefreshTokenExpired(RefreshToken token);
         bool TemporaryTokenExpired(string token);
         bool IsValidRefreshTokenForUser(RefreshToken refreshToken, string token);
+        void AssertValidToken(string token);
     }
 }
