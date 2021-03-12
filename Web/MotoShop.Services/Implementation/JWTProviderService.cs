@@ -21,39 +21,34 @@ namespace MotoShop.Services.Implementation
             _tokenWriter = tokenWriter;
             _tokenValidationParameters = tokenValidationParameters;
         }
-
         public bool CheckIfRefreshTokenExists(string userID)
         {
             return _dbContext.RefreshTokens.Any(x => x.UserId == userID);
         }
-
         public RefreshToken GetRefreshToken(string token)
         {
             return _dbContext.RefreshTokens.FirstOrDefault(x => x.Token == token);
         }
-
         public RefreshToken GetRefreshTokenByUserID(string userID)
         {
             return _dbContext.RefreshTokens.FirstOrDefault(x => x.UserId == userID);
         }
-
         public void AssertValidToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
             tokenHandler.ValidateToken(token, _tokenValidationParameters, out var validatedToken);
         }
-
         public bool IsValidRefreshTokenForUser(RefreshToken refreshToken, string token)
         {
             var userID = _tokenWriter.DecodeToken(token).First(x => x.Type == "UserID").Value;
 
             return refreshToken.UserId == userID;
         }
-
-        public RefreshTokenResult RefreshToken(string token, string tempToken, string userID)
+        public RefreshTokenResult RefreshToken(string token, string tempToken)
         {
             var tk = GetRefreshToken(token);
+            var userID = _tokenWriter.DecodeToken(tempToken).First(x => x.Type == "UserID").Value;
 
             var result = new RefreshTokenResult();
 
@@ -66,16 +61,6 @@ namespace MotoShop.Services.Implementation
             if (RefreshTokenExpired(tk))
             {
                 result.Errors.Add("Refresh token has already expired");
-                return result;
-            }
-
-            try
-            {
-                AssertValidToken(tempToken);
-            }
-            catch(Exception ex)
-            {
-                result.Errors.Add(ex.Message);
                 return result;
             }
 
@@ -93,10 +78,7 @@ namespace MotoShop.Services.Implementation
                 Token = newToken
             };
         }
-
-   
         public bool RefreshTokenExpired(RefreshToken token) =>  token.ExpiryDate < DateTime.UtcNow;
-
         public bool TemporaryTokenExpired(string token)
         {
             var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);

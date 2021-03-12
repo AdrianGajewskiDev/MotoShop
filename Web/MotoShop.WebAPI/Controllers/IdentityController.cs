@@ -9,9 +9,10 @@ using MotoShop.Services.Services;
 using MotoShop.WebAPI.Helpers;
 using MotoShop.WebAPI.Models.Request;
 using MotoShop.WebAPI.Models.Requests;
-using MotoShop.WebAPI.Token_Providers;
+using MotoShop.WebAPI.Models.Response;
 using Serilog;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MotoShop.WebAPI.Controllers
@@ -74,8 +75,6 @@ namespace MotoShop.WebAPI.Controllers
         [HttpPost("signIn")]
         public async Task<IActionResult> SignIn([FromBody] UserSignInRequestModel userSignInRequestModel)
         {
-
-
             if (userSignInRequestModel == null)
                 return BadRequest(new { message = StaticMessages.WasNull(nameof(userSignInRequestModel)) });
 
@@ -85,7 +84,6 @@ namespace MotoShop.WebAPI.Controllers
 
             if (_tokenProviderService.GetRefreshTokenByUserID(userID) == null)
                 _refreshTokenGenerator.Generate(userID);    
-
 
             if (string.IsNullOrEmpty(userID))
             {
@@ -98,7 +96,16 @@ namespace MotoShop.WebAPI.Controllers
             var role = await _applicationUserService.IsAdmin(userID) ? ApplicationRoles.Administrator : ApplicationRoles.NormalUser;
             var token = _jsonWebTokenWriter.GenerateToken(_jsonWebTokenWriter.AddStandardClaims(userID, role));
 
-            return Ok(new { token = token });
+            var refreshToken = _tokenProviderService.GetRefreshTokenByUserID(userID);
+
+            if (refreshToken == null || string.IsNullOrEmpty(refreshToken.Token))
+                return NotFound(StaticMessages.NotFound("Refresh token", "UserID", userID));
+
+            return Ok(new AuthenticatedResponse 
+            {
+                Token = token,
+                RefreshToken = refreshToken.Token
+            });
         }
 
         [AllowAnonymous]
@@ -145,10 +152,19 @@ namespace MotoShop.WebAPI.Controllers
         }
 
 
-        [HttpGet("refreshToken")]
-        public IActionResult RefreshToken()
+        [HttpPut("refreshToken")]
+        public IActionResult RefreshToken([FromBody] RefreshTokenRequestModel model)
         {
-            return Ok();
+            var result = _tokenProviderService.RefreshToken(model.RefreshToken, model.Token);
+
+            if (result.Errors.Any())
+                return BadRequest(result.Errors);
+
+            return Ok(new AuthenticatedResponse
+            {
+                Token = result.Token,
+                RefreshToken = result.RefreshToken
+            });
         }
     }
 }

@@ -13,7 +13,6 @@ namespace MotoShop.WebAPI.Token_Providers
         {
             _ctx = ctx;
         }
-
         public RefreshToken Generate(string userID)
         {
             var newRefreshToken = new RefreshToken

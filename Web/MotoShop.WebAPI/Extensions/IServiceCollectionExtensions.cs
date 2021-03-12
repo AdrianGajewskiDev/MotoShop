@@ -54,7 +54,6 @@ namespace MotoShop.WebAPI.Extensions
                 options.SaveToken = false;
                 options.TokenValidationParameters = tokentValidationParams;
             });
-            
 
             return services;
         }
