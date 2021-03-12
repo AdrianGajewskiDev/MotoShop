@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using MotoShop.WebAPI.Helpers.HealthChecks;
 using MotoShop.WebAPI.Models.Response.HealthChecks;
+using static Serilog.Log;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -54,6 +55,8 @@ namespace MotoShop.WebAPI.Controllers
                     Description = "Cannot find a health check or something went wrong while trying to execute health check"
                 };
 
+                Logger.Error(response.Description, response.HealthCheckName);
+
                 return NotFound(response);
             }
 
@@ -63,6 +66,11 @@ namespace MotoShop.WebAPI.Controllers
                 Status = databaseReport.Value.Status,
                 Description = databaseReport.Value.Description
             };
+
+            if(responseModel.Status != HealthStatus.Healthy)
+                Logger.Error(responseModel.Description, responseModel.HealthCheckName);
+            else
+                Logger.Information(responseModel.Description, responseModel.HealthCheckName);
 
             return Ok(responseModel);
         }
@@ -83,6 +91,8 @@ namespace MotoShop.WebAPI.Controllers
                     Description = "Cannot find a health check or something went wrong while trying to execute health check"
                 };
 
+                Logger.Error(response.Description, response.HealthCheckName);
+
                 return NotFound(response);
             }
 
@@ -92,6 +102,11 @@ namespace MotoShop.WebAPI.Controllers
                 Status = redisReport.Value.Status,
                 Description = redisReport.Value.Description
             };
+
+            if (responseModel.Status != HealthStatus.Healthy)
+                Logger.Error(responseModel.Description, responseModel.HealthCheckName);
+            else
+                Logger.Information(responseModel.Description, responseModel.HealthCheckName);
 
             return Ok(responseModel);
         }

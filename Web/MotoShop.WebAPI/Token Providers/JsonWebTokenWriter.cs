@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using MotoShop.Services.Services;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace MotoShop.WebAPI.Token_Providers
 {
-    public class JsonWebTokenWriter
+    public class JsonWebTokenWriter : ITokenWriter
     {
         private readonly IConfiguration _configuration;
 
