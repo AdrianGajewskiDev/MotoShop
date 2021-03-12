@@ -2,6 +2,8 @@
 using MotoShop.Data.Models.User;
 using MotoShop.Services.HelperModels;
 using MotoShop.Services.Services;
+using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,6 +12,7 @@ namespace MotoShop.Services.Implementation
     public class JWTProviderService : ITokenProviderService
     {
         private readonly ApplicationDatabaseContext _dbContext;
+        private readonly ITokenWriter _tokenWriter;
 
         public JWTProviderService(ApplicationDatabaseContext dbContext)
         {
@@ -31,7 +34,14 @@ namespace MotoShop.Services.Implementation
             return _dbContext.RefreshTokens.FirstOrDefault(x => x.UserId == userID);
         }
 
-        public Task<RefreshTokenResult> RefreshToken(string token, string userID, ITokenWriter tokenWriter)
+        public bool IsValidRefreshTokenForUser(RefreshToken refreshToken, string token)
+        {
+            var userID = _tokenWriter.DecodeToken(token).First(x => x.Type == "UserID").Value;
+
+            return refreshToken.UserId == userID;
+        }
+
+        public RefreshTokenResult RefreshToken(string token, string userID)
         {
             var tk = GetRefreshToken(token);
 
@@ -40,22 +50,38 @@ namespace MotoShop.Services.Implementation
             if (tk == null)
             {
                 result.Errors.Add("Cannot find a refresh token");
-                return Task.FromResult(result);
+                return result;
             }
 
-            if (TokenExpired(tk.Token))
+            if (RefreshTokenExpired(tk))
             {
                 result.Errors.Add("Refresh token has already expired");
-                return Task.FromResult(result);
+                return result;
             }
 
 
-               
+            var newToken = _tokenWriter.GenerateToken(_tokenWriter.AddStandardClaims(userID, ApplicationRoles.NormalUser));
+
+            return new RefreshTokenResult
+            {
+                RefreshToken = tk.Token,
+                Token = newToken
+            };
         }
 
-        public bool TokenExpired(string token)
-        {
+   
+        public bool RefreshTokenExpired(RefreshToken token) =>  token.ExpiryDate < DateTime.UtcNow;
 
+        public bool TemporaryTokenExpired(string token)
+        {
+            var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+
+            DateTime expiryDate = jwtToken.ValidTo;
+
+            if (expiryDate == DateTime.MinValue)
+                throw new InvalidOperationException("Cannot find the expiration claim in JWT token");
+
+            return expiryDate < DateTime.UtcNow;
         }
     }
 }
