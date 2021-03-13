@@ -151,7 +151,6 @@ namespace MotoShop.WebAPI.Controllers
             return BadRequest(StaticMessages.SomethingWentWrong);
         }
 
-
         [HttpPut("refreshToken")]
         public IActionResult RefreshToken([FromBody] RefreshTokenRequestModel model)
         {
