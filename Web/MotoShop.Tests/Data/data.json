@@ -2,6 +2,9 @@
   "GoogleAuthOptions": {
     "ClientID": "78220292618-ean89urhcnt15u383q98ggke9sasuofv.apps.googleusercontent.com",
     "ClientSecret": "mx3sA-pkKFJmPjLv7Zfo1lCY"
+  },
+  "JWT": {
+    "Key": "a5b4153442874480be208776347753bc",
+    "Lifetime": "45"
   }
-
 }
