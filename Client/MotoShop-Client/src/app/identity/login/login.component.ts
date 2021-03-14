@@ -48,13 +48,14 @@ export class LoginComponent implements OnInit {
       (res: any) => {
         this.showLoadingSpinner = false;
         this.identityService.saveToken(res.Token);
+        this.identityService.saveRefreshToken(res.RefreshToken);
         this.router.navigateByUrl("/home").then(() => {
           window.location.reload();
         });
       },
       (error) => {
         console.log(error);
-        
+
         this.showLoadingSpinner = false;
         if (error.status == 404) {
           this.showErrorMessage = true;

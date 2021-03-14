@@ -9,6 +9,7 @@ export const serverUpdateUserProfileUrl = "https://localhost:44304/api/UserAccou
 export const serverUpdateUserPasswordUrl = "https://localhost:44304/api/UserAccount/changePassword";
 export const serverResetUserPasswordUrl = "https://localhost:44304/api/UserAccount/resetPassword"
 export const serverExternalSignInUrl = "https://localhost:44304/api/identity/externalSignIn";
+export const serverRefreshTokenUrl = "https://localhost:44304/api/identity/refreshToken";
 
 //administration
 export const administrationGetAllUsers = "https://localhost:44304/api/administration";

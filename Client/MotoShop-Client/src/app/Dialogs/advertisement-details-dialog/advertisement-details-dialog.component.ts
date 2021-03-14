@@ -15,8 +15,7 @@ import { Advertisement } from 'src/app/shared/models/advertisements/advertisemen
 
 
 interface DialogData {
-  Data: number | string;
-  DataType: string;
+  AdvertisementID: number;
 }
 
 @Component({
@@ -48,33 +47,26 @@ export class AdvertisementDetailsDialogComponent implements OnInit {
   imageUrl: string;
 
   ngOnInit(): void {
+    this.advertisementsService.getByID(this.data.AdvertisementID).subscribe((res) => {
+      this.model = res;
+      if (this.model.ShopItem.ItemType == "Motocycle") {
+        this.item = "Motocycle";
+        this.motocycle = this.model.ShopItem as Motocycle;
+        this.motocycle.YearOfProduction = this.datePipe.transform(this.motocycle.YearOfProduction, "yyyy")
+      }
+      else {
+        this.item = "Car";
+        this.car = this.model.ShopItem as Car;
+        this.car.YearOfProduction = this.datePipe.transform(this.car.YearOfProduction, "yyyy-MM")
 
-    switch (this.data.DataType) {
-      case "ID": {
-        this.advertisementsService.getByID(this.data.Data as number).subscribe((res) => {
-          this.model = res;
-          if (this.model.ShopItem.ItemType == "Motocycle") {
-            this.item = "Motocycle";
-            this.motocycle = this.model.ShopItem as Motocycle;
-            this.motocycle.YearOfProduction = this.datePipe.transform(this.motocycle.YearOfProduction, "yyyy")
-          }
-          else {
-            this.item = "Car";
-            this.car = this.model.ShopItem as Car;
-            this.car.YearOfProduction = this.datePipe.transform(this.car.YearOfProduction, "yyyy-MM")
+      }
+      this.imageUrl = buildImagePath(this.model.ShopItem.ImageUrl);
+      this.model.Placed = this.datePipe.transform(this.model.Placed, "yyyy-MM-dd");
 
-          }
-          this.imageUrl = buildImagePath(this.model.ShopItem.ImageUrl);
-          this.model.Placed = this.datePipe.transform(this.model.Placed, "yyyy-MM-dd");
+      if (this.model)
+        this.advertisementFound = true;
 
-          if (this.model)
-            this.advertisementFound = true;
-
-        }, error => { console.log(error); });
-      } break;
-    }
-
-
+    }, error => { console.log(error); });
   }
 
   deleteAd() {

@@ -1,23 +1,49 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpParams, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { RefreshTokenRequestModel } from '../models/identity/refreshTokenRequest.model';
+import { serverRefreshTokenUrl } from '../server-urls';
 import { IdentityService } from '../services/identity.service';
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
-    constructor(private service: IdentityService) { }
+    constructor(private service: IdentityService, private router: Router) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (!this.service.isSignedIn)
             return next.handle(req);
 
         let token = this.service.getToken;
-        let clonedReq = req.clone({
-            headers: req.headers.set(
-                "Authorization",
-                "Bearer " + token)
-        });
 
-        return next.handle(clonedReq);
+        if (!this.service.tokenHasExpired) {
+            let clonedReq = req.clone({
+                headers: req.headers.set(
+                    "Authorization",
+                    "Bearer " + token)
+            });
+
+            return next.handle(clonedReq);
+        }
+
+        let requestBody: RefreshTokenRequestModel = {
+            RefreshToken: this.service.getRefreshToken,
+            Token: this.service.getToken
+        }
+
+        let refreshTokenRequest: HttpRequest<any> = new HttpRequest<any>("PUT", serverRefreshTokenUrl, requestBody);
+
+        next.handle(refreshTokenRequest).toPromise().then((res: any) => {
+            console.log(res);
+
+            this.service.saveToken(res.body.Token);
+            this.service.saveRefreshToken(res.body.RefreshToken)
+        },
+            error => {
+                console.log(error);
+            });
+
+        this.router.navigateByUrl("/home");
     }
 }

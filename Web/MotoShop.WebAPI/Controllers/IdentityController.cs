@@ -82,9 +82,6 @@ namespace MotoShop.WebAPI.Controllers
 
             string userID = await _applicationUserService.SignInAsync(userSignInRequestModel.Data, userSignInRequestModel.Password, userLogInVariant);
 
-            if (_tokenProviderService.GetRefreshTokenByUserID(userID) == null)
-                _refreshTokenGenerator.Generate(userID);    
-
             if (string.IsNullOrEmpty(userID))
             {
                 string prefix = userLogInVariant == UserSignInVariant.Email ? "email" : "username";
