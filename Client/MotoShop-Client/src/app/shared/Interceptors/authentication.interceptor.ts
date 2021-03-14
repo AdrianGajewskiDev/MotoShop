@@ -11,7 +11,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
     constructor(private service: IdentityService, private router: Router) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (!this.service.isSignedIn)
+        if (!this.service.isSignedIn || this.service.isRefreshTokenRequested == true)
             return next.handle(req);
 
         let token = this.service.getToken;
@@ -25,6 +25,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
             return next.handle(clonedReq);
         }
+        this.service.isRefreshTokenRequested = true;
 
         let requestBody: RefreshTokenRequestModel = {
             RefreshToken: this.service.getRefreshToken,
@@ -34,10 +35,9 @@ export class AuthenticationInterceptor implements HttpInterceptor {
         let refreshTokenRequest: HttpRequest<any> = new HttpRequest<any>("PUT", serverRefreshTokenUrl, requestBody);
 
         next.handle(refreshTokenRequest).toPromise().then((res: any) => {
-            console.log(res);
-
             this.service.saveToken(res.body.Token);
             this.service.saveRefreshToken(res.body.RefreshToken)
+            this.service.isRefreshTokenRequested = false;
         },
             error => {
                 console.log(error);

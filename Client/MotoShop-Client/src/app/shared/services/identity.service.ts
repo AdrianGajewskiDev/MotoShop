@@ -12,6 +12,7 @@ export class IdentityService {
 
     private registerUrl = serverRegisterNewUserUrl;
     private signedIn: boolean = localStorage.getItem("token") != null && localStorage.getItem("RefreshToken") != null;
+    public isRefreshTokenRequested: boolean = false;
 
 
     registerUser(model: UserRegisterModel) {
@@ -21,14 +22,19 @@ export class IdentityService {
         return this.httpClient.post(serverSignInUrl, signInCredentials);
     }
     logout(): void {
-        if (this.isSignedIn)
+        if (this.isSignedIn) {
             this.removeToken();
+            this.removeRefreshToken();
+        }
     }
     public saveToken(token: string): void {
         localStorage.setItem("token", token);
     }
     public removeToken() {
         localStorage.removeItem("token");
+    }
+    public removeRefreshToken() {
+        localStorage.removeItem("RefreshToken");
     }
     public get getToken(): string {
         let token = localStorage.getItem("token")
@@ -63,10 +69,10 @@ export class IdentityService {
 
         return this.httpClient.put(serverRefreshTokenUrl, model);
     }
-
     public get getUserID() {
         const helper = new JwtHelperService()
 
         return helper.decodeToken(this.getToken).UserID;
     }
+
 }

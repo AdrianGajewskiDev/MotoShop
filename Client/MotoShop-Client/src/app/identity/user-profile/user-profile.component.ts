@@ -150,7 +150,6 @@ export class UserProfileComponent implements OnInit {
     if (!this.adsDataSource) {
       this.adsService.getAllByUserID(this.identityService.getUserID).subscribe(
         (res: any) => {
-          this.showLoadingSpinner = false;
           res.Advertisements.forEach(element => {
             element.Placed = this.datePipe.transform(element.Placed, "yyyy-MM-dd")
           });
