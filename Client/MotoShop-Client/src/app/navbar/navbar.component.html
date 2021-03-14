@@ -33,7 +33,7 @@
         </div>
         <div class="sidenav-content">
             <ul fxLayout="column">
-                <li class="nav-link-sidenav"><a (click)="goTo('/home')">Home</a></li>
+                <li class="nav-link-sidenav"><a (click)="goTo('/home'); drawer.toggle()">Home</a></li>
                 <li class="nav-link-sidenav"><a href="#">Cart</a></li>
                 <li *ngIf="isUserSignedIn == false" fxLayoutAlign="center center" class="signInUpButton-sidenav"><a
                         (click)="goTo('/identity'); drawer.toggle()">SignIn/Up</a></li>
@@ -41,8 +41,8 @@
                     <button mat-button [matMenuTriggerFor]="beforeMenu" class="my-account-btn">Account <span
                             class="material-icons">account_circle</span></button>
                     <mat-menu #beforeMenu="matMenu" xPosition="before" class="dropdown-menu">
-                        <button mat-menu-item (click)="goTo('/userProfile')">My Account</button>
-                        <button mat-menu-item (click)="logout()">Logout</button>
+                        <button mat-menu-item (click)="goTo('/userProfile'); drawer.toggle()">My Account</button>
+                        <button mat-menu-item (click)="logout(); drawer.toggle()">Logout</button>
                     </mat-menu>
                 </li>
             </ul>
