@@ -13,6 +13,10 @@ import { isEmpty } from '../../shared/Helpers/formGroupHelpers'
 import { buildImagePath } from "../../shared/Helpers/buildProfileImagePath"
 import { UploadService } from 'src/app/shared/services/upload.service';
 import { Router } from '@angular/router';
+import { AdvertisementsService } from 'src/app/shared/services/advertisements.service';
+import { IdentityService } from 'src/app/shared/services/identity.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-user-profile',
@@ -26,7 +30,12 @@ export class UserProfileComponent implements OnInit {
     private mapper: FormsMapper,
     private toastr: ToastrService,
     private uploadService: UploadService,
-    private router: Router) { }
+    private router: Router,
+    private adsService: AdvertisementsService,
+    private identityService: IdentityService,
+    private datePipe: DatePipe) { }
+
+  public adsDataSource;
 
   public userData: UserProfileDataModel;
   public showError: boolean = false;
@@ -40,8 +49,11 @@ export class UserProfileComponent implements OnInit {
   public imageUrl: string = "";
 
   public color = "Black";
+  public displayedColumns: string[] = ['Title', 'Price', 'Placed'];
 
   ngOnInit(): void {
+    this.getAds();
+
     this.editUserDataForm = this.fb.group({
       name: [''],
       lastName: [''],
@@ -102,7 +114,6 @@ export class UserProfileComponent implements OnInit {
       }
     );
   }
-
   changePassword() {
     let model = this.mapper.map<UpdateUserPasswordModel>(new UpdateUserPasswordModel(), this.editPasswordForm);
     model.newPassword = this.editPasswordForm.get('password').value;
@@ -112,7 +123,6 @@ export class UserProfileComponent implements OnInit {
       error => this.toastr.error("Ups, something went wrong while trying to reset the password, please try again"))
 
   }
-
   changePhoto(): void {
     this.showImageLoadingSpinner = true;
     const inputNode: any = document.querySelector('#file');
@@ -124,12 +134,33 @@ export class UserProfileComponent implements OnInit {
       },
       error => this.toastr.error(error.error.message));
   }
-
   goToAdminPanel() {
     this.router.navigateByUrl("/administrator");
   }
-
-
   editPhoto(): void { }
   deletePhoto(): void { }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.adsDataSource.filter = filterValue.trim().toLowerCase();
+  }
+  getAds() {
+    this.showLoadingSpinner = true;
+    console.log("herer");
+
+    if (!this.adsDataSource) {
+      this.adsService.getAllByUserID(this.identityService.getUserID).subscribe(
+        (res: any) => {
+          this.showLoadingSpinner = false;
+          res.Advertisements.forEach(element => {
+            element.Placed = this.datePipe.transform(element.Placed, "yyyy-MM-dd")
+          });
+          this.adsDataSource = new MatTableDataSource(res.Advertisements);
+        },
+        error => {
+          this.showLoadingSpinner = false;
+          console.log(error);
+        }
+      )
+    }
+  }
 }

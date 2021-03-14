@@ -52,7 +52,6 @@ export class IdentityService {
         const helper = new JwtHelperService()
         return helper.isTokenExpired(token);
     }
-
     refreshToken() {
         const token = this.getToken;
         const refreshToken = this.getRefreshToken;
@@ -63,5 +62,11 @@ export class IdentityService {
         }
 
         return this.httpClient.put(serverRefreshTokenUrl, model);
+    }
+
+    public get getUserID() {
+        const helper = new JwtHelperService()
+
+        return helper.decodeToken(this.getToken).UserID;
     }
 }
