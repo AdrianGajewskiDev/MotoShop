@@ -52,7 +52,7 @@ namespace MotoShop.Services.Implementation
         {
             return await _userManager.RemoveFromRoleAsync(user, ApplicationRoles.Administrator);
         }
-
+        
         public IEnumerable<ApplicationUser> GetAllUsers()
         {
             return AdministrationQueries.GetAllUsers(_dbContext);
@@ -89,6 +89,14 @@ namespace MotoShop.Services.Implementation
             return results;
 
         }
+
+        public async Task<bool> IsAdministrator(string userID)
+        {
+            var user = new ApplicationUser { Id = userID};
+
+            return await IsInRole(user, ApplicationRoles.Administrator);
+        }
+
         public async Task<bool> IsInRole(ApplicationUser user, string role) => await _userManager.IsInRoleAsync(user, role);
 
         public async Task<bool> RoleExists(string role)

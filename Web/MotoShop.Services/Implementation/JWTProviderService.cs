@@ -48,7 +48,8 @@ namespace MotoShop.Services.Implementation
         public RefreshTokenResult RefreshToken(string token, string tempToken)
         {
             var tk = GetRefreshToken(token);
-            var userID = _tokenWriter.DecodeToken(tempToken).First(x => x.Type == "UserID").Value;
+            var decodedToken = _tokenWriter.DecodeToken(tempToken);
+            var userID = decodedToken.First(x => x.Type == "UserID").Value;
 
             var result = new RefreshTokenResult();
 
@@ -70,7 +71,9 @@ namespace MotoShop.Services.Implementation
                 return result;
             }
 
-            var newToken = _tokenWriter.GenerateToken(_tokenWriter.AddStandardClaims(userID, ApplicationRoles.NormalUser));
+            var userRole = decodedToken.First(x => x.Type == "role").Value;
+
+            var newToken = _tokenWriter.GenerateToken(_tokenWriter.AddStandardClaims(userID, userRole));
 
             return new RefreshTokenResult
             {
