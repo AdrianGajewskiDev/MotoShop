@@ -1,10 +1,11 @@
 <div class="container">
-    <section class="find-dc-section" fxLayout="row">
+    <section class="find-dc-section" fxLayout="row" fxLayout.gt-sm="row" fxLayout.lt-md="column"
+        fxLayoutAlign.lt-md="center center">
         <div class="search-form" fxLayoutAlign="center start">
             <mat-tab-group mat-align-tabs="start">
                 <mat-tab label="Cars">
-                    <form class="form-src" [formGroup]="carFilterForm" (ngSubmit)="search()">
-                        <div class="form-item" fxLayoutAlign="start center" fxLayout="row">
+                    <form class="form-src" [formGroup]="carFilterForm" (ngSubmit)="search()" fxLayout.lt-sm="column">
+                        <div class="form-item" fxLayoutAlign="start center" fxLayout.lt-sm="column" fxLayout="row">
                             <select class="select-input" formControlName="brand" (change)="onSelection('brand')">
                                 <option>Select Brand</option>
                                 <option *ngFor="let brand of brands">{{brand}}</option>
@@ -18,7 +19,7 @@
                                 <option *ngFor="let gearbox of gearboxes">{{gearbox}}</option>
                             </select>
                         </div>
-                        <div class="form-item" fxLayoutAlign="start center" fxLayout="row">
+                        <div class="form-item" fxLayoutAlign="start center" fxLayout="row" fxLayout.lt-sm="column">
                             <div class="small-input-group">
                                 <p>Price</p>
                                 <input type="text" placeholder="From..." formControlName="fromPrice" />
@@ -30,7 +31,7 @@
                                 <input type="text" placeholder="To..." formControlName="toProductionYear" />
                             </div>
                         </div>
-                        <div class="form-item" fxLayoutAlign="start center" fxLayout="row">
+                        <div class="form-item" fxLayoutAlign="start center" fxLayout="row" fxLayout.lt-sm="column">
                             <div class="small-input-group">
                                 <p>Mileage</p>
                                 <input type="text" placeholder="From..." formControlName="fromMileage" />
@@ -41,7 +42,7 @@
                                 <option *ngFor="let fuel of fuels">{{fuel}}</option>
                             </select>
                         </div>
-                        <div class="form-item" fxLayoutAlign="center center" fxLayout="row">
+                        <div fxLayoutAlign="center center" fxLayoutAlign.lt-sm="center end">
                             <button mat-raised-button color="primary">Search</button>
                         </div>
                     </form>
@@ -58,5 +59,8 @@
             <h1>Find Your Dream Car</h1>
             <p>Choose from over 100 000 available cars for sale </p>
         </div>
+    </section>
+    <section class="top-three-section">
+
     </section>
 </div>

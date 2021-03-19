@@ -1,4 +1,6 @@
 .find-dc-section
+    display: flex
+    flex-direction: row
     width: 100%
     height: 50vh
     background-image: url("src/assets/images-layout/homePageMainImage.jpg")
@@ -11,7 +13,7 @@
         text-transform: uppercase
         letter-spacing: 2px
         width: 60%
-        height: 100%
+        color: #000
         h1
             margin-bottom: 0.5rem
 
@@ -21,6 +23,7 @@
     height: 20rem
     background: #fff
     .form-item
+        max-width: 100%
         width: 100%
         height: 3.5rem
         margin-bottom: 20px
@@ -35,3 +38,49 @@
         width: 40%
         padding: 0.5em
         margin-right: 0.3rem
+
+.top-three-section
+    width: 100%
+    height: 50vh
+
+@media screen and(max-width: 1150px)
+    .find-dc-section
+        .search-form
+            width: 50%
+        .dsc
+            font-size: 0.9em
+            width: 50%
+
+@media screen and(max-width: 960px)
+    .find-dc-section
+        height: 60vh
+        .search-form
+            width: 100%
+        .dsc
+            font-size: 0.9em
+            width: 100%
+            color: #fff
+            h1
+                margin-bottom: 0.5rem
+
+@media screen and(max-width: 560px)
+    .find-dc-section
+        height: 80vh
+        .dsc
+            font-size: 0.7em
+        .container
+            padding: 0
+            padding-top: 20px
+        .form-src
+            width: 20rem
+            height: 30rem
+            .form-item
+                width: 100%
+                height: 5rem
+                margin-bottom: 30px
+            .small-input-group
+
+                height: 5rem
+                width: 100%
+                &:nth-child(3)
+                    margin-bottom: 50px
