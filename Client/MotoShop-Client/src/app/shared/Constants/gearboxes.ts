@@ -1,0 +1,1 @@
+export const gearboxes: string[] = ["Manual", "Automatic", "SemiAuto"];

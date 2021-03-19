@@ -1,0 +1,1 @@
+export const fuels: string[] = ["Petrol", "Diesel", "Electric", "Hybrid"];
