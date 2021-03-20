@@ -1,66 +1,65 @@
-<div class="container">
-    <section class="find-dc-section" fxLayout="row" fxLayout.gt-sm="row" fxLayout.lt-md="column"
-        fxLayoutAlign.lt-md="center center">
-        <div class="search-form" fxLayoutAlign="center start">
-            <mat-tab-group mat-align-tabs="start">
+<div class="container-homepage" fxLayout="column">
+    <section class="home-dc-section" fxLayout="row" fxLayout.lt-md="column">
+        <div class="form-container-home">
+            <mat-tab-group mat-align-tabs="center">
                 <mat-tab label="Cars">
-                    <form class="form-src" [formGroup]="carFilterForm" (ngSubmit)="search()" fxLayout.lt-sm="column">
-                        <div class="form-item" fxLayoutAlign="start center" fxLayout.lt-sm="column" fxLayout="row">
-                            <select class="select-input" formControlName="brand" (change)="onSelection('brand')">
-                                <option>Select Brand</option>
-                                <option *ngFor="let brand of brands">{{brand}}</option>
-                            </select>
-                            <select class="select-input" formControlName="model" (change)="onSelection('model')">
-                                <option>Select Model</option>
-                                <option *ngFor="let model of models">{{model}}</option>
-                            </select>
-                            <select class="select-input" formControlName="gearbox" (change)="onSelection('gearbox')">
-                                <option>Gearbox</option>
-                                <option *ngFor="let gearbox of gearboxes">{{gearbox}}</option>
-                            </select>
-                        </div>
-                        <div class="form-item" fxLayoutAlign="start center" fxLayout="row" fxLayout.lt-sm="column">
-                            <div class="small-input-group">
-                                <p>Price</p>
-                                <input type="text" placeholder="From..." formControlName="fromPrice" />
-                                <input type="text" placeholder="To..." formControlName="toPrice" />
+                    <div class="tab-form-container" fxLayoutAlign="center center">
+                        <form class="tab-form" [formGroup]="carFilterForm" (ngSubmit)="search()" fxLayout="column">
+                            <div class="form-input-container" fxLayoutAlign="center center">
+                                <select class="select-input" formControlName="brand" (change)="onSelection('brand')">
+                                    <option>Select Brand</option>
+                                    <option *ngFor="let brand of brands">{{brand}}</option>
+                                </select>
+                                <select class="select-input" formControlName="model" (change)="onSelection('model')">
+                                    <option>Select Model</option>
+                                    <option *ngFor="let model of models">{{model}}</option>
+                                </select>
                             </div>
-                            <div class="small-input-group">
-                                <p>Year of Production</p>
-                                <input type="text" placeholder="From..." formControlName="fromProductionYear" />
-                                <input type="text" placeholder="To..." formControlName="toProductionYear" />
+                            <div class="form-input-container" fxLayoutAlign="center center">
+                                <select class="select-input" formControlName="gearbox"
+                                    (change)="onSelection('gearbox')">
+                                    <option>Gearbox</option>
+                                    <option *ngFor="let gearbox of gearboxes">{{gearbox}}</option>
+                                </select>
+                                <select class="select-input" formControlName="fuelType">
+                                    <option>Fuel Type</option>
+                                    <option *ngFor="let fuel of fuels">{{fuel}}</option>
+                                </select>
                             </div>
-                        </div>
-                        <div class="form-item" fxLayoutAlign="start center" fxLayout="row" fxLayout.lt-sm="column">
-                            <div class="small-input-group">
-                                <p>Mileage</p>
-                                <input type="text" placeholder="From..." formControlName="fromMileage" />
-                                <input type="text" placeholder="To..." formControlName="toMileage" />
+                            <span>Price</span>
+                            <div class="form-input-container" fxLayoutAlign="center center">
+                                <input class="select-input" mat-input type="text" placeholder="From..."
+                                    formControlName="fromPrice" />
+                                <input class="select-input" mat-input type="text" placeholder="To..."
+                                    formControlName="toPrice" />
                             </div>
-                            <select class="select-input" formControlName="fuelType">
-                                <option>Fuel Type</option>
-                                <option *ngFor="let fuel of fuels">{{fuel}}</option>
-                            </select>
-                        </div>
-                        <div fxLayoutAlign="center center" fxLayoutAlign.lt-sm="center end">
-                            <button mat-raised-button color="primary">Search</button>
-                        </div>
-                    </form>
+                            <span>Year of Production</span>
+                            <div class="form-input-container" fxLayoutAlign="center center">
+                                <input class="select-input" mat-input type="text" placeholder="From..."
+                                    formControlName="fromProductionYear" />
+                                <input class="select-input" mat-input type="text" placeholder="To..."
+                                    formControlName="toProductionYear" />
+                            </div>
+                            <span>Mileage</span>
+                            <div class="form-input-container" fxLayoutAlign="center center">
+                                <input class="select-input" mat-input type="text" placeholder="From..."
+                                    formControlName="fromMileage" />
+                                <input class="select-input" mat-input type="text" placeholder="To..."
+                                    formControlName="toMileage" />
+                            </div>
+                            <div class="form-input-container" fxLayoutAlign="center center">
+                                <button mat-raised-button color="primary">Search</button>
+                            </div>
+                        </form>
+                    </div>
                 </mat-tab>
-                <mat-tab label="Motocycles">
-                    <form class="form-src"></form>
-                </mat-tab>
-                <mat-tab label="Parts">
-                    <form class="form-src"></form>
-                </mat-tab>
+                <mat-tab label="Motocycles">Content 2</mat-tab>
+                <mat-tab label="Parts">Content 3</mat-tab>
             </mat-tab-group>
         </div>
-        <div class="dsc" fxLayoutAlign="start center" fxLayout="column">
+        <div class="welcome-section" fxLayout="column" fxLayoutAlign="start center">
             <h1>Find Your Dream Car</h1>
-            <p>Choose from over 100 000 available cars for sale </p>
+            <p>Choose from over 100 000 available cars for sale</p>
         </div>
-    </section>
-    <section class="top-three-section">
-
     </section>
 </div>

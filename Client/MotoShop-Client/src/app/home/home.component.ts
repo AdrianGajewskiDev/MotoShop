@@ -79,7 +79,7 @@ export class HomeComponent implements OnInit {
 
   clearForm() {
     this.models = [];
-    this.disableAll();
+    this.disableModelsControl();
   }
   isDefaultValue(value): boolean {
     return value == "Select Brand" || value == "Select Model";
@@ -89,15 +89,8 @@ export class HomeComponent implements OnInit {
     this.carFilterForm.get(formControl).enable();
   }
 
-  disableAll() {
-    Object.keys(this.carFilterForm.controls).forEach(key => {
-      let currentControl = this.carFilterForm.controls[key];
-      let currentControlName = this.getName(currentControl);
-
-      if (currentControlName && currentControlName !== "brand") {
-        currentControl.disable();
-      }
-    });
+  disableModelsControl() {
+    this.carFilterForm.get('model').disable();
   }
 
   getName(control: AbstractControl): string | null {
