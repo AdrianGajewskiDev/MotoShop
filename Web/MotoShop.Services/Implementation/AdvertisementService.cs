@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MotoShop.Data.Database_Context;
+using MotoShop.Data.Models.Constants;
 using MotoShop.Data.Models.Store;
 using MotoShop.Services.EntityFramework.CompiledQueries;
+using MotoShop.Services.HelperModels;
 using MotoShop.Services.Services;
 using System;
 using System.Collections.Generic;
@@ -62,7 +64,7 @@ namespace MotoShop.Services.Implementation
         }
         public IEnumerable<Advertisement> GetAll()
         {
-            return AdvertisementQueries.GetAll(_context);
+            return AdvertisementQueries.GetAllWithAuthorAndShopItem(_context);
         }
         public IEnumerable<Advertisement> GetAllAdvertisementsByAuthorId(string authorID)
         {
@@ -119,6 +121,33 @@ namespace MotoShop.Services.Implementation
             }
 
             return result.AsQueryable();
+        }
+
+        public TopThreeAdvertisementsResult GetTopThree()
+        {
+            var advertisements = _context.Cars.Select(x => new TopThreeAdvertisementsItemResult 
+            {
+                BodyType = x.CarType,
+                Gearbox = x.Gearbox,
+                HP = x.HorsePower,
+                Id = _context.Advertisements.Where(ad => ad.ShopItem.ID == x.ID).Select(id => id.ID).FirstOrDefault(),
+                ImageUrl = x.ImageUrl,
+                Name = $"{x.CarBrand} {x.CarModel}",
+                ProductionYear = x.YearOfProduction.Year,
+                CubicCapacity = x.CubicCapacity,
+                Price = x.Price
+            }).ToArray();
+
+            var sportCars = advertisements.Where(x => x.BodyType == CarType.Coupe.ToString()).OrderByDescending(x => x.HP).Take(3).ToArray();
+            var suvCars  = advertisements.Where(x => x.BodyType == CarType.Suv.ToString().ToUpper()).OrderByDescending(x => x.HP).Take(3).ToArray();
+            var sedanCars  = advertisements.Where(x => x.BodyType == CarType.Sedan.ToString()).OrderByDescending(x => x.HP).Take(3).ToArray();
+
+            return new TopThreeAdvertisementsResult
+            {
+                SedanCars = sedanCars,
+                SportCars = sportCars,
+                SuvCars = suvCars
+            };
         }
     }
 }

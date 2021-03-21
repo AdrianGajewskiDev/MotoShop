@@ -62,24 +62,66 @@
             <p>Choose from over 100 000 available cars for sale</p>
         </div>
     </section>
-    <section class="top-section">
+    <section class="top-section" fxLayoutAlign="center center" fxLayout="column">
         <div class="header" fxLayout="row" fxLayoutAlign="center center">
             <img src="../../assets/icons/sportsCarsIcon.png">
             <h1>Top Sport Cars</h1>
         </div>
         <div class="content" fxLayoutAlign="center start" fxLayout="row">
-            <div class="card" fxLayout="column" fxLayoutAlign="start center">
-                <h1>BMW E46</h1>
+            <div *ngFor="let ad of advertisements.SportCars" class="card" fxLayout="column"
+                fxLayoutAlign="start center">
+                <h1>{{ad.Name}}</h1>
                 <img src="../../assets/images-layout/CarImage.jpg">
                 <div class="details" fxLayoutAlign="center center">
                     <p>
-                        150HP | 250 000 Mileage <br>
-                        Manual | Sedan | 1993cm3
+                        {{ad.HP}}HP | 250 000 <br>
+                        {{ad.Gearbox}} | {{ad.BodyType}} | {{ad.CubicCapacity}}cm3
                     </p>
                 </div>
-                <h3>23 000$</h3>
+                <h3>{{ad.Price}}$</h3>
             </div>
+
         </div>
     </section>
+    <section class="top-section" fxLayoutAlign="center center" fxLayout="column">
+        <div class="header" fxLayout="row" fxLayoutAlign="center center">
+            <img src="../../assets/icons/sportsCarsIcon.png">
+            <h1>Top SUV Cars</h1>
+        </div>
+        <div class="content" fxLayoutAlign="center start" fxLayout="row">
+            <div *ngFor="let ad of advertisements.SuvCars" class="card" fxLayout="column" fxLayoutAlign="start center">
+                <h1>{{ad.Name}}</h1>
+                <img src="../../assets/images-layout/CarImage.jpg">
+                <div class="details" fxLayoutAlign="center center">
+                    <p>
+                        {{ad.HP}}HP | 250 000 <br>
+                        {{ad.Gearbox}} | {{ad.BodyType}} | {{ad.CubicCapacity}}cm3
+                    </p>
+                </div>
+                <h3>{{ad.Price}}$</h3>
+            </div>
 
+        </div>
+    </section>
+    <section class="top-section" fxLayoutAlign="center center" fxLayout="column">
+        <div class="header" fxLayout="row" fxLayoutAlign="center center">
+            <img src="../../assets/icons/sportsCarsIcon.png">
+            <h1>Top Family Cars</h1>
+        </div>
+        <div class="content" fxLayoutAlign="center start" fxLayout="row">
+            <div *ngFor="let ad of advertisements.SedanCars" class="card" fxLayout="column"
+                fxLayoutAlign="start center">
+                <h1>{{ad.Name}}</h1>
+                <img src="../../assets/images-layout/CarImage.jpg">
+                <div class="details" fxLayoutAlign="center center">
+                    <p>
+                        {{ad.HP}}HP | 250 000 <br>
+                        {{ad.Gearbox}} | {{ad.BodyType}} | {{ad.CubicCapacity}}cm3
+                    </p>
+                </div>
+                <h3>{{ad.Price}}$</h3>
+            </div>
+
+        </div>
+    </section>
 </div>

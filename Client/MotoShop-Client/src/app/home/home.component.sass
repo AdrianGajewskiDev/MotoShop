@@ -1,3 +1,5 @@
+@import "../Sass/variables"
+
 .container-homepage
     padding-top: 20px
     .home-dc-section
@@ -44,7 +46,7 @@
         letter-spacing: 2px
 
 .top-section
-    height: 60vh
+    height: 45vh
     width: 100vw
     background: #fff
     .header
@@ -56,16 +58,23 @@
             margin-right: 10px
         h1
             text-transform: uppercase
+            font-size: 1.2rem
     .content
         height: 85%
-        width: 100%
+        width: 80%
+        max-width: 80%
         padding: 20px
+        margin-bottom: 10px
         .card
+            border: 1px solid #000
             width: 25%
             height: 300px
             margin: 20px
-            border-radius: 10px
-            background: #FFE7E6
+            border-radius: 5px
+            background: #fff
+            -webkit-box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.42)
+            -moz-box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.42)
+            box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.42)
             h1
                 margin-bottom: 10px
             img
@@ -90,6 +99,10 @@
                 width: 100%
     .card
         width: 30% !important
+        h1
+            font-size: 0.9rem
+        p
+            font-size: 0.7rem
 
 @media screen and ( max-width:500px )
     .tab-form-container
@@ -122,7 +135,6 @@
                 width: 70% !important
 
 @media screen and ( max-width:380px )
-
     .welcome-section
         h1
             font-size: 1.2rem !important

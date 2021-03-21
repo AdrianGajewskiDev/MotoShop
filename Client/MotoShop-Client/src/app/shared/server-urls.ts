@@ -22,6 +22,7 @@ export const serverGetAllAdvertisementsByUserIDUrl = "https://localhost:44304/ap
 export const serverGetAllAdvertisementsUrl = "https://localhost:44304/api/advertisements";
 export const serverDeleteAdvertisementUrl = "https://localhost:44304/api/advertisements/";
 export const serverUpdateAdvertisementUrl = "https://localhost:44304/api/advertisements/";
+export const serverGetTopAdvertisementsUrl = "https://localhost:44304/api/advertisements/topThree";
 
 //files
 export const serverImageUploadUrl = "https://localhost:44304/api/upload/single";

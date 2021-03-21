@@ -22,5 +22,6 @@ namespace MotoShop.Services.EntityFramework.CompiledQueries
 
             return func(context, id) as T; 
         }
+
     }
 }

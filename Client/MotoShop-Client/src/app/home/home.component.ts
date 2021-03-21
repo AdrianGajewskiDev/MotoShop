@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, ControlContainer, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { carBrands } from "../shared/Constants/carBrands"
 import { fuels } from '../shared/Constants/fuels';
 import { gearboxes } from '../shared/Constants/gearboxes';
+import { TopThreeAdvertisementsRequestResult, TopThreeAdvertisementsResult } from '../shared/models/advertisements/Items/topThreeAdvertisemetsModel';
+import { AdvertisementsService } from '../shared/services/advertisements.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -10,12 +12,13 @@ import { gearboxes } from '../shared/Constants/gearboxes';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private service: AdvertisementsService) { }
 
   public brands = [];
   public models = [];
   public gearboxes = gearboxes;
   public fuels = fuels;
+  public advertisements: TopThreeAdvertisementsResult;
 
   public carFilterForm: FormGroup;
 
@@ -36,8 +39,12 @@ export class HomeComponent implements OnInit {
       });
     this.brands = carBrands.map(x => x.brand);
 
+    this.service.getTopThree().subscribe((res: TopThreeAdvertisementsRequestResult) => {
+      this.advertisements = res.Advertisements;
+    });
   }
 
+  //#region UI Methods
   onSelection(control: string) {
 
     let res = this.carFilterForm.get(control)?.value;
@@ -51,11 +58,9 @@ export class HomeComponent implements OnInit {
       }
     }
   }
-
   search() {
 
   }
-
   onSelectInputChange(control, valueToSet) {
 
     if (this.isDefaultValue(valueToSet)) {
@@ -76,7 +81,6 @@ export class HomeComponent implements OnInit {
         break;
     }
   }
-
   clearForm() {
     this.models = [];
     this.disableModelsControl();
@@ -84,15 +88,12 @@ export class HomeComponent implements OnInit {
   isDefaultValue(value): boolean {
     return value == "Select Brand" || value == "Select Model";
   }
-
   enableFormInput(formControl: string) {
     this.carFilterForm.get(formControl).enable();
   }
-
   disableModelsControl() {
     this.carFilterForm.get('model').disable();
   }
-
   getName(control: AbstractControl): string | null {
     let group = <FormGroup>control.parent;
 
@@ -114,4 +115,6 @@ export class HomeComponent implements OnInit {
 
     return name;
   }
+  //#endregion
+
 }

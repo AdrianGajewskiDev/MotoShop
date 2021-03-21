@@ -1,4 +1,5 @@
 ﻿using MotoShop.Data.Models.Store;
+using MotoShop.Services.HelperModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,6 @@ namespace MotoShop.Services.Services
         Task<bool> AddAdvertisementAsync(Advertisement advertisement);
         Task<bool> UpdateAdvertisementAsync(int id, Advertisement newAdvertisement, Advertisement oldAdvertisement);
         void DeleteAdvertisement(int advertisementID);
-
+        TopThreeAdvertisementsResult GetTopThree();
     }
 }

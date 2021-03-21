@@ -112,6 +112,7 @@ namespace MotoShop.WebAPI.Controllers
         }
 
         [HttpGet("byUser/{userID}")]
+        [Cache(5)]
         public IActionResult GetAllByUserID(string userID)
         {
             var advertisements = _advertisementService.GetAllAdvertisementsByAuthorId(userID);
@@ -123,6 +124,20 @@ namespace MotoShop.WebAPI.Controllers
             var responseModel = new AllAdvertisementsByUserIDResponseModel
             {
                 Advertisements = advertisements
+            };
+
+            return Ok(responseModel);
+        }
+
+        [HttpGet("topThree")]
+        [Cache(30)]
+        public IActionResult GetTopThree()
+        {
+            var result = _advertisementService.GetTopThree();
+
+            var responseModel = new TopThreeAdvertisementsResponseModel 
+            {
+                Advertisements = result
             };
 
             return Ok(responseModel);
@@ -144,6 +159,7 @@ namespace MotoShop.WebAPI.Controllers
 
             return BadRequest(StaticMessages.SomethingWentWrong);
         }
+
 
         [HttpGet("query")]
         public IActionResult GetByQuery([FromQuery, Required] string searchQuery)
