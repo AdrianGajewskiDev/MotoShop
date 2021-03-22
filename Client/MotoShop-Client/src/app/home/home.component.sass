@@ -2,6 +2,7 @@
 
 .container-homepage
     padding-top: 20px
+    background: #ffff
     .home-dc-section
         width: 100vw
         height: 50vh
@@ -35,6 +36,7 @@
     padding: 20px
     height: 100%
     width: 60vw
+    position: relative
     h1
         font-size: 1.7rem
         text-transform: uppercase
@@ -44,6 +46,23 @@
         font-size: 1.2rem
         text-transform: uppercase
         letter-spacing: 2px
+    a
+        position: absolute
+        top: 50%
+        left: 40%
+        padding: 15px
+        color: #fff
+        background: $primaryYelow
+        cursor: pointer
+        -webkit-box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.42)
+        -moz-box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.42)
+        box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.42)
+        border-radius: 5px
+        outline: none
+        &:hover
+            transform: scale(0.98)
+        &:active
+            background: #1C2FB5
 
 .top-section
     height: 45vh
@@ -75,6 +94,10 @@
             -webkit-box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.42)
             -moz-box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.42)
             box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.42)
+            cursor: pointer
+            transition: 0.2s ease-in-out
+            &:hover
+                transform: scale(1.01)
             h1
                 margin-bottom: 10px
             img
@@ -84,18 +107,24 @@
                 height: 130px
                 width: 100%
 
+.spinner
+    width: 100px
+    height: 100px
+    background: #000
+    z-index: 99
+
 @media screen and ( max-width:959px )
     .container-homepage
         .home-dc-section
             height: 80vh
             .form-container-home
-                height: 80%
+                height: 70%
                 width: 100%
                 .tab-form
                     width: 70%
             .welcome-section
                 color: #fff
-                height: 20%
+                height: 30%
                 width: 100%
     .card
         width: 30% !important
@@ -105,6 +134,9 @@
             font-size: 0.7rem
 
 @media screen and ( max-width:500px )
+    .home-dc-section
+        height: 95vh !important
+
     .tab-form-container
         height: 550px !important
         .tab-form

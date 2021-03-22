@@ -9,9 +9,9 @@ export class LoadingSpinnerComponent implements OnInit {
 
   constructor() { }
 
-  @Input() color: "White" | "Black" = "White";
+  @Input() color: string = "#fff"
   ngOnInit(): void {
-
+    document.getElementById("spinner")
   }
 
 }

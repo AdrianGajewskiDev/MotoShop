@@ -60,12 +60,16 @@
         <div class="welcome-section" fxLayout="column" fxLayoutAlign="start center">
             <h1>Find Your Dream Car</h1>
             <p>Choose from over 100 000 available cars for sale</p>
+            <a>Add Your Advertisement</a>
         </div>
     </section>
     <section class="top-section" fxLayoutAlign="center center" fxLayout="column">
         <div class="header" fxLayout="row" fxLayoutAlign="center center">
             <img src="../../assets/icons/sportsCarsIcon.png">
-            <h1>Top Sport Cars</h1>
+            <h1 *ngIf="showLoadingMessage == false">Top Sport Cars</h1>
+            <h1 *ngIf="showLoadingMessage == true">
+                Loading....
+            </h1>
         </div>
         <div class="content" fxLayoutAlign="center start" fxLayout="row">
             <div *ngFor="let ad of advertisements.SportCars" class="card" fxLayout="column"
@@ -86,7 +90,10 @@
     <section class="top-section" fxLayoutAlign="center center" fxLayout="column">
         <div class="header" fxLayout="row" fxLayoutAlign="center center">
             <img src="../../assets/icons/sportsCarsIcon.png">
-            <h1>Top SUV Cars</h1>
+            <h1 *ngIf="showLoadingMessage == false">Top SUV Cars</h1>
+            <h1 *ngIf="showLoadingMessage == true">
+                Loading....
+            </h1>
         </div>
         <div class="content" fxLayoutAlign="center start" fxLayout="row">
             <div *ngFor="let ad of advertisements.SuvCars" class="card" fxLayout="column" fxLayoutAlign="start center">
@@ -106,7 +113,10 @@
     <section class="top-section" fxLayoutAlign="center center" fxLayout="column">
         <div class="header" fxLayout="row" fxLayoutAlign="center center">
             <img src="../../assets/icons/sportsCarsIcon.png">
-            <h1>Top Family Cars</h1>
+            <h1 *ngIf="showLoadingMessage == false">Top Family Cars</h1>
+            <h1 *ngIf="showLoadingMessage == true">
+                Loading....
+            </h1>
         </div>
         <div class="content" fxLayoutAlign="center start" fxLayout="row">
             <div *ngFor="let ad of advertisements.SedanCars" class="card" fxLayout="column"

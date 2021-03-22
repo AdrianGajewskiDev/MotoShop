@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   public gearboxes = gearboxes;
   public fuels = fuels;
   public advertisements: TopThreeAdvertisementsResult;
+  public showLoadingMessage: boolean = true;
 
   public carFilterForm: FormGroup;
 
@@ -40,6 +41,7 @@ export class HomeComponent implements OnInit {
     this.brands = carBrands.map(x => x.brand);
 
     this.service.getTopThree().subscribe((res: TopThreeAdvertisementsRequestResult) => {
+      this.showLoadingMessage = false;
       this.advertisements = res.Advertisements;
     });
   }
