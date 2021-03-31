@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AddAdvertisementComponent } from './add-advertisement/add-advertisement.component';
 import { AdministrationPanelComponent } from './administration/administration-panel/administration-panel.component';
 import { HomeComponent } from './home/home.component';
 import { ConfirmationComponent } from './identity/confirmation-component/confirmation-component.component';
@@ -59,6 +60,10 @@ const routes: Routes = [
     path: "administrator",
     component: AdministrationPanelComponent,
     canActivate: [AdministratorGuard]
+  },
+  {
+    path: "new-advertisement",
+    component: AddAdvertisementComponent
   }
 ];
 

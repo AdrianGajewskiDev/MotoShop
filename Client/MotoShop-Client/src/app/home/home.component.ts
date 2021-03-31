@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { carBrands } from "../shared/Constants/carBrands"
 import { fuels } from '../shared/Constants/fuels';
 import { gearboxes } from '../shared/Constants/gearboxes';
@@ -12,7 +13,9 @@ import { AdvertisementsService } from '../shared/services/advertisements.service
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private service: AdvertisementsService) { }
+  constructor(private fb: FormBuilder,
+    private service: AdvertisementsService,
+    private router: Router) { }
 
   public brands = [];
   public models = [];
@@ -44,6 +47,10 @@ export class HomeComponent implements OnInit {
       this.showLoadingMessage = false;
       this.advertisements = res.Advertisements;
     });
+  }
+
+  addAdvertisement() {
+    this.router.navigateByUrl("new-advertisement");
   }
 
   //#region UI Methods

@@ -41,6 +41,7 @@ import { EditAdvertisementDialogComponent } from './Dialogs/edit-advertisement-d
 import { ServerHealthService } from './shared/services/serverHealth.service';
 import { ServerHealthItemComponent } from './administration/server-health-item/server-health-item.component';
 import { ServerHealthItemDetailsDialogComponent } from './Dialogs/server-health-item-details-dialog/server-health-item-details-dialog.component';
+import { AddAdvertisementComponent } from './add-advertisement/add-advertisement.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { ServerHealthItemDetailsDialogComponent } from './Dialogs/server-health-
     AdvertisementDetailsDialogComponent,
     EditAdvertisementDialogComponent,
     ServerHealthItemComponent,
-    ServerHealthItemDetailsDialogComponent
+    ServerHealthItemDetailsDialogComponent,
+    AddAdvertisementComponent
 
   ],
   imports: [
