@@ -19,10 +19,17 @@ export class AddAdvertisementComponent implements OnInit {
   public fuels = fuels;
   public gearboxes = gearboxes;
   public bodyTypes = bodyTypes;
+  public baseInfoForm: FormGroup;
   public carFilterForm: FormGroup;
 
   ngOnInit(): void {
     this.brands = carBrands.map(x => x.brand);
+
+    this.baseInfoForm = this.fb.group({
+      "title": new FormControl({ value: "" }, Validators.required),
+      'description': new FormControl({ value: "" }, Validators.required)
+    })
+
     this.carFilterForm = this.fb.group(
       {
         "brand": new FormControl({ value: "" }, [Validators.required]),
@@ -32,6 +39,14 @@ export class AddAdvertisementComponent implements OnInit {
         "price": new FormControl({ value: "", disabled: false }, [Validators.required]),
         "productionYear": new FormControl({ value: "", disabled: false }, [Validators.required]),
         "fuelType": new FormControl({ value: "", disabled: false }, [Validators.required]),
+        "hp": new FormControl({ value: "", disabled: false }, [Validators.required]),
+        "cubicCapacity": new FormControl({ value: "", disabled: false }, [Validators.required]),
+        "fuelConsumption": new FormControl({ value: "", disabled: false }, [Validators.required]),
+        "length": new FormControl({ value: "", disabled: false }, [Validators.required]),
+        "width": new FormControl({ value: "", disabled: false }, [Validators.required]),
+        "acceleration": new FormControl({ value: "", disabled: false }, [Validators.required]),
+        "numberOfDoors": new FormControl({ value: "", disabled: false }, [Validators.required]),
+        "numberOfSeats": new FormControl({ value: "", disabled: false }, [Validators.required]),
         "mileage": new FormControl({ value: "", disabled: false }, [Validators.required]),
       });
   }
@@ -40,7 +55,6 @@ export class AddAdvertisementComponent implements OnInit {
     const fileInput = document.getElementById("fileInput");
     fileInput.click();
   }
-
   onSelection(control: string) {
 
     let res = this.carFilterForm.get(control)?.value;
@@ -51,9 +65,11 @@ export class AddAdvertisementComponent implements OnInit {
       } break;
     }
   }
-  search() {
+
+  submit(itemType: string) {
 
   }
+
   onSelectInputChange(control, valueToSet) {
 
     if (this.isDefaultValue(valueToSet)) {

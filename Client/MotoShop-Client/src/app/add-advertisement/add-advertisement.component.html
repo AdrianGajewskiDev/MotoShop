@@ -1,19 +1,19 @@
 <div class="container" fxLayoutAlign="center center">
     <div class="form-container">
-        <form fxLayout="column" fxLayoutAlign="start center">
+        <form [formGroup]="baseInfoForm" fxLayout="column" fxLayoutAlign="start center">
             <mat-form-field class="form-input-item">
                 <mat-label>Title</mat-label>
-                <input type="text" matInput placeholder="Title...">
+                <input type="text" formControlName="title" matInput placeholder="Title...">
             </mat-form-field>
             <mat-form-field class="form-input-item">
                 <mat-label>Description</mat-label>
-                <input type="text" matInput placeholder="Description...">
+                <input type="text" formControlName="description" matInput placeholder="Description...">
             </mat-form-field>
         </form>
         <mat-tab-group mat-align-tabs="start" class="form-switcher">
             <mat-tab label="Car">
                 <div class="sub-form-container" fxLayoutAlign="center start">
-                    <form [formGroup]="carFilterForm">
+                    <form [formGroup]="carFilterForm" (ngSubmit)="submit('car')">
                         <div class="sub-form-input-item" fxLayout="row">
                             <select class="select-input" formControlName="brand" (change)="onSelection('brand')">
                                 <option>Select Brand</option>
@@ -46,53 +46,63 @@
                         <div class="sub-form-input-item" fxLayout="row" fxLayoutAlign="center center">
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>HP</mat-label>
-                                <input type="text" matInput placeholder="HP...">
+                                <input type="text" formControlName="hp" matInput placeholder="HP...">
                             </mat-form-field>
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>Cubic Capacity (m3)</mat-label>
-                                <input type="text" matInput placeholder="Cubic Capacity (m3)...">
+                                <input type="text" formControlName="cubicCapacity" matInput
+                                    placeholder="Cubic Capacity (m3)...">
                             </mat-form-field>
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>Fuel Consumption (l/100km)</mat-label>
-                                <input type="text" matInput placeholder="Fuel Consumption (l/100km)...">
+                                <input type="text" formControlName="fuelConsumption" matInput
+                                    placeholder="Fuel Consumption (l/100km)...">
                             </mat-form-field>
                         </div>
                         <div class="sub-form-input-item" fxLayout="row" fxLayoutAlign="center center">
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>Length</mat-label>
-                                <input type="text" matInput placeholder="Length...">
+                                <input type="text" formControlName="length" matInput placeholder="Length...">
                             </mat-form-field>
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>Width</mat-label>
-                                <input type="text" matInput placeholder="Width...">
+                                <input type="text" formControlName="width" matInput placeholder="Width...">
                             </mat-form-field>
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>Acceleration</mat-label>
-                                <input type="text" matInput placeholder="Acceleration(sec to 100km/h)...">
+                                <input type="text" formControlName="acceleration" matInput
+                                    placeholder="Acceleration(sec to 100km/h)...">
                             </mat-form-field>
                         </div>
                         <div class="sub-form-input-item" fxLayout="row" fxLayoutAlign="center center">
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>Prod. Year</mat-label>
-                                <input type="text" matInput placeholder="Production Year...">
+                                <input type="text" formControlName="productionYear" matInput
+                                    placeholder="Production Year...">
                             </mat-form-field>
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>Nr of doors</mat-label>
-                                <input type="text" matInput placeholder="Number of doors...">
+                                <input type="text" formControlName="numberOfDoors" matInput
+                                    placeholder="Number of doors...">
                             </mat-form-field>
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>Nr of seats</mat-label>
-                                <input type="text" matInput placeholder="Number of seats...">
+                                <input type="text" formControlName="numberOfSeats" matInput
+                                    placeholder="Number of seats...">
                             </mat-form-field>
                         </div>
                         <div class="sub-form-input-item" fxLayout="row" fxLayoutAlign="start center">
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>Mileage</mat-label>
-                                <input type="text" matInput placeholder="Mileage...">
+                                <input type="text" formControlName="mileage" matInput placeholder="Mileage...">
+                            </mat-form-field>
+                            <mat-form-field class="form-input-item-subform">
+                                <mat-label>Price</mat-label>
+                                <input type="number" formControlName="price" matInput placeholder="Price...">
                             </mat-form-field>
                         </div>
                         <div class="sub-form-input-item" fxLayout="row" fxLayoutAlign="center center">
-                            <button mat-raised-button color='primary'>Submit</button>
+                            <button type="submit" mat-raised-button color='primary'>Submit</button>
                         </div>
                     </form>
                 </div>
