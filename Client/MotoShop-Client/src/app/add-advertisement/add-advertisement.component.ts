@@ -26,8 +26,8 @@ export class AddAdvertisementComponent implements OnInit {
     this.brands = carBrands.map(x => x.brand);
 
     this.baseInfoForm = this.fb.group({
-      "title": new FormControl({ value: "" }, Validators.required),
-      'description': new FormControl({ value: "" }, Validators.required)
+      "title": ["", Validators.required],
+      'description': ["", Validators.required],
     })
 
     this.carFilterForm = this.fb.group(
@@ -55,6 +55,37 @@ export class AddAdvertisementComponent implements OnInit {
     const fileInput = document.getElementById("fileInput");
     fileInput.click();
   }
+
+
+  submit(itemType: string) {
+
+  }
+
+  checkErrorForSelectInput(control: string, defaultValue = ""): boolean {
+    if (defaultValue === "")
+      return this.carFilterForm.get(control).touched;
+
+    return this.carFilterForm.get(control).touched && this.carFilterForm.get(control).value === defaultValue;
+  }
+
+
+  isCarFilterFormValid(): boolean {
+    let flag = false;
+
+    //TODO: refactor this
+    if (this.carFilterForm.valid) {
+      if (this.carFilterForm.get("brand").value == "Select Brand" || this.carFilterForm.get("model").value == "Select Model"
+        || this.carFilterForm.get("gearbox").value == "Gearbox" || this.carFilterForm.get("fuelType").value == "Fuel Type"
+        || this.carFilterForm.get("bodyType").value == "Body Type") {
+
+        return false;
+      }
+      flag = true;
+    }
+    return flag;
+  }
+
+
   onSelection(control: string) {
 
     let res = this.carFilterForm.get(control)?.value;
@@ -65,11 +96,6 @@ export class AddAdvertisementComponent implements OnInit {
       } break;
     }
   }
-
-  submit(itemType: string) {
-
-  }
-
   onSelectInputChange(control, valueToSet) {
 
     if (this.isDefaultValue(valueToSet)) {

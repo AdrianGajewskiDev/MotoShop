@@ -4,10 +4,12 @@
             <mat-form-field class="form-input-item">
                 <mat-label>Title</mat-label>
                 <input type="text" formControlName="title" matInput placeholder="Title...">
+                <mat-error *ngIf="baseInfoForm.get('title').errors?.required">Title is required</mat-error>
             </mat-form-field>
             <mat-form-field class="form-input-item">
                 <mat-label>Description</mat-label>
                 <input type="text" formControlName="description" matInput placeholder="Description...">
+                <mat-error *ngIf="baseInfoForm.get('description').errors?.required">Description is required</mat-error>
             </mat-form-field>
         </form>
         <mat-tab-group mat-align-tabs="start" class="form-switcher">
@@ -15,27 +17,37 @@
                 <div class="sub-form-container" fxLayoutAlign="center start">
                     <form [formGroup]="carFilterForm" (ngSubmit)="submit('car')">
                         <div class="sub-form-input-item" fxLayout="row">
-                            <select class="select-input" formControlName="brand" (change)="onSelection('brand')">
+                            <select class="select-input" formControlName="brand"
+                                [ngClass]="{'error': checkErrorForSelectInput('brand', 'Select Brand')}"
+                                (change)="onSelection('brand')">
                                 <option>Select Brand</option>
                                 <option *ngFor="let brand of brands">{{brand}}</option>
                             </select>
-                            <select class="select-input" formControlName="model" (change)="onSelection('model')">
+                            <select class="select-input" formControlName="model"
+                                [ngClass]="{'error': checkErrorForSelectInput('model', 'Select Model')}"
+                                (change)="onSelection('model')">
                                 <option>Select Model</option>
                                 <option *ngFor="let model of models">{{model}}</option>
                             </select>
                         </div>
                         <div class="sub-form-input-item" fxLayout="row">
-                            <select class="select-input" formControlName="gearbox">
+                            <select class="select-input"
+                                [ngClass]="{'error': checkErrorForSelectInput('gearbox', 'Gearbox')}"
+                                formControlName="gearbox">
                                 <option>Gearbox</option>
                                 <option *ngFor="let gearbox of gearboxes">{{gearbox}}</option>
                             </select>
-                            <select class="select-input" formControlName="fuelType">
+                            <select class="select-input"
+                                [ngClass]="{'error': checkErrorForSelectInput('fuelType', 'Fuel Type')}"
+                                formControlName="fuelType">
                                 <option>Fuel Type</option>
                                 <option *ngFor="let fuel of fuels">{{fuel}}</option>
                             </select>
                         </div>
                         <div class="sub-form-input-item" fxLayout="row">
-                            <select class="select-input" formControlName="gearbox">
+                            <select class="select-input"
+                                [ngClass]="{'error': checkErrorForSelectInput('bodyType', 'Body Type')}"
+                                formControlName="bodyType">
                                 <option>Body Type</option>
                                 <option *ngFor="let bodyType of bodyTypes">{{bodyType}}</option>
                             </select>
@@ -46,63 +58,93 @@
                         <div class="sub-form-input-item" fxLayout="row" fxLayoutAlign="center center">
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>HP</mat-label>
-                                <input type="text" formControlName="hp" matInput placeholder="HP...">
+                                <input type="number" formControlName="hp" matInput placeholder="HP...">
+                                <mat-error *ngIf="carFilterForm.get('hp').errors?.required">HP is
+                                    required</mat-error>
                             </mat-form-field>
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>Cubic Capacity (m3)</mat-label>
-                                <input type="text" formControlName="cubicCapacity" matInput
+                                <input type="number" formControlName="cubicCapacity" matInput
                                     placeholder="Cubic Capacity (m3)...">
+                                <mat-error *ngIf="carFilterForm.get('cubicCapacity').errors?.required">Cubic Capacity is
+                                    required</mat-error>
                             </mat-form-field>
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>Fuel Consumption (l/100km)</mat-label>
-                                <input type="text" formControlName="fuelConsumption" matInput
+                                <input type="number" formControlName="fuelConsumption" matInput
                                     placeholder="Fuel Consumption (l/100km)...">
+                                <mat-error *ngIf="carFilterForm.get('fuelConsumption').errors?.required">Fuel
+                                    Consumption is
+                                    required</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="sub-form-input-item" fxLayout="row" fxLayoutAlign="center center">
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>Length</mat-label>
-                                <input type="text" formControlName="length" matInput placeholder="Length...">
+                                <input type="number" formControlName="length" matInput placeholder="Length...">
+                                <mat-error *ngIf="carFilterForm.get('length').errors?.required">Length is required
+                                </mat-error>
                             </mat-form-field>
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>Width</mat-label>
-                                <input type="text" formControlName="width" matInput placeholder="Width...">
+                                <input type="number" formControlName="width" matInput placeholder="Width...">
+                                <mat-error *ngIf="carFilterForm.get('width').errors?.required">Width is required
+                                </mat-error>
                             </mat-form-field>
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>Acceleration</mat-label>
-                                <input type="text" formControlName="acceleration" matInput
+                                <input type="number" formControlName="acceleration" matInput
                                     placeholder="Acceleration(sec to 100km/h)...">
+                                <mat-error *ngIf="carFilterForm.get('acceleration').errors?.required">Acceleration is
+                                    required
+                                </mat-error>
                             </mat-form-field>
                         </div>
                         <div class="sub-form-input-item" fxLayout="row" fxLayoutAlign="center center">
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>Prod. Year</mat-label>
-                                <input type="text" formControlName="productionYear" matInput
+                                <input type="date" formControlName="productionYear" matInput
                                     placeholder="Production Year...">
+                                <mat-error *ngIf="carFilterForm.get('productionYear').errors?.required">Production
+                                    Yearis required</mat-error>
                             </mat-form-field>
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>Nr of doors</mat-label>
-                                <input type="text" formControlName="numberOfDoors" matInput
+                                <input type="number" formControlName="numberOfDoors" matInput
                                     placeholder="Number of doors...">
+                                <mat-error *ngIf="carFilterForm.get('numberOfDoors').errors?.required">Number Of Doors
+                                    is
+                                    required</mat-error>
                             </mat-form-field>
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>Nr of seats</mat-label>
-                                <input type="text" formControlName="numberOfSeats" matInput
+                                <input type="number" formControlName="numberOfSeats" matInput
                                     placeholder="Number of seats...">
+                                <mat-error *ngIf="carFilterForm.get('numberOfSeats').errors?.required">Number Of Seats
+                                    is
+                                    required</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="sub-form-input-item" fxLayout="row" fxLayoutAlign="start center">
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>Mileage</mat-label>
-                                <input type="text" formControlName="mileage" matInput placeholder="Mileage...">
+                                <input type="number" formControlName="mileage" matInput placeholder="Mileage...">
+                                <mat-error *ngIf="carFilterForm.get('mileage').errors?.required">Mileage
+                                    is
+                                    required</mat-error>
                             </mat-form-field>
                             <mat-form-field class="form-input-item-subform">
                                 <mat-label>Price</mat-label>
                                 <input type="number" formControlName="price" matInput placeholder="Price...">
+                                <mat-error *ngIf="carFilterForm.get('price').errors?.required">Price
+                                    is
+                                    required
+                                </mat-error>
                             </mat-form-field>
                         </div>
                         <div class="sub-form-input-item" fxLayout="row" fxLayoutAlign="center center">
-                            <button type="submit" mat-raised-button color='primary'>Submit</button>
+                            <button type="submit" mat-raised-button color='primary'
+                                [disabled]="!isCarFilterFormValid() || !baseInfoForm.valid">Submit</button>
                         </div>
                     </form>
                 </div>
