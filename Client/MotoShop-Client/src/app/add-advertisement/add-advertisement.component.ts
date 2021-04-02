@@ -4,6 +4,8 @@ import { bodyTypes } from '../shared/Constants/carBodyTypes';
 import { carBrands } from '../shared/Constants/carBrands';
 import { fuels } from '../shared/Constants/fuels';
 import { gearboxes } from '../shared/Constants/gearboxes';
+import { NewAdvertisementBaseInfoModel } from '../shared/models/advertisements/newAdvertisementBaseInfoModel';
+import { NewCarAdvertisementModel } from '../shared/models/advertisements/newCarAdvertisementModel';
 
 @Component({
   selector: 'app-add-advertisement',
@@ -58,7 +60,33 @@ export class AddAdvertisementComponent implements OnInit {
 
 
   submit(itemType: string) {
-
+    switch (itemType) {
+      case 'car': {
+        let model: NewCarAdvertisementModel =
+        {
+          Acceleration: this.carFilterForm.get('acceleration').value,
+          BaseInfo: {
+            Description: this.baseInfoForm.get("description").value,
+            Title: this.baseInfoForm.get('title').value
+          },
+          BodyType: this.carFilterForm.get('bodyType').value,
+          CarBrand: this.carFilterForm.get('brand').value,
+          CarModel: this.carFilterForm.get('model').value,
+          CubicCapacity: this.carFilterForm.get('cubicCapacity').value,
+          FuelConsumption: this.carFilterForm.get('fuelConsumption').value,
+          FuelType: this.carFilterForm.get('fuelType').value,
+          Gearbox: this.carFilterForm.get('gearbox').value,
+          HP: this.carFilterForm.get('hp').value,
+          Length: this.carFilterForm.get('length').value,
+          Mileage: this.carFilterForm.get('mileage').value,
+          NumberOfDoors: this.carFilterForm.get('numberOfDoors').value,
+          NumberOfSeats: this.carFilterForm.get('numberOfSeats').value,
+          Price: this.carFilterForm.get('price').value,
+          Width: this.carFilterForm.get('width').value,
+          YearOfProduction: new Date(this.carFilterForm.get('productionYear').value)
+        };
+      } break;
+    }
   }
 
   checkErrorForSelectInput(control: string, defaultValue = ""): boolean {
@@ -84,7 +112,6 @@ export class AddAdvertisementComponent implements OnInit {
     }
     return flag;
   }
-
 
   onSelection(control: string) {
 

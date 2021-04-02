@@ -52,7 +52,8 @@
                                 <option *ngFor="let bodyType of bodyTypes">{{bodyType}}</option>
                             </select>
                             <input type="file" id="fileInput" style="display: none;">
-                            <button (click)="getFile()" mat-raised-button color='basic' style="width: 130px;">Add
+                            <button (click)="getFile()" mat-raised-button color='basic' type="button"
+                                style="width: 130px;">Add
                                 Image</button>
                         </div>
                         <div class="sub-form-input-item" fxLayout="row" fxLayoutAlign="center center">
