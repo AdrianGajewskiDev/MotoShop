@@ -1,4 +1,5 @@
 <div class="container" fxLayoutAlign="center center">
+    <mat-spinner *ngIf="showLoadingSpinner == true" class="spinner"></mat-spinner>
     <div class="form-container">
         <form [formGroup]="baseInfoForm" fxLayout="column" fxLayoutAlign="start center">
             <mat-form-field class="form-input-item">

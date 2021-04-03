@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { bodyTypes } from '../shared/Constants/carBodyTypes';
 import { carBrands } from '../shared/Constants/carBrands';
 import { fuels } from '../shared/Constants/fuels';
 import { gearboxes } from '../shared/Constants/gearboxes';
-import { NewAdvertisementBaseInfoModel } from '../shared/models/advertisements/newAdvertisementBaseInfoModel';
+import { Car } from '../shared/models/advertisements/Items/car.model';
 import { NewCarAdvertisementModel } from '../shared/models/advertisements/newCarAdvertisementModel';
+import { AdvertisementsService } from '../shared/services/advertisements.service';
+import { IdentityService } from '../shared/services/identity.service';
 
 @Component({
   selector: 'app-add-advertisement',
@@ -14,7 +18,11 @@ import { NewCarAdvertisementModel } from '../shared/models/advertisements/newCar
 })
 export class AddAdvertisementComponent implements OnInit {
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,
+    private identityService: IdentityService,
+    private adService: AdvertisementsService,
+    private router: Router,
+    private toastr: ToastrService) { }
 
   public brands = [];
   public models = [];
@@ -23,6 +31,8 @@ export class AddAdvertisementComponent implements OnInit {
   public bodyTypes = bodyTypes;
   public baseInfoForm: FormGroup;
   public carFilterForm: FormGroup;
+
+  public showLoadingSpinner: boolean = false;
 
   ngOnInit(): void {
     this.brands = carBrands.map(x => x.brand);
@@ -60,33 +70,56 @@ export class AddAdvertisementComponent implements OnInit {
 
 
   submit(itemType: string) {
+    this.showLoadingSpinner = true;
     switch (itemType) {
       case 'car': {
-        let model: NewCarAdvertisementModel =
-        {
-          Acceleration: this.carFilterForm.get('acceleration').value,
-          BaseInfo: {
-            Description: this.baseInfoForm.get("description").value,
-            Title: this.baseInfoForm.get('title').value
-          },
-          BodyType: this.carFilterForm.get('bodyType').value,
-          CarBrand: this.carFilterForm.get('brand').value,
-          CarModel: this.carFilterForm.get('model').value,
-          CubicCapacity: this.carFilterForm.get('cubicCapacity').value,
-          FuelConsumption: this.carFilterForm.get('fuelConsumption').value,
-          FuelType: this.carFilterForm.get('fuelType').value,
-          Gearbox: this.carFilterForm.get('gearbox').value,
-          HP: this.carFilterForm.get('hp').value,
-          Length: this.carFilterForm.get('length').value,
-          Mileage: this.carFilterForm.get('mileage').value,
-          NumberOfDoors: this.carFilterForm.get('numberOfDoors').value,
-          NumberOfSeats: this.carFilterForm.get('numberOfSeats').value,
-          Price: this.carFilterForm.get('price').value,
-          Width: this.carFilterForm.get('width').value,
-          YearOfProduction: new Date(this.carFilterForm.get('productionYear').value)
-        };
+        this.proceedCarAdvertisement();
       } break;
     }
+  }
+
+  proceedCarAdvertisement() {
+    let model: NewCarAdvertisementModel =
+    {
+      Description: this.baseInfoForm.get("description").value,
+      Price: this.carFilterForm.get("price").value,
+      Title: this.baseInfoForm.get("title").value,
+      Car: new Car
+    };
+    model.Car = {
+      Acceleration: this.carFilterForm.get('acceleration').value,
+      CarType: this.carFilterForm.get('bodyType').value,
+      CarBrand: this.carFilterForm.get('brand').value,
+      CarModel: this.carFilterForm.get('model').value,
+      CubicCapacity: this.carFilterForm.get('cubicCapacity').value,
+      FuelConsumption: this.carFilterForm.get('fuelConsumption').value,
+      Fuel: this.carFilterForm.get('fuelType').value,
+      Gearbox: this.carFilterForm.get('gearbox').value,
+      HorsePower: this.carFilterForm.get('hp').value,
+      Lenght: this.carFilterForm.get('length').value,
+      NumberOfDoors: this.carFilterForm.get('numberOfDoors').value,
+      NumberOfSeats: this.carFilterForm.get('numberOfSeats').value,
+      Price: this.carFilterForm.get('price').value,
+      Width: this.carFilterForm.get('width').value,
+      YearOfProduction: this.carFilterForm.get('productionYear').value,
+      ItemType: "Car",
+      ImageUrl: "wwwroot/resources/images/CarImage.jpg",
+      ID: 0,
+      OwnerID: this.identityService.getUserID,
+      Mileage: this.carFilterForm.get('mileage').value,
+    }
+    this.adService.addAdvertisement(model).subscribe(res => {
+      this.showLoadingSpinner = false;
+      this.toastr.success("Successfully added your advertisement");
+      this.router.navigateByUrl("/home");
+    }
+      , error => this.errorCallback(error));
+  }
+
+  errorCallback(error) {
+    this.showLoadingSpinner = false;
+    console.log(error);
+    this.toastr.error("Something went wrong while trying to add your advertisement. Try again.")
   }
 
   checkErrorForSelectInput(control: string, defaultValue = ""): boolean {

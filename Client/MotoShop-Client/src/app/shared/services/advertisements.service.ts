@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { UpdateDataResult } from "src/app/Dialogs/edit-advertisement-dialog/edit-advertisement-dialog.component";
 import { Advertisement } from "../models/advertisements/advertisement.model";
 import { AdvertisementDetailsModel } from "../models/advertisements/advertisementDetails.model";
-import { serverDeleteAdvertisementUrl, serverGetAllAdvertisementsByUserIDUrl, serverGetAllAdvertisementsUrl, serverGetTopAdvertisementsUrl, serverUpdateAdvertisementUrl } from "../server-urls";
+import { serverAddAdvertisementUrl, serverDeleteAdvertisementUrl, serverGetAllAdvertisementsByUserIDUrl, serverGetAllAdvertisementsUrl, serverGetTopAdvertisementsUrl, serverUpdateAdvertisementUrl } from "../server-urls";
 
 @Injectable()
 export class AdvertisementsService {
@@ -41,4 +41,7 @@ export class AdvertisementsService {
         return this.httpClient.get(serverGetTopAdvertisementsUrl);
     }
 
+    addAdvertisement(model) {
+        return this.httpClient.post(serverAddAdvertisementUrl, model);
+    }
 }

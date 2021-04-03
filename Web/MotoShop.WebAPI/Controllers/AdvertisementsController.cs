@@ -87,7 +87,6 @@ namespace MotoShop.WebAPI.Controllers
 
             Advertisement advertisement = new Advertisement
             {
-                Author = await _applicationUserService.GetUserByID(userID),
                 AuthorID = userID,
                 Description = newAdvertisementRequestModel.Description,
                 Placed = DateTime.Now,

@@ -1,15 +1,8 @@
-import { NewAdvertisementBaseInfoModel } from "./newAdvertisementBaseInfoModel";
-import { NewAdvertisementBaseModel } from "./newAdvertisementBaseModel";
+import { Car } from "./Items/car.model";
 
-export class NewCarAdvertisementModel extends NewAdvertisementBaseModel {
-    BaseInfo: NewAdvertisementBaseInfoModel;
-    CarBrand: string;
-    CarModel: string;
-    Gearbox: string;
-    BodyType: string;
-    Length: number;
-    Width: number;
-    Acceleration: number;
-    NumberOfDoors: Date;
-    NumberOfSeats: number;
+export class NewCarAdvertisementModel {
+    Title: string;
+    Description: string;
+    Car: Car;
+    Price: number;
 }

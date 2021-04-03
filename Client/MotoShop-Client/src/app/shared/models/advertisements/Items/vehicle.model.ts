@@ -9,4 +9,5 @@ export class Vehicle extends ShopItem {
     CubicCapacity: number;
     Fuel: string;
     YearOfProduction: string;
+    Mileage: number;
 }
