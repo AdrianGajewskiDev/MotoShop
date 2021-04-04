@@ -55,7 +55,7 @@ export class UserProfileComponent implements OnInit {
     this.getAds();
 
     this.editUserDataForm = this.fb.group({
-      name: [''],
+      name: [],
       lastName: [''],
       email: ['', [Validators.email]],
       username: ['']
@@ -70,6 +70,8 @@ export class UserProfileComponent implements OnInit {
           this.imageUrl = this.userData.ImageUrl;
         else
           this.imageUrl = buildImagePath(this.userData.ImageUrl);
+
+        this.fetchUserProfileDataToForm();
       },
       (error) => {
 
@@ -86,6 +88,15 @@ export class UserProfileComponent implements OnInit {
       {
         validators: passwordsMatchesValidator
       });
+  }
+
+  fetchUserProfileDataToForm() {
+    this.editUserDataForm.setValue({
+      name: this.userData.Name,
+      lastName: this.userData.LastName,
+      email: this.userData.Email,
+      username: this.userData.UserName
+    });
   }
 
   editUserData(): void {
