@@ -43,6 +43,7 @@ import { ServerHealthItemComponent } from './administration/server-health-item/s
 import { ServerHealthItemDetailsDialogComponent } from './Dialogs/server-health-item-details-dialog/server-health-item-details-dialog.component';
 import { AddAdvertisementComponent } from './add-advertisement/add-advertisement.component';
 import { AdvertisementOverviewComponent } from './advertisement-overview/advertisement-overview.component';
+import { AdvertisementDetailsComponent } from './advertisement-details/advertisement-details.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { AdvertisementOverviewComponent } from './advertisement-overview/adverti
     ServerHealthItemComponent,
     ServerHealthItemDetailsDialogComponent,
     AddAdvertisementComponent,
-    AdvertisementOverviewComponent
+    AdvertisementOverviewComponent,
+    AdvertisementDetailsComponent
 
   ],
   imports: [
