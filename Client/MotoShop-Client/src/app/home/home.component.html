@@ -71,7 +71,7 @@
                 Loading....
             </h1>
         </div>
-        <div class="content" fxLayoutAlign="center start" fxLayout="row">
+        <div class="content" fxLayoutAlign="space-between center" fxLayout="row">
             <app-advertisement-overview *ngFor="let ad of advertisements.SportCars" [advertisement]="ad">
             </app-advertisement-overview>
         </div>
@@ -81,12 +81,12 @@
     <section class="top-section" fxLayoutAlign="center center" fxLayout="column">
         <div class="header" fxLayout="row" fxLayoutAlign="center center">
             <img src="../../assets/icons/sportsCarsIcon.png">
-            <h1 *ngIf="showLoadingMessage == false">Top SUV Cars</h1>
+            <h1 *ngIf="showLoadingMessage == false">Top SUV/Premium Cars</h1>
             <h1 *ngIf="showLoadingMessage == true">
                 Loading....
             </h1>
         </div>
-        <div class="content" fxLayoutAlign="center start" fxLayout="row">
+        <div class="content" fxLayoutAlign="space-between center" fxLayout="row">
             <app-advertisement-overview *ngFor="let ad of advertisements.SuvCars" [advertisement]="ad">
             </app-advertisement-overview>
         </div>
@@ -100,7 +100,7 @@
                 Loading....
             </h1>
         </div>
-        <div class="content" fxLayoutAlign="center start" fxLayout="row">
+        <div class="content" fxLayoutAlign="space-between center" fxLayout="row">
             <app-advertisement-overview *ngFor="let ad of advertisements.SedanCars" [advertisement]="ad">
             </app-advertisement-overview>
         </div>
