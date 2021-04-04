@@ -4,7 +4,7 @@
     {
         Coupe,
         Sedan,
-        Suv,
+        MUV_SUV,
         Cabriolet,
         Kombi
     }

@@ -63,7 +63,8 @@ const routes: Routes = [
   },
   {
     path: "new-advertisement",
-    component: AddAdvertisementComponent
+    component: AddAdvertisementComponent,
+    canActivate: [AuthenticationGuard]
   }
 ];
 

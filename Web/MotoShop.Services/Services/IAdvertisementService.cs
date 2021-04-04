@@ -20,6 +20,8 @@ namespace MotoShop.Services.Services
         Task<bool> AddAdvertisementAsync(Advertisement advertisement);
         Task<bool> UpdateAdvertisementAsync(int id, Advertisement newAdvertisement, Advertisement oldAdvertisement);
         void DeleteAdvertisement(int advertisementID);
+        void AddImage(int adID, string path);
         TopThreeAdvertisementsResult GetTopThree();
+
     }
 }

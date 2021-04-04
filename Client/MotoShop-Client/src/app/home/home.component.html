@@ -75,7 +75,7 @@
             <div *ngFor="let ad of advertisements.SportCars" class="card" fxLayout="column"
                 fxLayoutAlign="start center">
                 <h1>{{ad.Name}}</h1>
-                <img src="../../assets/images-layout/CarImage.jpg">
+                <img [src]="buildImageUrl(ad.ImageUrl)">
                 <div class="details" fxLayoutAlign="center center">
                     <p>
                         {{ad.HP}}HP | 250 000 <br>
@@ -98,7 +98,7 @@
         <div class="content" fxLayoutAlign="center start" fxLayout="row">
             <div *ngFor="let ad of advertisements.SuvCars" class="card" fxLayout="column" fxLayoutAlign="start center">
                 <h1>{{ad.Name}}</h1>
-                <img src="../../assets/images-layout/CarImage.jpg">
+                <img [src]="buildImageUrl(ad.ImageUrl)">
                 <div class="details" fxLayoutAlign="center center">
                     <p>
                         {{ad.HP}}HP | 250 000 <br>
@@ -122,7 +122,7 @@
             <div *ngFor="let ad of advertisements.SedanCars" class="card" fxLayout="column"
                 fxLayoutAlign="start center">
                 <h1>{{ad.Name}}</h1>
-                <img src="../../assets/images-layout/CarImage.jpg">
+                <img [src]="buildImageUrl(ad.ImageUrl)">
                 <div class="details" fxLayoutAlign="center center">
                     <p>
                         {{ad.HP}}HP | 250 000 <br>

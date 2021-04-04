@@ -105,7 +105,7 @@ namespace MotoShop.WebAPI.Controllers
             advertisement.ShopItem.OwnerID = userID;
 
             if (await _advertisementService.AddAdvertisementAsync(advertisement))
-                return Ok();
+                return Ok(new { id = advertisement.ID});
 
             return BadRequest(StaticMessages.SomethingWentWrong);
         }
@@ -129,7 +129,6 @@ namespace MotoShop.WebAPI.Controllers
         }
 
         [HttpGet("topThree")]
-        [Cache(30)]
         public IActionResult GetTopThree()
         {
             var result = _advertisementService.GetTopThree();

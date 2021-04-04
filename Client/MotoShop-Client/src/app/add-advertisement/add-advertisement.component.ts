@@ -10,6 +10,7 @@ import { Car } from '../shared/models/advertisements/Items/car.model';
 import { NewCarAdvertisementModel } from '../shared/models/advertisements/newCarAdvertisementModel';
 import { AdvertisementsService } from '../shared/services/advertisements.service';
 import { IdentityService } from '../shared/services/identity.service';
+import { UploadService } from '../shared/services/upload.service';
 
 @Component({
   selector: 'app-add-advertisement',
@@ -22,7 +23,8 @@ export class AddAdvertisementComponent implements OnInit {
     private identityService: IdentityService,
     private adService: AdvertisementsService,
     private router: Router,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private imageUploader: UploadService) { }
 
   public brands = [];
   public models = [];
@@ -32,6 +34,7 @@ export class AddAdvertisementComponent implements OnInit {
   public baseInfoForm: FormGroup;
   public carFilterForm: FormGroup;
 
+  private image: File;
   public showLoadingSpinner: boolean = false;
 
   ngOnInit(): void {
@@ -68,6 +71,9 @@ export class AddAdvertisementComponent implements OnInit {
     fileInput.click();
   }
 
+  onImageSelected(event) {
+    this.image = event.target.files[0];
+  }
 
   submit(itemType: string) {
     this.showLoadingSpinner = true;
@@ -103,17 +109,26 @@ export class AddAdvertisementComponent implements OnInit {
       Width: this.carFilterForm.get('width').value,
       YearOfProduction: this.carFilterForm.get('productionYear').value,
       ItemType: "Car",
-      ImageUrl: "wwwroot/resources/images/CarImage.jpg",
+      ImageUrl: "Not selected",
       ID: 0,
       OwnerID: this.identityService.getUserID,
       Mileage: this.carFilterForm.get('mileage').value,
     }
-    this.adService.addAdvertisement(model).subscribe(res => {
-      this.showLoadingSpinner = false;
-      this.toastr.success("Successfully added your advertisement");
-      this.router.navigateByUrl("/home");
+
+    this.adService.addAdvertisement(model).subscribe((res: any) => {
+      console.log(res);
+
+      this.imageUploader.uploadAdvertisementImage(this.image, res.Id).subscribe(res => {
+        this.showLoadingSpinner = false;
+        this.toastr.success("Successfully added your advertisement");
+        this.router.navigateByUrl("/home");
+      },
+        error => console.log(error)
+      );
+
     }
       , error => this.errorCallback(error));
+
   }
 
   errorCallback(error) {
@@ -128,7 +143,6 @@ export class AddAdvertisementComponent implements OnInit {
 
     return this.carFilterForm.get(control).touched && this.carFilterForm.get(control).value === defaultValue;
   }
-
 
   isCarFilterFormValid(): boolean {
     let flag = false;

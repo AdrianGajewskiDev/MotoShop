@@ -122,7 +122,6 @@ namespace MotoShop.Services.Implementation
 
             return result.AsQueryable();
         }
-
         public TopThreeAdvertisementsResult GetTopThree()
         {
             var advertisements = _context.Cars.Select(x => new TopThreeAdvertisementsItemResult 
@@ -138,8 +137,9 @@ namespace MotoShop.Services.Implementation
                 Price = x.Price
             }).ToArray();
 
+
             var sportCars = advertisements.Where(x => x.BodyType == CarType.Coupe.ToString()).OrderByDescending(x => x.HP).Take(3).ToArray();
-            var suvCars  = advertisements.Where(x => x.BodyType == CarType.Suv.ToString().ToUpper()).OrderByDescending(x => x.HP).Take(3).ToArray();
+            var suvCars  = advertisements.Where(x => x.BodyType == CarType.MUV_SUV.ToString().Replace('_', '/').ToUpper()).OrderByDescending(x => x.HP).Take(3).ToArray();
             var sedanCars  = advertisements.Where(x => x.BodyType == CarType.Sedan.ToString()).OrderByDescending(x => x.HP).Take(3).ToArray();
 
             return new TopThreeAdvertisementsResult
@@ -148,6 +148,16 @@ namespace MotoShop.Services.Implementation
                 SportCars = sportCars,
                 SuvCars = suvCars
             };
+        }
+        public void AddImage(int adID, string path)
+        {
+            var ad = GetAdvertisementById(adID);
+
+            ad.ShopItem.ImageUrl = path;
+
+            _context.Entry(ad).State = EntityState.Modified;
+
+            _context.SaveChanges();
         }
     }
 }
