@@ -134,7 +134,8 @@ namespace MotoShop.Services.Implementation
                 Name = $"{x.CarBrand} {x.CarModel}",
                 ProductionYear = x.YearOfProduction.Year,
                 CubicCapacity = x.CubicCapacity,
-                Price = x.Price
+                Price = x.Price,
+                Mileage = x.Mileage
             }).ToArray();
 
 

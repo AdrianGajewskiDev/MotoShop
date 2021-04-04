@@ -1,0 +1,12 @@
+<div class="card" fxLayout="column" fxLayoutAlign="start center">
+    <h1>{{advertisement.Name}}</h1>
+    <img [src]="buildImageUrl(advertisement.ImageUrl)" class="thumbnail-img">
+    <div class="details" fxLayoutAlign="center center">
+        <p>
+            {{advertisement.HP}}HP | {{advertisement.CubicCapacity}}cm3 |
+            {{advertisement.Mileage}} | {{advertisement.Gearbox}} |<br>
+            {{advertisement.BodyType}}
+        </p>
+    </div>
+    <h3>{{advertisement.Price}}$</h3>
+</div>

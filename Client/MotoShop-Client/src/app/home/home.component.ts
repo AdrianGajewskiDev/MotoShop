@@ -6,7 +6,6 @@ import { fuels } from '../shared/Constants/fuels';
 import { gearboxes } from '../shared/Constants/gearboxes';
 import { TopThreeAdvertisementsRequestResult, TopThreeAdvertisementsResult } from '../shared/models/advertisements/Items/topThreeAdvertisemetsModel';
 import { AdvertisementsService } from '../shared/services/advertisements.service';
-import { buildImagePath } from "../shared/Helpers/buildProfileImagePath"
 
 @Component({
   selector: 'app-home',
@@ -49,15 +48,14 @@ export class HomeComponent implements OnInit {
       this.showLoadingMessage = false;
       this.advertisements = res.Advertisements;
     });
+
+
   }
 
   addAdvertisement() {
     this.router.navigateByUrl("new-advertisement");
   }
 
-  buildImageUrl(url) {
-    return buildImagePath(url);
-  }
   //#region UI Methods
   onSelection(control: string) {
 

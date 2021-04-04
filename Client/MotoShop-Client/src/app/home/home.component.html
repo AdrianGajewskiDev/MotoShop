@@ -72,20 +72,11 @@
             </h1>
         </div>
         <div class="content" fxLayoutAlign="center start" fxLayout="row">
-            <div *ngFor="let ad of advertisements.SportCars" class="card" fxLayout="column"
-                fxLayoutAlign="start center">
-                <h1>{{ad.Name}}</h1>
-                <img [src]="buildImageUrl(ad.ImageUrl)">
-                <div class="details" fxLayoutAlign="center center">
-                    <p>
-                        {{ad.HP}}HP | 250 000 <br>
-                        {{ad.Gearbox}} | {{ad.BodyType}} | {{ad.CubicCapacity}}cm3
-                    </p>
-                </div>
-                <h3>{{ad.Price}}$</h3>
-            </div>
-
+            <app-advertisement-overview *ngFor="let ad of advertisements.SportCars" [advertisement]="ad">
+            </app-advertisement-overview>
         </div>
+
+
     </section>
     <section class="top-section" fxLayoutAlign="center center" fxLayout="column">
         <div class="header" fxLayout="row" fxLayoutAlign="center center">
@@ -96,21 +87,12 @@
             </h1>
         </div>
         <div class="content" fxLayoutAlign="center start" fxLayout="row">
-            <div *ngFor="let ad of advertisements.SuvCars" class="card" fxLayout="column" fxLayoutAlign="start center">
-                <h1>{{ad.Name}}</h1>
-                <img [src]="buildImageUrl(ad.ImageUrl)">
-                <div class="details" fxLayoutAlign="center center">
-                    <p>
-                        {{ad.HP}}HP | 250 000 <br>
-                        {{ad.Gearbox}} | {{ad.BodyType}} | {{ad.CubicCapacity}}cm3
-                    </p>
-                </div>
-                <h3>{{ad.Price}}$</h3>
-            </div>
-
+            <app-advertisement-overview *ngFor="let ad of advertisements.SuvCars" [advertisement]="ad">
+            </app-advertisement-overview>
         </div>
+
     </section>
-    <section class="top-section" fxLayoutAlign="center center" fxLayout="column">
+    <section class="top-section latest-section" fxLayoutAlign="center center" fxLayout="column">
         <div class="header" fxLayout="row" fxLayoutAlign="center center">
             <img src="../../assets/icons/sportsCarsIcon.png">
             <h1 *ngIf="showLoadingMessage == false">Top Family Cars</h1>
@@ -119,19 +101,9 @@
             </h1>
         </div>
         <div class="content" fxLayoutAlign="center start" fxLayout="row">
-            <div *ngFor="let ad of advertisements.SedanCars" class="card" fxLayout="column"
-                fxLayoutAlign="start center">
-                <h1>{{ad.Name}}</h1>
-                <img [src]="buildImageUrl(ad.ImageUrl)">
-                <div class="details" fxLayoutAlign="center center">
-                    <p>
-                        {{ad.HP}}HP | 250 000 <br>
-                        {{ad.Gearbox}} | {{ad.BodyType}} | {{ad.CubicCapacity}}cm3
-                    </p>
-                </div>
-                <h3>{{ad.Price}}$</h3>
-            </div>
-
+            <app-advertisement-overview *ngFor="let ad of advertisements.SedanCars" [advertisement]="ad">
+            </app-advertisement-overview>
         </div>
+
     </section>
 </div>

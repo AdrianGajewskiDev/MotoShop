@@ -21,7 +21,7 @@ namespace MotoShop.Data.Models.Store
         [Required]
         [MaxLength(length: 20)]
         public string Fuel { get; set; }
-
+        public int Mileage { get; set; }
         public DateTime YearOfProduction { get; set; }
     }
 }

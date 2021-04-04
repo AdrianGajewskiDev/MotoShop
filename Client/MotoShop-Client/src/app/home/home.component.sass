@@ -68,6 +68,12 @@
     height: 45vh
     width: 100vw
     background: #fff
+    .content
+        height: 85%
+        width: 80%
+        max-width: 80%
+        padding: 20px
+        margin-bottom: 10px
     .header
         height: 15%
         width: 100%
@@ -78,40 +84,15 @@
         h1
             text-transform: uppercase
             font-size: 1.2rem
-    .content
-        height: 85%
-        width: 80%
-        max-width: 80%
-        padding: 20px
-        margin-bottom: 10px
-        .card
-            border: 1px solid #000
-            width: 25%
-            height: 300px
-            margin: 20px
-            border-radius: 5px
-            background: #fff
-            -webkit-box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.42)
-            -moz-box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.42)
-            box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.42)
-            cursor: pointer
-            transition: 0.2s ease-in-out
-            &:hover
-                transform: scale(1.01)
-            h1
-                margin-bottom: 10px
-            img
-                width: 90%
-                height: 180px
-            .details
-                height: 130px
-                width: 100%
 
 .spinner
     width: 100px
     height: 100px
     background: #000
     z-index: 99
+
+.latest-section
+    height: 50vh !important
 
 @media screen and ( max-width:959px )
     .container-homepage
@@ -163,8 +144,6 @@
             flex-direction: column !important
             align-items: center !important
             justify-content: center !important
-            .card
-                width: 70% !important
 
 @media screen and ( max-width:380px )
     .welcome-section
