@@ -39,24 +39,28 @@
                                 <form [formGroup]="editUserDataForm" (ngSubmit)="editUserData()">
                                     <p class="error-msg" *ngIf="showUpdatingError == true">{{errorMessage}}</p>
                                     <mat-form-field>
-                                        <mat-label>First name</mat-label>
+                                        <mat-label>{{userData.Name}}</mat-label>
                                         <input formControlName="name" matInput type="text" autocomplete="off">
                                     </mat-form-field>
                                     <mat-form-field>
-                                        <mat-label>Last name</mat-label>
+                                        <mat-label>{{userData.LastName}}</mat-label>
                                         <input formControlName="lastName" matInput type="text" autocomplete="off">
                                     </mat-form-field>
                                     <mat-form-field>
-                                        <mat-label>Username</mat-label>
+                                        <mat-label>{{userData.UserName}}</mat-label>
                                         <input formControlName="username" matInput type="text" autocomplete="off">
 
                                     </mat-form-field>
                                     <mat-form-field>
-                                        <mat-label>Email</mat-label>
+                                        <mat-label>{{userData.Email}}</mat-label>
                                         <input formControlName="email" matInput type="email" autocomplete="off">
                                         <mat-error *ngIf="editUserDataForm.get('email').hasError('email')">
                                             Please provide a <strong>valid</strong> email adress
                                         </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <mat-label>{{userData.PhoneNumber}}</mat-label>
+                                        <input formControlName="phoneNumber" matInput type="text" autocomplete="off">
                                     </mat-form-field>
                                     <button type="submit" mat-raised-button color="primary">Save</button>
                                 </form>

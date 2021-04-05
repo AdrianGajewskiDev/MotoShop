@@ -58,7 +58,8 @@ export class UserProfileComponent implements OnInit {
       name: [],
       lastName: [''],
       email: ['', [Validators.email]],
-      username: ['']
+      username: [''],
+      phoneNumber: ['']
     })
     this.userService.getUserProfileData().subscribe(
       (res: ApiResponse<UserProfileDataModel>) => {
@@ -71,7 +72,6 @@ export class UserProfileComponent implements OnInit {
         else
           this.imageUrl = buildImagePath(this.userData.ImageUrl);
 
-        this.fetchUserProfileDataToForm();
       },
       (error) => {
 
@@ -95,18 +95,20 @@ export class UserProfileComponent implements OnInit {
       name: this.userData.Name,
       lastName: this.userData.LastName,
       email: this.userData.Email,
-      username: this.userData.UserName
+      username: this.userData.UserName,
+      phoneNumber: this.userData.PhoneNumber
     });
   }
 
   editUserData(): void {
     this.showLoadingSpinner = true;
 
-    if (isEmpty(this.editUserDataForm))
+    if (isEmpty(this.editUserDataForm)) {
+      this.showLoadingSpinner = false;
       return;
+    }
 
     let model = this.mapper.map<UpdateUserProfileDataModel>(new UpdateUserProfileDataModel(), this.editUserDataForm);
-
 
     this.userService.updateUserProfile(model).subscribe(
       res => {
