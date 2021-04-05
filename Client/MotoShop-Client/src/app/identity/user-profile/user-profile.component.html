@@ -40,29 +40,44 @@
                                     <p class="error-msg" *ngIf="showUpdatingError == true">{{errorMessage}}</p>
                                     <mat-form-field>
                                         <mat-label>{{userData.Name}}</mat-label>
-                                        <input formControlName="name" matInput type="text" autocomplete="off">
+                                        <input formControlName="name" matInput type="text" autocomplete="off"
+                                            #nameControl (change)="updateUserDataLocaly('name', nameControl.value)"
+                                            (focus)="setInputValue(nameControl, userData.Name)">
                                     </mat-form-field>
                                     <mat-form-field>
                                         <mat-label>{{userData.LastName}}</mat-label>
-                                        <input formControlName="lastName" matInput type="text" autocomplete="off">
+                                        <input formControlName="lastName" #lastNameControl matInput type="text"
+                                            autocomplete="off"
+                                            (change)="updateUserDataLocaly('lastName', lastNameControl.value)"
+                                            (focus)="setInputValue(lastNameControl, userData.LastName)">
                                     </mat-form-field>
                                     <mat-form-field>
                                         <mat-label>{{userData.UserName}}</mat-label>
-                                        <input formControlName="username" matInput type="text" autocomplete="off">
+                                        <input formControlName="username" #usernameControl matInput type="text"
+                                            autocomplete="off"
+                                            (change)="updateUserDataLocaly('username', usernameControl.value)"
+                                            (focus)="setInputValue(usernameControl, userData.UserName)">
 
                                     </mat-form-field>
                                     <mat-form-field>
                                         <mat-label>{{userData.Email}}</mat-label>
-                                        <input formControlName="email" matInput type="email" autocomplete="off">
+                                        <input formControlName="email" #emailControl matInput type="email"
+                                            autocomplete="off"
+                                            (change)="updateUserDataLocaly('email', emailControl.value)"
+                                            (focus)="setInputValue(emailControl, userData.Email)">
                                         <mat-error *ngIf="editUserDataForm.get('email').hasError('email')">
                                             Please provide a <strong>valid</strong> email adress
                                         </mat-error>
                                     </mat-form-field>
                                     <mat-form-field>
                                         <mat-label>{{userData.PhoneNumber}}</mat-label>
-                                        <input formControlName="phoneNumber" matInput type="text" autocomplete="off">
+                                        <input formControlName="phoneNumber" #phoneNumber matInput type="text"
+                                            autocomplete="off"
+                                            (change)="updateUserDataLocaly('phoneNumber', phoneNumber.value)"
+                                            (focus)="setInputValue(phoneNumber, userData.PhoneNumber)">
                                     </mat-form-field>
-                                    <button type="submit" mat-raised-button color="primary">Save</button>
+                                    <button [disabled]="isUpdatingDataRequestAllowed() == false" type="submit"
+                                        mat-raised-button color="primary">Save</button>
                                 </form>
 
                             </mat-expansion-panel>

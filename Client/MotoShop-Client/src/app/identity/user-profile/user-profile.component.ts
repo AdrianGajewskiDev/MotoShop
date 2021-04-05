@@ -38,6 +38,7 @@ export class UserProfileComponent implements OnInit {
   public adsDataSource;
 
   public userData: UserProfileDataModel;
+  public copiedUserData;
   public showError: boolean = false;
   public editUserDataForm: FormGroup;
   public editPasswordForm: FormGroup;
@@ -64,6 +65,8 @@ export class UserProfileComponent implements OnInit {
     this.userService.getUserProfileData().subscribe(
       (res: ApiResponse<UserProfileDataModel>) => {
         this.userData = res.ResponseContent;
+        this.copiedUserData = { ...this.userData };
+
         this.showLoadingSpinner = false;
         this.showImageLoadingSpinner = false;
 
@@ -102,11 +105,6 @@ export class UserProfileComponent implements OnInit {
 
   editUserData(): void {
     this.showLoadingSpinner = true;
-
-    if (isEmpty(this.editUserDataForm)) {
-      this.showLoadingSpinner = false;
-      return;
-    }
 
     let model = this.mapper.map<UpdateUserProfileDataModel>(new UpdateUserProfileDataModel(), this.editUserDataForm);
 
@@ -174,5 +172,40 @@ export class UserProfileComponent implements OnInit {
         }
       )
     }
+  }
+
+  setInputValue(control: HTMLInputElement, value) {
+    control.value = value;
+  }
+
+  updateUserDataLocaly(dataType: string, newData) {
+
+    switch (dataType) {
+      case "name": {
+        this.userData.Name = newData;
+      } break;
+      case "lastName": {
+        this.userData.LastName = newData;
+      } break;
+      case "email": {
+        this.userData.Email = newData;
+      } break;
+      case "phoneNumber": {
+        this.userData.PhoneNumber = newData;
+      } break;
+      case "username": {
+        this.userData.UserName = newData;
+      } break;
+    }
+  }
+
+  isUpdatingDataRequestAllowed(): boolean {
+    let flag = false;
+
+    if (JSON.stringify(this.userData) !== JSON.stringify(this.copiedUserData))
+      flag = true;
+
+    console.log(flag);
+    return flag;
   }
 }
