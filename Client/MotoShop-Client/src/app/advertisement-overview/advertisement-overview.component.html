@@ -1,4 +1,4 @@
-<div class="card" fxLayout="column" fxLayoutAlign="start center">
+<div class="card" fxLayout="column" fxLayoutAlign="start center" (click)="goToDetails()">
     <h1>{{advertisement.Name}}</h1>
     <img [src]="buildImageUrl(advertisement.ImageUrl)" class="thumbnail-img">
     <div class="details" fxLayoutAlign="center center" fxLayout="column">

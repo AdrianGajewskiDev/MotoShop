@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AddAdvertisementComponent } from './add-advertisement/add-advertisement.component';
 import { AdministrationPanelComponent } from './administration/administration-panel/administration-panel.component';
+import { AdvertisementDetailsComponent } from './advertisement-details/advertisement-details.component';
 import { HomeComponent } from './home/home.component';
 import { ConfirmationComponent } from './identity/confirmation-component/confirmation-component.component';
 import { ForgotPasswordComponent } from './identity/forgot-password/forgot-password.component';
@@ -65,6 +66,10 @@ const routes: Routes = [
     path: "new-advertisement",
     component: AddAdvertisementComponent,
     canActivate: [AuthenticationGuard]
+  },
+  {
+    path: "details/:id",
+    component: AdvertisementDetailsComponent,
   }
 ];
 

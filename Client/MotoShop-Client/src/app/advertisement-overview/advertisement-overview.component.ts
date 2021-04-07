@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { buildImagePath } from '../shared/Helpers/buildProfileImagePath';
 import { AdvertisementOverallDetails } from '../shared/models/advertisements/advertisementOverallDetails.model';
 
@@ -9,7 +10,7 @@ import { AdvertisementOverallDetails } from '../shared/models/advertisements/adv
 })
 export class AdvertisementOverviewComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   @Input() public advertisement: AdvertisementOverallDetails
 
@@ -18,5 +19,9 @@ export class AdvertisementOverviewComponent implements OnInit {
 
   buildImageUrl(url) {
     return buildImagePath(url);
+  }
+
+  goToDetails() {
+    this.router.navigateByUrl("/details/" + this.advertisement.Id);
   }
 }

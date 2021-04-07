@@ -1,1 +1,65 @@
-<p>advertisement-details works!</p>
+<div class="ad-details">
+    <div class="image" fxLayoutAlign="center center">
+        <img [src]="imageUrl">
+    </div>
+    <div class="details" fxLayoutAlign="start center" fxLayout="column">
+        <h1>{{model.ShopItem.CarBrand}} {{model.ShopItem.CarModel}}</h1>
+        <h3>{{model.ShopItem.Fuel}} | {{model.ShopItem.HorsePower}}HP | {{model.ShopItem.CubicCapacity}}cm3 |
+            {{model.ShopItem.CarType}}</h3>
+        <div class="divider"></div>
+        <div class="ad-description">
+            <p>{{model.Description}}</p>
+        </div>
+        <p class="price">15 000$</p>
+        <button mat-raised-button color="primary">50x-xxx-xxx</button>
+        <button mat-raised-button color="warn">Send Message</button>
+        <div class="divider"></div>
+        <h1>Owner</h1>
+        <p class="owner-info">{{model.Author.Name}} {{model.Author.LastName}}</p>
+        <p class="owner-info">{{model.Author.Email}}</p>
+        <p class="owner-info"><strong>Placed:</strong> {{model.Placed}} </p>
+        <p class="owner-info"><strong>Advertisement ID:</strong> {{model.ID}} </p>
+    </div>
+    <div class="car-details" fxLayout="row" fxLayoutAlign="center center">
+        <div class="car-details-section">
+            <div class="car-details-section-item" fxLayout="row">
+                <p class="title">Car Brand</p>
+                <p class="content">{{model.ShopItem.CarBrand}}</p>
+            </div>
+            <div class="car-details-section-item" fxLayout="row">
+                <p class="title">Car Model</p>
+                <p class="content">{{model.ShopItem.CarModel}}</p>
+            </div>
+            <div class="car-details-section-item" fxLayout="row">
+                <p class="title">Car Type</p>
+                <p class="content">{{model.ShopItem.CarType}}</p>
+            </div>
+            <div class="car-details-section-item" fxLayout="row">
+                <p class="title">HP</p>
+                <p class="content">{{model.ShopItem.HorsePower}}</p>
+            </div>
+            <div class="car-details-section-item" fxLayout="row">
+                <p class="title">Cubic Capacity (cm3)</p>
+                <p class="content">{{model.ShopItem.CubicCapacity}}cm3</p>
+            </div>
+        </div>
+        <div class="car-details-section">
+            <div class="car-details-section-item" fxLayout="row">
+                <p class="title">Gearbox</p>
+                <p class="content">{{model.ShopItem.Gearbox}}</p>
+            </div>
+            <div class="car-details-section-item" fxLayout="row">
+                <p class="title">Fuel</p>
+                <p class="content">{{model.ShopItem.Fuel}}</p>
+            </div>
+            <div class="car-details-section-item" fxLayout="row">
+                <p class="title">Production Year</p>
+                <p class="content">{{model.ShopItem.YearOfProduction}}</p>
+            </div>
+            <div class="car-details-section-item" fxLayout="row">
+                <p class="title">Fuel Consumption</p>
+                <p class="content">{{model.ShopItem.FuelConsumption}}l/100km</p>
+            </div>
+        </div>
+    </div>
+</div>

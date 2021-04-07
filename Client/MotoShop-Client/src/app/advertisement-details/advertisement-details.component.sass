@@ -1,0 +1,65 @@
+.ad-details
+    width: 100%
+    height: 80vh
+    display: grid
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr
+    grid-template-rows: 1fr 1fr 1fr 1fr
+    grid-template-areas: "IMG IMG IMG DETAILS DETAILS" "IMG IMG IMG DETAILS DETAILS" "CARDETAILS CARDETAILS CARDETAILS DETAILS DETAILS" "CARDETAILS CARDETAILS CARDETAILS DETAILS DETAILS"
+    background: #fff
+.image
+    grid-area: IMG
+    padding: 20px
+    img
+        width: 50%
+        height: 100%
+.details
+    grid-area: DETAILS
+    padding: 20px
+    .ad-description
+        max-height: 170px
+        height: 170px
+        width: 100%
+        overflow-y: scroll
+        display: flex
+        p
+            margin-top: 10px
+            align-self: flex-start
+            justify-self: flex-start
+    .price
+        align-self: flex-end
+        border: none
+        font-size: 1.5rem
+        color: red
+        margin: 15px
+    button
+        padding: 10px
+        width: 300px
+        margin-bottom: 10px
+    .owner-info
+        align-self: flex-start
+        margin: 5px
+
+.divider
+    width: 100%
+    height: 1px
+    margin-top: 10px
+    background: grey
+
+.car-details
+    grid-area: CARDETAILS
+    width: 100%
+    height: 100%
+    padding: 20px
+    .car-details-section
+        width: 50%
+        height: 100%
+        .car-details-section-item
+            width: 100%
+            display: flex
+            margin: 10px
+            .title
+                width: 40%
+                align-self: flex-start
+            .content
+                width: 60%
+                align-self: flex-end

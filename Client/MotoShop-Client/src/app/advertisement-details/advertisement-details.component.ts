@@ -1,4 +1,9 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { buildImagePath } from '../shared/Helpers/buildProfileImagePath';
+import { AdvertisementDetailsModel } from '../shared/models/advertisements/advertisementDetails.model';
+import { AdvertisementsService } from '../shared/services/advertisements.service';
 
 @Component({
   selector: 'app-advertisement-details',
@@ -7,9 +12,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdvertisementDetailsComponent implements OnInit {
 
-  constructor() { }
+  private id;
+
+  public model: AdvertisementDetailsModel;
+  public showLoadingSpinner = true;
+  public imageUrl;
+
+  constructor(private routes: ActivatedRoute,
+    private advertisementsService: AdvertisementsService,
+    private datePipe: DatePipe) { }
 
   ngOnInit(): void {
+    this.id = this.routes.snapshot.params["id"];
+
+    this.advertisementsService.getByID(this.id).subscribe(res => {
+      this.showLoadingSpinner = false;
+      this.model = res;
+      this.imageUrl = buildImagePath(res.ShopItem.ImageUrl);
+      this.model.Placed = this.datePipe.transform(this.model.Placed, "dd-mm-yyyy")
+      this.model.ShopItem.YearOfProduction = this.datePipe.transform(this.model.ShopItem.YearOfProduction, "yyyy")
+    }, error => {
+      this.showLoadingSpinner = false;
+      console.log(error);
+    });
   }
 
 }
