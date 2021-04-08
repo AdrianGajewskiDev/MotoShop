@@ -10,7 +10,7 @@
         <div class="ad-description">
             <p>{{model.Description}}</p>
         </div>
-        <p class="price">15 000$</p>
+        <p class="price">{{model.ShopItem.Price}}$</p>
         <button mat-raised-button color="primary">50x-xxx-xxx</button>
         <button mat-raised-button color="warn">Send Message</button>
         <div class="divider"></div>
@@ -20,7 +20,7 @@
         <p class="owner-info"><strong>Placed:</strong> {{model.Placed}} </p>
         <p class="owner-info"><strong>Advertisement ID:</strong> {{model.ID}} </p>
     </div>
-    <div class="car-details" fxLayout="row" fxLayoutAlign="center center">
+    <div class="car-details" fxLayout="row">
         <div class="car-details-section">
             <div class="car-details-section-item" fxLayout="row">
                 <p class="title">Car Brand</p>

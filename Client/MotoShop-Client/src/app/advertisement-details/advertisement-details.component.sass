@@ -63,3 +63,32 @@
             .content
                 width: 60%
                 align-self: flex-end
+
+@media screen and(max-width: 960px)
+    .ad-details
+        height: 200vh
+        grid-template-columns: 1fr
+        grid-template-rows: 1fr 1fr 1fr
+        grid-template-areas: "IMG" "DETAILS" "CARDETAILS"
+
+@media screen and(max-width: 960px)
+    .image
+        img
+            width: 70%
+    .details
+        border-bottom: 1px solid grey
+
+@media screen and(max-width: 660px)
+    .car-details
+        flex-direction: column !important
+        .car-details-section
+            width: 100%
+    .image
+        img
+            width: 80%
+            height: 80%
+
+@media screen and ( max-width: 450px)
+    .image
+        img
+            height: 60%
