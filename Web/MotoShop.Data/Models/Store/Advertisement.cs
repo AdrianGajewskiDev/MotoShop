@@ -12,7 +12,7 @@ namespace MotoShop.Data.Models.Store
         [MaxLength(length: 50)]
         public string Title { get; set; }
         [Required]
-        [MaxLength(length: 200)]
+        [MaxLength(length: 2000)]
         public string Description { get; set; }
         public DateTime Placed { get; set; }
 

@@ -11,7 +11,7 @@
             <p>{{model.Description}}</p>
         </div>
         <p class="price">{{model.ShopItem.Price}}$</p>
-        <button mat-raised-button color="primary">50x-xxx-xxx</button>
+        <button mat-raised-button color="primary" (click)="showPhoneNumber()">{{phoneNumber}}</button>
         <button mat-raised-button color="warn">Send Message</button>
         <div class="divider"></div>
         <h1>Owner</h1>
@@ -59,6 +59,10 @@
             <div class="car-details-section-item" fxLayout="row">
                 <p class="title">Fuel Consumption</p>
                 <p class="content">{{model.ShopItem.FuelConsumption}}l/100km</p>
+            </div>
+            <div class="car-details-section-item" fxLayout="row">
+                <p class="title">Mileage</p>
+                <p class="content">{{model.ShopItem.Mileage}}</p>
             </div>
         </div>
     </div>
