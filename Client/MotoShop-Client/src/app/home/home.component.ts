@@ -47,6 +47,8 @@ export class HomeComponent implements OnInit {
     this.service.getTopThree().subscribe((res: TopThreeAdvertisementsRequestResult) => {
       this.showLoadingMessage = false;
       this.advertisements = res.Advertisements;
+
+      console.log(this.advertisements);
     });
 
 

@@ -13,7 +13,7 @@ namespace MotoShop.Services.HelperModels
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string ImageUrl { get; set; }
+        public IEnumerable<string> ImageUrl { get; set; }
         public string Gearbox { get; set; }
         public string BodyType { get; set; }
         public int HP { get; set; }

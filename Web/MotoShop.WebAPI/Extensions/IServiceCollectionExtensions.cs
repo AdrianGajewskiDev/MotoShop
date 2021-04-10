@@ -85,13 +85,13 @@ namespace MotoShop.WebAPI.Extensions
             services.AddTransient<IRefreshTokenGenerator<RefreshToken>, RefreshTokenGenerator>();
             services.AddTransient<ITokenWriter, JsonWebTokenWriter>();
             services.AddTransient<ITokenProviderService, JWTProviderService>();
+            services.AddTransient<IImageUploadService, ImageUploader> ();
 
 
             //Singletons
             services.AddSingleton<CacheBase>();
             services.AddSingleton<ICachingService, CachingService>();
             services.AddSingleton<IEmailSenderService, EmailSender>();
-            services.AddSingleton<IImageUploadService, ImageUploader>();
 
             return services;
         }

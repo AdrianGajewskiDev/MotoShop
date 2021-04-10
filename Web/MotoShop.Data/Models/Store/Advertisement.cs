@@ -1,5 +1,6 @@
 ﻿using MotoShop.Data.Models.User;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MotoShop.Data.Models.Store
@@ -20,6 +21,8 @@ namespace MotoShop.Data.Models.Store
         public virtual ApplicationUser Author { get; set; }
 
         public virtual ShopItem ShopItem { get; set; }
+
+        public virtual IEnumerable<Image> Images { get; set; }
 
     }
 }

@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MotoShop.Data.Models.User;
+using MotoShop.Data.Models.Store;
 using MotoShop.Services.HelperModels;
 using MotoShop.Services.Services;
 using MotoShop.WebAPI.Attributes;
 using MotoShop.WebAPI.Extensions;
 using MotoShop.WebAPI.Helpers;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MotoShop.WebAPI.Controllers
@@ -17,14 +19,16 @@ namespace MotoShop.WebAPI.Controllers
     {
         private readonly IImageUploadService _imageUploadService;
         private readonly IApplicationUserService _userService;
+        private readonly IShopItemsService _shopItemsService;
         private readonly IAdvertisementService _advertisementService;
 
         public UploadController(IImageUploadService imageUploadService, IApplicationUserService userService,
-            IAdvertisementService advertisementService)
+            IAdvertisementService advertisementService, IShopItemsService shopItemsService)
         {
             _imageUploadService = imageUploadService;
             _userService = userService;
             _advertisementService = advertisementService;
+            _shopItemsService = shopItemsService;
         }
 
         [Authorize]
@@ -55,16 +59,25 @@ namespace MotoShop.WebAPI.Controllers
         [ClearCache]
         public async Task<IActionResult> UploadAdvertisementImage(int id)
         {
-            string userID = User.GetUserID();
-            string dbPath = string.Empty;
-            IFormFile image = Request.Form.Files[0];
+            IFormFile[] images = Request.Form.Files.ToArray();
 
-            ImageUploadResult result = await _imageUploadService.UploadImageAsync(image);
+            var imagesModel = new List<Image>();
+
+            foreach (var image in images)
+            {
+                imagesModel.Add(new Image
+                {
+                    AdvrtisementID = id,
+                    Deleted = false,
+                    FilePath = _imageUploadService.GenerateUniqueName(image)
+                });
+            }
+
+            MultipleImageUploadResult result =  _imageUploadService.UploadMultipleImagesAsync(imagesModel);
 
             if (result.Success)
             {
-                _advertisementService.AddImage(id, result.Path);
-                return Ok(new { path = result.Path });
+                return Ok();
             }
 
             return BadRequest(StaticMessages.SomethingWentWrong);

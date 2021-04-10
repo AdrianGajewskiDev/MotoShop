@@ -52,7 +52,8 @@
                                 <option>Body Type</option>
                                 <option *ngFor="let bodyType of bodyTypes">{{bodyType}}</option>
                             </select>
-                            <input (change)="onImageSelected($event)" type="file" id="fileInput" style="display: none;">
+                            <input (change)="onImageSelected($event)" type="file" id="fileInput" multiple
+                                style="display: none;">
                             <button (click)="getFile()" mat-raised-button color='basic' type="button"
                                 style="width: 130px;">Add
                                 Image</button>

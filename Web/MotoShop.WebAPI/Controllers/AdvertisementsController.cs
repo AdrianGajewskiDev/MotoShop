@@ -129,7 +129,6 @@ namespace MotoShop.WebAPI.Controllers
         }
 
         [HttpGet("topThree")]
-        [Cache(20)]
         public IActionResult GetTopThree()
         {
             var result = _advertisementService.GetTopThree();

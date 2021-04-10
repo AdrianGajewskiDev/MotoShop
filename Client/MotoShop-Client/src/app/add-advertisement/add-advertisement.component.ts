@@ -34,7 +34,7 @@ export class AddAdvertisementComponent implements OnInit {
   public baseInfoForm: FormGroup;
   public carFilterForm: FormGroup;
 
-  private image: File;
+  private images: File[];
   public showLoadingSpinner: boolean = false;
 
   ngOnInit(): void {
@@ -72,7 +72,7 @@ export class AddAdvertisementComponent implements OnInit {
   }
 
   onImageSelected(event) {
-    this.image = event.target.files[0];
+    this.images = event.target.files;
   }
 
   submit(itemType: string) {
@@ -118,7 +118,7 @@ export class AddAdvertisementComponent implements OnInit {
     this.adService.addAdvertisement(model).subscribe((res: any) => {
       console.log(res);
 
-      this.imageUploader.uploadAdvertisementImage(this.image, res.Id).subscribe(res => {
+      this.imageUploader.uploadAdvertisementImage(this.images, res.Id).subscribe(res => {
         this.showLoadingSpinner = false;
         this.toastr.success("Successfully added your advertisement");
         this.router.navigateByUrl("/home");

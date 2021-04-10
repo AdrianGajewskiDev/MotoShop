@@ -130,7 +130,6 @@ namespace MotoShop.Services.Implementation
                 Gearbox = x.Gearbox,
                 HP = x.HorsePower,
                 Id = _context.Advertisements.Where(ad => ad.ShopItem.ID == x.ID).Select(id => id.ID).FirstOrDefault(),
-                ImageUrl = x.ImageUrl,
                 Name = $"{x.CarBrand} {x.CarModel}",
                 ProductionYear = x.YearOfProduction.Year,
                 CubicCapacity = x.CubicCapacity,
@@ -138,6 +137,10 @@ namespace MotoShop.Services.Implementation
                 Mileage = x.Mileage
             }).ToArray();
 
+            foreach (var ad in advertisements)
+            {
+                ad.ImageUrl = _context.Images.Where(x => x.AdvrtisementID == ad.Id).Select(x => x.FilePath);
+            }
 
             var sportCars = advertisements.Where(x => x.BodyType == CarType.Coupe.ToString()).OrderByDescending(x => x.HP).Take(3).ToArray();
             var suvCars  = advertisements.Where(x => x.BodyType == CarType.MUV_SUV.ToString().Replace('_', '/').ToUpper()).OrderByDescending(x => x.HP).Take(3).ToArray();

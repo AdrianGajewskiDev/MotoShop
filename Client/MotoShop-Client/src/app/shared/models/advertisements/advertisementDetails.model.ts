@@ -8,4 +8,5 @@ export class AdvertisementDetailsModel {
     AuthorID: string;
     Author: UserProfileDataModel;
     ShopItem: any;
+    Image: string[];
 }

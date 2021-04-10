@@ -14,6 +14,7 @@ namespace MotoShop.Services.EntityFramework.CompiledQueries
                 db.Advertisements
                 .Include(x => x.Author)
                 .Include(x => x.ShopItem)
+                .Include(x => x.Images)
                 .Single(c => c.ID == id));
 
 

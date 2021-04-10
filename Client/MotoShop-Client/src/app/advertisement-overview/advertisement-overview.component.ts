@@ -14,7 +14,13 @@ export class AdvertisementOverviewComponent implements OnInit {
 
   @Input() public advertisement: AdvertisementOverallDetails
 
+  public slides = [];
   ngOnInit(): void {
+    for (const image of this.advertisement.ImageUrl) {
+      console.log(this.buildImageUrl(image));
+
+      this.slides.push({ image: this.buildImageUrl(image) });
+    }
   }
 
   buildImageUrl(url) {

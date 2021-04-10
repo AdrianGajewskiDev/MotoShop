@@ -1,7 +1,7 @@
 export class AdvertisementOverallDetails {
     Id: number;
     Name: string;
-    ImageUrl: string;
+    ImageUrl: string[];
     Gearbox: string;
     BodyType: string;
     HP: number;

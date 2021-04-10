@@ -89,12 +89,13 @@ namespace MotoShop.Web
          
             app.UseResponseCompression();
 
+            app.UseCors("DevPolicy");
             app.UseExceptionHandler(new ExceptionHandlerOptions
             {
                 ExceptionHandler = new ExceptionHandlerMidleware().HandleException
             });
 
-            app.UseCors("DevPolicy");
+            app.UseMiddleware<CorsMidleware>();
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();

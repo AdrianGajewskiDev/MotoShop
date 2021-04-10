@@ -42,6 +42,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { NgImageSliderModule } from 'ng-image-slider';
+
 
 @NgModule({
   exports: [
@@ -61,6 +63,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
     MatChipsModule,
     MatStepperModule,
     MatDatepickerModule,
+    NgImageSliderModule,
     MatDialogModule,
     MatDividerModule,
     MatExpansionModule,

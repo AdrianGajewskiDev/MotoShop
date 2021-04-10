@@ -15,11 +15,12 @@ export class UploadService {
         return this.client.post(serverImageUploadUrl, data);
     }
 
-    uploadAdvertisementImage(image: File, param: any) {
+    uploadAdvertisementImage(images: File[], param: any) {
 
         const data = new FormData();
 
-        data.append("image", image);
+        for (const image of images)
+            data.append("image", image);
 
         return this.client.post(serverAdvertisementImageUploadUrl + "/" + param, data);
     }
