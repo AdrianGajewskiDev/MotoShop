@@ -75,6 +75,10 @@ export class UserProfileComponent implements OnInit {
         else
           this.imageUrl = buildImagePath(this.userData.ImageUrl);
 
+
+        console.log(this.imageUrl);
+
+
       },
       (error) => {
 

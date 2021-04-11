@@ -61,19 +61,8 @@ namespace MotoShop.WebAPI.Controllers
         {
             IFormFile[] images = Request.Form.Files.ToArray();
 
-            var imagesModel = new List<Image>();
 
-            foreach (var image in images)
-            {
-                imagesModel.Add(new Image
-                {
-                    AdvrtisementID = id,
-                    Deleted = false,
-                    FilePath = _imageUploadService.GenerateUniqueName(image)
-                });
-            }
-
-            MultipleImageUploadResult result =  _imageUploadService.UploadMultipleImagesAsync(imagesModel);
+            MultipleImageUploadResult result =  await _imageUploadService.UploadMultipleImagesAsync(images, id);
 
             if (result.Success)
             {

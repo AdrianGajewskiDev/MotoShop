@@ -48,11 +48,7 @@ namespace MotoShop.Services.Implementation
             string savePath = SavePath;
             string fullPath = Path.Combine(savePath, uniqueFileName.ToString());
             string dbPath = Path.Combine("wwwroot", "resources", "images", uniqueFileName.ToString()).Replace(@"\", @"/");
-
-            using (FileStream fs = new FileStream(fullPath, FileMode.Create))
-            {
-                await image.CopyToAsync(fs);
-            }
+            await SaveImage(image, fullPath);
 
             var result = new ImageUploadResult
             {
@@ -66,18 +62,46 @@ namespace MotoShop.Services.Implementation
 
         }
 
-        public MultipleImageUploadResult UploadMultipleImagesAsync(IEnumerable<Image> images)
+        public async Task<MultipleImageUploadResult> UploadMultipleImagesAsync(IEnumerable<IFormFile> formDataImages, int advertisementID)
         {
-            var result = new MultipleImageUploadResult
+            var images = new List<Image>();
+            var result = new MultipleImageUploadResult();
+            Dictionary<IFormFile, Image> pairValues = new Dictionary<IFormFile, Image>();
+            List<Task> saveTasks = new List<Task>();
+
+            foreach (var image in formDataImages)
             {
-                Paths = images.Select(x => x.FilePath),
-                Success = true
-            };
 
-            _dbContext.Images.AddRange(images);
+                var newImage = new Image
+                {
+                    AdvrtisementID = advertisementID,
+                    Deleted = false,
+                    FilePath = GenerateUniqueName(image)
+                };
 
-            if (_dbContext.SaveChanges() <= 0)
-                result.Success = false;
+                images.Add(newImage);
+
+                pairValues.Add(image, newImage);
+            }
+
+            _dbContext.AddRange(images);
+
+            if(_dbContext.SaveChanges() > 0)
+            {
+                result.Success = true;
+                result.Paths = images.Select(x => x.FilePath);
+
+                foreach (var image in formDataImages)
+                {
+                    saveTasks.Add(SaveImage(image, pairValues[image].FilePath));
+                }
+
+                await Task.WhenAll(saveTasks);
+
+                return result;
+            }
+
+            result.Success = false;
 
             return result;
         }
@@ -86,5 +110,27 @@ namespace MotoShop.Services.Implementation
         {
             return new StringBuilder().Append(Path.GetRandomFileName()).Append(ContentDispositionHeaderValue.Parse(formFile.ContentDisposition).FileName.Trim('"')).ToString();
         }
+
+        private async Task SaveImage(IFormFile image, string path)
+        {
+            using (FileStream fs = new FileStream(path, FileMode.Create))
+            {
+                await image.CopyToAsync(fs);
+            }
+        }
     }
 }
+
+
+
+//var imagesModel = new List<Image>();
+
+//foreach (var image in images)
+//{
+//    imagesModel.Add(new Image
+//    {
+//        AdvrtisementID = id,
+//        Deleted = false,
+//        FilePath = _imageUploadService.GenerateUniqueName(image)
+//    });
+//}
