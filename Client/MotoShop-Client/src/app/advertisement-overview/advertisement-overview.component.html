@@ -1,5 +1,6 @@
 <div class="card" fxLayout="column" fxLayoutAlign="start center" (click)="goToDetails()">
     <h1>{{advertisement.Name}}</h1>
+    <app-image-slider [Images]="slides"></app-image-slider>
     <div class="details" fxLayoutAlign="center center" fxLayout="column">
         <p>
             {{advertisement.HP}}HP | {{advertisement.CubicCapacity}}cm3 |

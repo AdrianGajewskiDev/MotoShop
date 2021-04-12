@@ -1,0 +1,92 @@
+.image_Slider-container
+    width: 300px
+    height: 200px
+    position: relative
+    background: chartreuse
+
+.image_Slider-content
+    position: absolute
+    top: 0
+    width: 100%
+    height: 90%
+    & img
+        width: 100%
+        height: 100%
+        object-fit: cover
+
+.img
+    display: none
+    &-active
+        display: block
+
+.image_Slider-nav
+    position: absolute
+    bottom: 0
+    width: 100%
+    height: 10%
+    display: flex
+    justify-content: center
+    align-items: center
+    background-color: grey
+    & .nav-list
+        list-style: none
+        display: flex
+
+.nav-list-item
+    margin: 5px
+
+.nav-btn
+    height: 20px
+    width: 20px
+    border-style: none
+    border-radius: 50%
+    outline: none
+
+.active
+    background: black !important
+
+.arrow-btn
+    background: transparent
+    border: none
+    width: 30px
+    height: 30px
+    position: absolute
+    outline: none
+    transition: 0.2s transform ease-in-out
+    transition: 0.4s opacity ease-in-out
+    opacity: 0
+    &.left::after
+        content: ""
+        position: absolute
+        top: -140px
+        display: block
+        width: 120%
+        height: 300px
+        background: grey
+        transition: none
+        opacity: 0.3
+        z-index: -10
+        pointer-events: none
+    &.right::after
+        content: ""
+        position: absolute
+        top: -140px
+        display: block
+        width: 120%
+        right: 0
+        height: 300px
+        background: grey
+        transition: none
+        opacity: 0.3
+        z-index: -10
+        pointer-events: none
+    &.right
+        top: calc(50% - 15px)
+        right: -35px
+    &.left
+        top: calc(50% - 15px)
+        left: -35px
+    &:active
+        transform: scale(0.9)
+    .image_Slider-content:hover &
+        opacity: 1 !important

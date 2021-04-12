@@ -44,6 +44,7 @@ import { ServerHealthItemDetailsDialogComponent } from './Dialogs/server-health-
 import { AddAdvertisementComponent } from './add-advertisement/add-advertisement.component';
 import { AdvertisementOverviewComponent } from './advertisement-overview/advertisement-overview.component';
 import { AdvertisementDetailsComponent } from './advertisement-details/advertisement-details.component';
+import { ImageSliderComponent } from './image-slider/image-slider.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { AdvertisementDetailsComponent } from './advertisement-details/advertise
     ServerHealthItemDetailsDialogComponent,
     AddAdvertisementComponent,
     AdvertisementOverviewComponent,
-    AdvertisementDetailsComponent
+    AdvertisementDetailsComponent,
+    ImageSliderComponent
 
   ],
   imports: [

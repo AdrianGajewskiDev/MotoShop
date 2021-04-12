@@ -76,7 +76,7 @@ namespace MotoShop.Services.Implementation
                 {
                     AdvrtisementID = advertisementID,
                     Deleted = false,
-                    FilePath = GenerateUniqueName(image)
+                    FilePath = GenerateUniqueName(image).Trim()
                 };
 
                 images.Add(newImage);
