@@ -29,6 +29,7 @@
     "ng-gapi": "0.0.94",
     "ng-image-slider": "^2.6.4",
     "ngx-material-file-input": "^2.1.1",
+    "ngx-owl-carousel-o": "^5.0.0",
     "ngx-toastr": "^13.1.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",

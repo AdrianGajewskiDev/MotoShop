@@ -19,11 +19,9 @@ export class AdvertisementOverviewComponent implements OnInit {
   public slides: string[] = [];
   ngOnInit(): void {
     for (const image of this.advertisement.ImageUrl) {
-
       this.slides.push(this.buildImageUrl(this.baseServrResourcesPath + image));
-      console.log(this.buildImageUrl(this.baseServrResourcesPath + image));
-
     }
+
   }
 
   buildImageUrl(url) {

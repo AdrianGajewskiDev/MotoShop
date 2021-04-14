@@ -93,7 +93,7 @@ namespace MotoShop.Services.Implementation
 
                 foreach (var image in formDataImages)
                 {
-                    saveTasks.Add(SaveImage(image, pairValues[image].FilePath));
+                    saveTasks.Add(SaveImage(image,Path.Combine(SavePath, pairValues[image].FilePath)));
                 }
 
                 await Task.WhenAll(saveTasks);
@@ -120,17 +120,3 @@ namespace MotoShop.Services.Implementation
         }
     }
 }
-
-
-
-//var imagesModel = new List<Image>();
-
-//foreach (var image in images)
-//{
-//    imagesModel.Add(new Image
-//    {
-//        AdvrtisementID = id,
-//        Deleted = false,
-//        FilePath = _imageUploadService.GenerateUniqueName(image)
-//    });
-//}

@@ -45,6 +45,8 @@ import { AddAdvertisementComponent } from './add-advertisement/add-advertisement
 import { AdvertisementOverviewComponent } from './advertisement-overview/advertisement-overview.component';
 import { AdvertisementDetailsComponent } from './advertisement-details/advertisement-details.component';
 import { ImageSliderComponent } from './image-slider/image-slider.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { OWLCarouselComponent } from './owlcarousel/owlcarousel.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +72,8 @@ import { ImageSliderComponent } from './image-slider/image-slider.component';
     AddAdvertisementComponent,
     AdvertisementOverviewComponent,
     AdvertisementDetailsComponent,
-    ImageSliderComponent
+    ImageSliderComponent,
+    OWLCarouselComponent
 
   ],
   imports: [
@@ -80,6 +83,7 @@ import { ImageSliderComponent } from './image-slider/image-slider.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    CarouselModule,
     FlexLayoutModule,
     HttpClientModule,
     ToastrModule.forRoot(),

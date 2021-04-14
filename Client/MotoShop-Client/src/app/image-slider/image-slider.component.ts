@@ -1,21 +1,41 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-image-slider',
   templateUrl: './image-slider.component.html',
   styleUrls: ['./image-slider.component.sass']
 })
-export class ImageSliderComponent implements OnInit {
+export class ImageSliderComponent implements OnInit, AfterViewInit {
+  @Input() ImagesUrls: string[] = [];
+  @Input() ShowNavigationMenu: boolean = true;
+  images;
+  navigationButtonsContainer;
+  navigationButtons;
+  leftArrowButton;
+  rightArrowButton;
+  currentImageIndex = 0;
+  imagesArray = [];
 
   constructor() { }
 
-  @Input() Images: string[];
-  @Input() ShowNavigationMenu: boolean = true;
+  ngOnInit() {
 
-  ngOnInit(): void {
+  }
 
+  ngAfterViewInit(): void {
+    console.log(this.ImagesUrls);
+
+    for (let i = 0; i < this.ImagesUrls.length; i++) {
+      document.querySelector(".image_Slider-content").innerHTML += ``
+    }
+    this.images = document.getElementsByClassName("img");
+    this.navigationButtonsContainer = document.querySelector(".nav-list")
+    this.navigationButtons = document.getElementsByClassName("nav-btn");
+    this.leftArrowButton = document.querySelector(".left");
+    this.rightArrowButton = document.querySelector(".right");
     this.addNavigationBtns();
     this.fetchImagesToArray();
+
     this.setCurrentActivElements();
 
     for (let i = 0; i < this.navigationButtons.length; i++) {
@@ -26,18 +46,16 @@ export class ImageSliderComponent implements OnInit {
       });
     }
 
-    console.log(this.Images);
+    this.leftArrowButton.addEventListener("click", () => {
+      this.previousImage();
+    });
 
+    this.rightArrowButton.addEventListener("click", () => {
+      this.nextImage();
+    });
   }
 
-  private imagesArray = [];
 
-  images = document.getElementsByClassName("img");
-  navigationButtonsContainer = document.querySelector(".nav-list")
-  navigationButtons = document.getElementsByClassName("nav-btn");
-  leftArrowButton = document.querySelector(".left");
-  rightArrowButton = document.querySelector(".right");
-  currentImageIndex = 0;
 
   addNavigationBtns() {
     let count = this.images.length;
@@ -72,8 +90,11 @@ export class ImageSliderComponent implements OnInit {
   }
 
   nextImage() {
+    console.log("jere");
+
     if (this.currentImageIndex == this.images.length - 1)
       return;
+    console.log(this.imagesArray);
 
     this.currentImageIndex += 1;
     this.switchImage(this.currentImageIndex);
