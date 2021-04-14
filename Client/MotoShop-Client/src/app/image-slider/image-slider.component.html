@@ -6,6 +6,9 @@
     </div>
     <div class="image_Slider-nav">
         <ul class="nav-list">
+            <li *ngFor="let img of images;let i = index" class="nav-list-item"><button class="nav-btn"
+                    [id]='"nav-"+i'></button>
+            </li>
         </ul>
     </div>
 </div>

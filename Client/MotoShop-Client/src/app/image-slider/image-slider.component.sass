@@ -1,8 +1,7 @@
 .image_Slider-container
     width: 300px
-    height: 160px
+    height: 170px
     position: relative
-    background: chartreuse
 
 .image_Slider-content
     position: absolute
@@ -40,8 +39,9 @@
     margin: 5px
 
 .nav-btn
-    height: 20px
-    width: 20px
+    height: 15px
+    width: 15px
+    z-index: 100
     border-style: none
     border-radius: 50%
     outline: none
@@ -58,40 +58,40 @@
     outline: none
     transition: 0.2s transform ease-in-out
     transition: 0.4s opacity ease-in-out
-    opacity: 1
+    opacity: 0
     z-index: 1000
 
     &.left::after
         content: ""
         position: absolute
-        top: -140px
+        top: -55px
         display: block
         width: 120%
-        height: 300px
+        height: 140px
         background: grey
         transition: none
-        opacity: 0.3
+        opacity: 0.5
         z-index: -10
         pointer-events: none
     &.right::after
         content: ""
         position: absolute
-        top: -140px
+        top: -55px
         display: block
         width: 120%
         right: 0
-        height: 300px
+        height: 140px
         background: grey
         transition: none
-        opacity: 0.3
+        opacity: 0.5
         z-index: -10
         pointer-events: none
     &.right
         top: calc(50% - 15px)
-        right: -35px
+        right: 0
     &.left
         top: calc(50% - 15px)
-        left: -35px
+        left: 0
     &:active
         transform: scale(0.9)
     .image_Slider-content:hover &

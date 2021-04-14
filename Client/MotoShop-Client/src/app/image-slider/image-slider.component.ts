@@ -19,23 +19,18 @@ export class ImageSliderComponent implements OnInit, AfterViewInit {
   constructor() { }
 
   ngOnInit() {
+    this.images = document.getElementsByClassName("img");
 
   }
 
   ngAfterViewInit(): void {
-    console.log(this.ImagesUrls);
 
-    for (let i = 0; i < this.ImagesUrls.length; i++) {
-      document.querySelector(".image_Slider-content").innerHTML += ``
-    }
-    this.images = document.getElementsByClassName("img");
     this.navigationButtonsContainer = document.querySelector(".nav-list")
     this.navigationButtons = document.getElementsByClassName("nav-btn");
     this.leftArrowButton = document.querySelector(".left");
     this.rightArrowButton = document.querySelector(".right");
-    this.addNavigationBtns();
-    this.fetchImagesToArray();
 
+    this.fetchImagesToArray();
     this.setCurrentActivElements();
 
     for (let i = 0; i < this.navigationButtons.length; i++) {
@@ -55,15 +50,6 @@ export class ImageSliderComponent implements OnInit, AfterViewInit {
     });
   }
 
-
-
-  addNavigationBtns() {
-    let count = this.images.length;
-
-    for (let i = 0; i < count; i++) {
-      this.navigationButtonsContainer.innerHTML += `<li class='nav-list-item'><button class='nav-btn' id='nav-${i}'></button></li>`;
-    }
-  }
 
   setCurrentActivElements() {
     this.imagesArray[0].element.classList.add("img-active")
