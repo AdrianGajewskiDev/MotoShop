@@ -74,7 +74,6 @@ namespace MotoShop.Services.Implementation
 
                 var newImage = new Image
                 {
-                    AdvrtisementID = advertisementID,
                     Deleted = false,
                     FilePath = GenerateUniqueName(image).Trim()
                 };

@@ -5,8 +5,8 @@
         <a class="arrow-btn left" (click)="previousImg()"><img src="../../assets/images-layout/arrow-left.png"
                 alt=""></a>
     </div>
-    <div class="image_Slider-nav">
-        <ul class="nav-list" *ngIf="ShowNavigationMenu">
+    <div *ngIf="ShowNavigationMenu" class="image_Slider-nav">
+        <ul class="nav-list">
             <li *ngFor=" let img of images;let i=index" class="nav-list-item"><button [ngClass]="{'active': i == 0}"
                     #navBtn class="nav-btn" [id]='"nav-"+i'
                     (click)="switchImage(i); switchNavigationButton(navBtn)"></button>

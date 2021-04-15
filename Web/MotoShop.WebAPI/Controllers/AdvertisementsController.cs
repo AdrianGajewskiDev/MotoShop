@@ -243,7 +243,8 @@ namespace MotoShop.WebAPI.Controllers
                             ID = advertisement.ID,
                             Placed = advertisement.Placed,
                             ShopItem = _shopItemService.GetCarItem(advertisement.ShopItem.ID),
-                            Title = advertisement.Title
+                            Title = advertisement.Title,
+                            ImageUrls = advertisement.Images.Select(x => x.FilePath)
                         };
 
                         return model;
@@ -259,7 +260,8 @@ namespace MotoShop.WebAPI.Controllers
                             ID = advertisement.ID,
                             Placed = advertisement.Placed,
                             ShopItem = _shopItemService.GetMotocycleItem(advertisement.ShopItem.ID),
-                            Title = advertisement.Title
+                            Title = advertisement.Title,
+                            ImageUrls = advertisement.Images.Select(x => x.FilePath)
                         };
 
                         return model;

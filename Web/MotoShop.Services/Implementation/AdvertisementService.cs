@@ -139,7 +139,7 @@ namespace MotoShop.Services.Implementation
 
             foreach (var ad in advertisements)
             {
-                ad.ImageUrl = _context.Images.Where(x => x.AdvrtisementID == ad.Id).Select(x => x.FilePath);
+                ad.ImageUrl = _context.Images.Where(x => x.AdvertisementID == ad.Id).Select(x => x.FilePath);
             }
 
             var sportCars = advertisements.Where(x => x.BodyType == CarType.Coupe.ToString()).OrderByDescending(x => x.HP).Take(3).ToArray();

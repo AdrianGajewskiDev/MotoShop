@@ -10,7 +10,8 @@ namespace MotoShop.Data.Models.Store
         public string FilePath { get; set; }
         public bool Deleted { get; set; }
         public Advertisement Advertisement { get; set; }
+
         [MaxLength(length: 100)]
-        public int AdvrtisementID { get; set; }
+        public int AdvertisementID { get; set; }
     }
 }

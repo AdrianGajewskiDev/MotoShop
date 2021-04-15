@@ -2,6 +2,7 @@
 using MotoShop.Data.Models.User;
 using MotoShop.WebAPI.Models.Response.UserAccount;
 using System;
+using System.Collections.Generic;
 
 namespace MotoShop.WebAPI.Models.Response.Advertisements
 {
@@ -14,5 +15,7 @@ namespace MotoShop.WebAPI.Models.Response.Advertisements
         public string AuthorID { get; set; }
         public UserAccountDetailsResponseModel Author { get; set; }
         public object ShopItem { get; set; }
+
+        public IEnumerable<string> ImageUrls { get; set; }
     }
 }

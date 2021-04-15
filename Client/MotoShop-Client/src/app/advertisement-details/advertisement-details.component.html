@@ -1,6 +1,6 @@
 <div class="ad-details">
     <div class="image" fxLayoutAlign="center center">
-        <img [src]="imageUrl">
+        <app-image-slider [ShowNavigationMenu]="true" [ImagesUrls]="slides"></app-image-slider>
     </div>
     <div class="details" fxLayoutAlign="start center" fxLayout="column">
         <h1>{{model.ShopItem.CarBrand}} {{model.ShopItem.CarModel}}</h1>

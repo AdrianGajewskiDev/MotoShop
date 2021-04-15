@@ -18,11 +18,13 @@ export class AdvertisementDetailsComponent implements OnInit {
   public showLoadingSpinner = true;
   public imageUrl;
   public phoneNumber: string;
+  private baseServrResourcesPath = "wwwroot/resources/images/";
 
   constructor(private routes: ActivatedRoute,
     private advertisementsService: AdvertisementsService,
     private datePipe: DatePipe) { }
 
+  public slides: string[] = [];
   ngOnInit(): void {
     this.id = this.routes.snapshot.params["id"];
 
@@ -33,6 +35,12 @@ export class AdvertisementDetailsComponent implements OnInit {
       this.model.Placed = this.datePipe.transform(this.model.Placed, "dd-mm-yyyy")
       this.model.ShopItem.YearOfProduction = this.datePipe.transform(this.model.ShopItem.YearOfProduction, "yyyy")
       this.phoneNumber = this.model.Author.PhoneNumber.substring(0, 2) + "x-xxx-xxx";
+      for (const image of this.model.ImageUrls) {
+        this.slides.push(this.buildImageUrl(this.baseServrResourcesPath + image));
+      }
+
+      console.log(this.model);
+
     }, error => {
       this.showLoadingSpinner = false;
       console.log(error);
@@ -41,4 +49,10 @@ export class AdvertisementDetailsComponent implements OnInit {
   showPhoneNumber() {
     this.phoneNumber = this.model.Author.PhoneNumber;
   }
+
+
+  buildImageUrl(url) {
+    return buildImagePath(url);
+  }
+
 }
