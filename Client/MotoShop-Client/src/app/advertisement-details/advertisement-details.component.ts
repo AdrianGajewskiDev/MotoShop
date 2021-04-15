@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { buildImagePath } from '../shared/Helpers/buildProfileImagePath';
 import { AdvertisementDetailsModel } from '../shared/models/advertisements/advertisementDetails.model';
@@ -20,9 +20,24 @@ export class AdvertisementDetailsComponent implements OnInit {
   public phoneNumber: string;
   private baseServrResourcesPath = "wwwroot/resources/images/";
 
+  public large = { width: "500px", height: "300px" };
+  public medium = { width: "400px", height: "200px" };
+
+  public currentImageSliderWidth = this.large;
+  public innerWidth;
   constructor(private routes: ActivatedRoute,
     private advertisementsService: AdvertisementsService,
     private datePipe: DatePipe) { }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+
+    if (this.innerWidth <= 550) {
+      this.currentImageSliderWidth = this.medium;
+    }
+  }
+
 
   public slides: string[] = [];
   ngOnInit(): void {

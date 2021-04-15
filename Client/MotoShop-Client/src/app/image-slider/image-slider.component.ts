@@ -9,6 +9,8 @@ import { AfterContentInit, AfterViewInit, Component, ElementRef, Inject, Input, 
 export class ImageSliderComponent implements AfterViewInit {
   @Input() ImagesUrls: string[] = [];
   @Input() ShowNavigationMenu: boolean = true;
+  @Input() Width: string | null = null;
+  @Input() Height: string | null = null;
 
   constructor(private crDocument: ElementRef<HTMLDocument>) { }
 
@@ -21,6 +23,18 @@ export class ImageSliderComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.images = this.crDocument.nativeElement.querySelectorAll(".img");
+
+    if (this.Width) {
+      let container = this.crDocument.nativeElement.querySelector(".image_Slider-container") as HTMLElement;
+
+      container.style.width = this.Width
+    }
+
+    if (this.Height) {
+      let container = this.crDocument.nativeElement.querySelector(".image_Slider-container") as HTMLElement;
+
+      container.style.height = this.Height
+    }
 
     this.totalImages = this.images.length;
     this.fetchImagesToDictionary();
