@@ -1,13 +1,15 @@
 <div class="image_Slider-container">
     <div class="image_Slider-content">
         <img *ngFor="let img of ImagesUrls" class='img' [src]="img">
-        <a class="arrow-btn right"><img src="../../assets/images-layout/arrow-right.png" alt=""></a>
-        <a class="arrow-btn left"><img src="../../assets/images-layout/arrow-left.png" alt=""></a>
+        <a class="arrow-btn right" (click)="nextImg()"><img src="../../assets/images-layout/arrow-right.png" alt=""></a>
+        <a class="arrow-btn left" (click)="previousImg()"><img src="../../assets/images-layout/arrow-left.png"
+                alt=""></a>
     </div>
     <div class="image_Slider-nav">
-        <ul class="nav-list">
-            <li *ngFor="let img of images;let i = index" class="nav-list-item"><button class="nav-btn"
-                    [id]='"nav-"+i'></button>
+        <ul class="nav-list" *ngIf="ShowNavigationMenu">
+            <li *ngFor=" let img of images;let i=index" class="nav-list-item"><button [ngClass]="{'active': i == 0}"
+                    #navBtn class="nav-btn" [id]='"nav-"+i'
+                    (click)="switchImage(i); switchNavigationButton(navBtn)"></button>
             </li>
         </ul>
     </div>

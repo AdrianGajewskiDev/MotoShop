@@ -1,96 +1,79 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { AfterContentInit, AfterViewInit, Component, ElementRef, Inject, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-image-slider',
   templateUrl: './image-slider.component.html',
   styleUrls: ['./image-slider.component.sass']
 })
-export class ImageSliderComponent implements OnInit, AfterViewInit {
+export class ImageSliderComponent implements AfterViewInit {
   @Input() ImagesUrls: string[] = [];
   @Input() ShowNavigationMenu: boolean = true;
-  images;
-  navigationButtonsContainer;
-  navigationButtons;
-  leftArrowButton;
-  rightArrowButton;
-  currentImageIndex = 0;
-  imagesArray = [];
 
-  constructor() { }
+  constructor(private crDocument: ElementRef<HTMLDocument>) { }
 
-  ngOnInit() {
-    this.images = document.getElementsByClassName("img");
+  public images: NodeListOf<Element>;
 
-  }
+  private imagesDictionary: Array<any> = []
+  private currentImageIndex: number = 0;
 
-  ngAfterViewInit(): void {
+  private totalImages: number;
 
-    this.navigationButtonsContainer = document.querySelector(".nav-list")
-    this.navigationButtons = document.getElementsByClassName("nav-btn");
-    this.leftArrowButton = document.querySelector(".left");
-    this.rightArrowButton = document.querySelector(".right");
+  ngAfterViewInit() {
+    this.images = this.crDocument.nativeElement.querySelectorAll(".img");
 
-    this.fetchImagesToArray();
-    this.setCurrentActivElements();
+    this.totalImages = this.images.length;
+    this.fetchImagesToDictionary();
 
-    for (let i = 0; i < this.navigationButtons.length; i++) {
-      this.navigationButtons[i].addEventListener("click", () => {
-        let currentIndex = Number.parseInt(this.navigationButtons[i].id.split("-")[1]);
-        this.currentImageIndex = currentIndex;
-        this.switchImage(currentIndex);
-      });
-    }
-
-    this.leftArrowButton.addEventListener("click", () => {
-      this.previousImage();
-    });
-
-    this.rightArrowButton.addEventListener("click", () => {
-      this.nextImage();
-    });
-  }
-
-
-  setCurrentActivElements() {
-    this.imagesArray[0].element.classList.add("img-active")
-    this.navigationButtons[0].classList.add("active");
-  }
-
-  fetchImagesToArray() {
-    for (let i = 0; i < this.images.length; i++) {
-      this.imagesArray.push({ index: i, element: this.images[i], navBtn: document.getElementById(`nav-${i}`) });
-    }
-  }
-
-  switchImage(index) {
-    for (let i = 0; i < this.images.length; i++) {
-      if (this.imagesArray[i].index == index) {
-        this.imagesArray[i].element.classList.add("img-active");
-        this.imagesArray[i].navBtn.classList.add("active");
-      }
-      else {
-        this.imagesArray[i].element.classList.remove("img-active");
-        this.imagesArray[i].navBtn.classList.remove("active");
-      }
-    }
-  }
-
-  nextImage() {
-    console.log("jere");
-
-    if (this.currentImageIndex == this.images.length - 1)
-      return;
-    console.log(this.imagesArray);
-
-    this.currentImageIndex += 1;
+    //display first image
     this.switchImage(this.currentImageIndex);
   }
 
-  previousImage() {
+
+  switchImage(index) {
+    for (let i = 0; i < this.imagesDictionary.length; i++)
+      if (this.imagesDictionary[i].index == index)
+        this.imagesDictionary[i].element.classList.add("img-active");
+      else
+        this.imagesDictionary[i].element.classList.remove("img-active");
+
+    this.currentImageIndex = index;
+
+    let navigationBtn = this.crDocument.nativeElement.querySelector(`#nav-${index}`);
+
+    if (navigationBtn) {
+
+      this.switchNavigationButton(navigationBtn);
+    }
+  }
+
+  fetchImagesToDictionary() {
+    for (let i = 0; i < this.images.length; i++) {
+      this.imagesDictionary.push({ index: i, element: this.images[i] })
+    }
+  }
+
+  nextImg() {
+    if (this.currentImageIndex == this.totalImages - 1)
+      return;
+
+    this.switchImage(this.currentImageIndex += 1);
+  }
+
+  previousImg() {
     if (this.currentImageIndex == 0)
       return;
 
-    this.currentImageIndex -= 1;
-    this.switchImage(this.currentImageIndex);
+    this.switchImage(this.currentImageIndex -= 1);
+  }
+
+  switchNavigationButton(control: Element) {
+    let all = this.crDocument.nativeElement.querySelectorAll(".nav-btn");
+
+    for (let i = 0; i < all.length; i++) {
+      all[i].classList.remove("active");
+    }
+
+    control.classList.add("active")
   }
 }
