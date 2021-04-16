@@ -118,5 +118,10 @@ namespace MotoShop.Services.Implementation
                 await image.CopyToAsync(fs);
             }
         }
+
+        public IEnumerable<string> GetImagePathsForItem(int advertisementID)
+        {
+            return _dbContext.Images.Where(x => x.AdvertisementID == advertisementID).Select(x => x.FilePath);
+        }
     }
 }

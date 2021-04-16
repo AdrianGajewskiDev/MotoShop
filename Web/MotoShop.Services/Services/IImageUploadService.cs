@@ -14,5 +14,7 @@ namespace MotoShop.Services.Services
         Task<MultipleImageUploadResult> UploadMultipleImagesAsync(IEnumerable<IFormFile> formDataImages, int advertisementID);
         void DeleteImage(string imageName);
         string GenerateUniqueName(IFormFile formFile);
+
+        IEnumerable<string> GetImagePathsForItem(int advertisementID);
     }
 }

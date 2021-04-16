@@ -124,7 +124,7 @@ namespace MotoShop.Services.Implementation
         }
         public TopThreeAdvertisementsResult GetTopThree()
         {
-            var advertisements = _context.Cars.Select(x => new TopThreeAdvertisementsItemResult 
+            var advertisements = _context.Cars.Select(x => new AdvertisementOveralInfoModel 
             {
                 BodyType = x.CarType,
                 Gearbox = x.Gearbox,

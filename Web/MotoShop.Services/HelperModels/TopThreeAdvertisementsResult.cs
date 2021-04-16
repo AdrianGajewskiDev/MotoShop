@@ -4,12 +4,12 @@ namespace MotoShop.Services.HelperModels
 {
     public class TopThreeAdvertisementsResult
     {
-        public IEnumerable<TopThreeAdvertisementsItemResult> SportCars { get; set; }
-        public IEnumerable<TopThreeAdvertisementsItemResult> SuvCars { get; set; }
-        public IEnumerable<TopThreeAdvertisementsItemResult> SedanCars { get; set; }
+        public IEnumerable<AdvertisementOveralInfoModel> SportCars { get; set; }
+        public IEnumerable<AdvertisementOveralInfoModel> SuvCars { get; set; }
+        public IEnumerable<AdvertisementOveralInfoModel> SedanCars { get; set; }
     }
 
-    public class TopThreeAdvertisementsItemResult
+    public class AdvertisementOveralInfoModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
