@@ -9,11 +9,8 @@ namespace MotoShop.Data.Models.Store
     {
         [Key]
         public int Id { get; set; }
-        public DateTime PinDate { get; set; }
-
         public IEnumerable<WatchlistItem> Items { get; set; }
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
-
     }
 }
