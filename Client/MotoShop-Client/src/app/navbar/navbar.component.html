@@ -10,7 +10,7 @@
     <div fxLayout="row" fxShow fxHide.lt-md fxLayoutAlign="center center" class="nav-links">
         <ul fxLayout="row" fxLayoutGap="30px">
             <li class="nav-link"><a (click)="goTo('/home')">Home</a></li>
-            <li class="nav-link"><a href="#">WatchList</a></li>
+            <li class="nav-link"><a (click)="goTo('/watchlist')">WatchList</a></li>
             <li *ngIf="isUserSignedIn == false" fxLayoutAlign="center center" class="signInUpButton"><a
                     (click)="goTo('/userProfile')">SignIn/Up</a></li>
             <li *ngIf="isUserSignedIn == true" fxLayoutAlign="center center" class="my-account-btn">

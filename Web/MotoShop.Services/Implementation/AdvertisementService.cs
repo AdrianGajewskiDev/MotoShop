@@ -163,5 +163,12 @@ namespace MotoShop.Services.Implementation
 
             _context.SaveChanges();
         }
+
+        public string GetAdvertisementTitle(int adID)
+        {
+            var title  = _context.Advertisements.Where(x => x.ID == adID).Select(x => x.Title).FirstOrDefault();
+
+            return title;
+        }
     }
 }

@@ -1,0 +1,15 @@
+<div class="item-container" fxLayout="row">
+    <div class="item-image">
+        <app-image-slider [ImagesUrls]="slides"></app-image-slider>
+    </div>
+    <div class="item-description">
+        <h1>{{Model.Title}}</h1>
+        <h3>From: AdrianDev</h3>
+        <p>Pinned: {{pinDateTransformed}}</p>
+        <p>20 000$</p>
+        <button type="button" mat-raised-button color="primary">Unwatch</button>
+        <a href="" class="icon">
+            <mat-icon>close</mat-icon>
+        </a>
+    </div>
+</div>

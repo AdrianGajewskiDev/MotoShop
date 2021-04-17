@@ -12,6 +12,7 @@ import { RegisterComponent } from './identity/register/register.component';
 import { UserProfileComponent } from './identity/user-profile/user-profile.component';
 import { AdministratorGuard } from './shared/Guards/administrator.guard';
 import { AuthenticationGuard } from './shared/Guards/authentication.guard';
+import { WatchlistComponent } from './Watchlist/watchlist/watchlist.component';
 
 
 const routes: Routes = [
@@ -70,6 +71,11 @@ const routes: Routes = [
   {
     path: "details/:id",
     component: AdvertisementDetailsComponent,
+  },
+  {
+    path: "watchlist",
+    component: WatchlistComponent,
+    canActivate: [AuthenticationGuard]
   }
 ];
 

@@ -47,6 +47,9 @@ import { AdvertisementDetailsComponent } from './advertisement-details/advertise
 import { ImageSliderComponent } from './image-slider/image-slider.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { OWLCarouselComponent } from './owlcarousel/owlcarousel.component';
+import { WatchlistComponent } from './Watchlist/watchlist/watchlist.component';
+import { WatchlistItemComponent } from './Watchlist/watchlist-item/watchlist-item.component';
+import { WatchlistService } from './shared/services/watchlist.service';
 
 @NgModule({
   declarations: [
@@ -73,7 +76,9 @@ import { OWLCarouselComponent } from './owlcarousel/owlcarousel.component';
     AdvertisementOverviewComponent,
     AdvertisementDetailsComponent,
     ImageSliderComponent,
-    OWLCarouselComponent
+    OWLCarouselComponent,
+    WatchlistComponent,
+    WatchlistItemComponent
 
   ],
   imports: [
@@ -100,6 +105,7 @@ import { OWLCarouselComponent } from './owlcarousel/owlcarousel.component';
     AdvertisementsService,
     DatePipe,
     ServerHealthService,
+    WatchlistService,
     ///Interceptors
     {
       provide: HTTP_INTERCEPTORS,

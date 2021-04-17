@@ -1,0 +1,4 @@
+<div class="container-with_bg_Image" fxLayoutAlign="center start">
+    <mat-spinner *ngIf="showLoadingSpinner == true" class="spinner"></mat-spinner>
+    <app-watchlist-item *ngFor="let item of model.Items" [Model]="item"></app-watchlist-item>
+</div>

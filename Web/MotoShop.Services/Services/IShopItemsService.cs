@@ -13,5 +13,6 @@ namespace MotoShop.Services.Services
         ShopItem GetItemByID(int id, ItemType type);
         Car GetCarItem(int id);
         Motocycle GetMotocycleItem(int id);
+
     }
 }

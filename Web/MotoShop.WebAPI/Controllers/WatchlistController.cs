@@ -19,13 +19,13 @@ namespace MotoShop.WebAPI.Controllers
     public class WatchlistController : ControllerBase
     {
         private readonly IWatchlistService _watchlistService;
-        private readonly IShopItemsService _shopItemsService;
+        private readonly IAdvertisementService _advertisementsService;
         private readonly IImageUploadService _imageUploadService;
 
-        public WatchlistController(IWatchlistService watchlistService, IShopItemsService shopItemsService, IImageUploadService imageUploadService)
+        public WatchlistController(IWatchlistService watchlistService, IAdvertisementService shopItemsService, IImageUploadService imageUploadService)
         {
             _watchlistService = watchlistService;
-            _shopItemsService = shopItemsService;
+            _advertisementsService = shopItemsService;
             _imageUploadService = imageUploadService;
         }
 
@@ -57,13 +57,13 @@ namespace MotoShop.WebAPI.Controllers
         {
             var userID = User.GetUserID();
 
-            var watchlist = _watchlistService.GetWatchlistItems(userID);
+            var watchlist = _watchlistService.GetWatchlistByUserId(userID);
 
-            if(watchlist.Any())
+            if(watchlist.Items.Any())
             {
-                List<AdvertisementOveralInfoModel> models = new List<AdvertisementOveralInfoModel>();
+                List<WatchListItemModel> models = new List<WatchListItemModel>();
 
-                foreach (var item in watchlist)
+                foreach (var item in watchlist.Items)
                 {
                     var model = BuildAdvertisementOveralInfoModel(item);
 
@@ -81,22 +81,17 @@ namespace MotoShop.WebAPI.Controllers
             return NotFound(StaticMessages.NotFound("Watchlist items", "User", userID)); 
         }
 
-        private AdvertisementOveralInfoModel BuildAdvertisementOveralInfoModel(WatchlistItem item)
+        private WatchListItemModel BuildAdvertisementOveralInfoModel(WatchlistItem item)
         {
-            var advertisement = _shopItemsService.GetItemByAdvertisement(item.ItemId) as Car;
+            //TODO: add functionality to handle motocycles
+            var advertisementTitle = _advertisementsService.GetAdvertisementTitle(item.ItemId);
 
-            var result = new AdvertisementOveralInfoModel
+            var result = new WatchListItemModel
             {
-                BodyType = advertisement.CarType,
-                Gearbox = advertisement.Gearbox,
-                HP = advertisement.HorsePower,
-                Id = item.ItemId,
-                Name = $"{advertisement.CarBrand} {advertisement.CarModel}",
-                ProductionYear = advertisement.YearOfProduction.Year,
-                CubicCapacity = advertisement.CubicCapacity,
-                Price = advertisement.Price,
-                Mileage = advertisement.Mileage,
-                ImageUrl = _imageUploadService.GetImagePathsForItem(item.ItemId)
+              Id = item.Id,
+              ImageUrls = _imageUploadService.GetImagePathsForItem(item.ItemId),
+              PinDate = item.PinDate,
+              Title = advertisementTitle
             };
 
             return result;

@@ -28,7 +28,7 @@ namespace MotoShop.Services.Implementation
 
         public Watchlist GetWatchlistById(int id)
         {
-            return _context.Watchlists.Where(x => x.Id == id).FirstOrDefault();
+            return _context.Watchlists.Where(x => x.Id == id).Include(x => x.Items).FirstOrDefault();
         }
 
         public Watchlist GetWatchlistByUserId(string id)
