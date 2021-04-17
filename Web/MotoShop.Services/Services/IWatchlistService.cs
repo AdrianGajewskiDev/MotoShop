@@ -10,5 +10,6 @@ namespace MotoShop.Services.Services
         Watchlist GetWatchlistByUserId(string id);
         int GetWatchlistId(string userID);
         bool AddItemToWatchlist( WatchlistItem watchlistItem);
+        bool DeleteWatchlistItem(int id);
     }
 }

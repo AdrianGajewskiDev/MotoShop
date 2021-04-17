@@ -26,6 +26,18 @@ namespace MotoShop.Services.Implementation
             return false;
         }
 
+        public bool DeleteWatchlistItem(int id)
+        {
+            var itemToRemove = new WatchlistItem { Id = id };
+
+            _context.WatchlistItems.Remove(itemToRemove);
+
+            if (_context.SaveChanges() > 0)
+                return true;
+
+            return false;
+        }
+
         public Watchlist GetWatchlistById(int id)
         {
             return _context.Watchlists.Where(x => x.Id == id).Include(x => x.Items).FirstOrDefault();

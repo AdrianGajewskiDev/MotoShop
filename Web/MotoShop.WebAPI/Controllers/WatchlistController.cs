@@ -81,6 +81,18 @@ namespace MotoShop.WebAPI.Controllers
             return NotFound(StaticMessages.NotFound("Watchlist items", "User", userID)); 
         }
 
+        [HttpDelete("{watchlistItemId}")]
+        [ClearCache]
+        public IActionResult DeleteWatchlistItem(int watchlistItemId)
+        {
+            var result = _watchlistService.DeleteWatchlistItem(watchlistItemId);
+
+            if (result)
+                return Ok();
+
+            return BadRequest(StaticMessages.SomethingWentWrong);
+        }
+
         private WatchListItemModel BuildAdvertisementOveralInfoModel(WatchlistItem item)
         {
             //TODO: add functionality to handle motocycles
