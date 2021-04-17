@@ -85,13 +85,17 @@ namespace MotoShop.WebAPI.Controllers
         {
             //TODO: add functionality to handle motocycles
             var advertisementTitle = _advertisementsService.GetAdvertisementTitle(item.ItemId);
+            var authorName = _advertisementsService.GetAdvertisementData(item.ItemId, x => x.Author.UserName);
+            var price = _advertisementsService.GetAdvertisementData(item.ItemId, x => x.ShopItem.Price);
 
             var result = new WatchListItemModel
             {
-              Id = item.Id,
-              ImageUrls = _imageUploadService.GetImagePathsForItem(item.ItemId),
-              PinDate = item.PinDate,
-              Title = advertisementTitle
+                Id = item.ItemId,
+                ImageUrls = _imageUploadService.GetImagePathsForItem(item.ItemId),
+                PinDate = item.PinDate,
+                Title = advertisementTitle,
+                Price = price,
+                AuthorName = authorName
             };
 
             return result;

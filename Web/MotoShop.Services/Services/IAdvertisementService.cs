@@ -23,8 +23,8 @@ namespace MotoShop.Services.Services
         void DeleteAdvertisement(int advertisementID);
         void AddImage(int adID, string path);
         TopThreeAdvertisementsResult GetTopThree();
-
         string GetAdvertisementTitle(int adID);
+        public T GetAdvertisementData<T>(int adID, Func<Advertisement, T> dataToSelect);
 
     }
 }

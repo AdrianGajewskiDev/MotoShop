@@ -170,5 +170,13 @@ namespace MotoShop.Services.Implementation
 
             return title;
         }
+
+        public T GetAdvertisementData<T>(int adID, Func<Advertisement, T> dataToSelect)
+        {
+            return _context.Advertisements.Where(x => x.ID == adID)
+                .Include(x => x.Author)
+                .Include(x => x.ShopItem)
+                .Select(dataToSelect).FirstOrDefault();
+        }
     }
 }

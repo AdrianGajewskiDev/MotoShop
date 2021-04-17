@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { serverWatchlistUrl } from "../server-urls";
+import { serverAddToWatchlistUrl, serverWatchlistUrl } from "../server-urls";
 
 @Injectable()
 export class WatchlistService {
@@ -8,5 +8,9 @@ export class WatchlistService {
 
     getWatchlist() {
         return this.httpClient.get(serverWatchlistUrl)
+    }
+
+    addToWatchlist(id: number) {
+        return this.httpClient.post(serverAddToWatchlistUrl + "/" + id, null);
     }
 }

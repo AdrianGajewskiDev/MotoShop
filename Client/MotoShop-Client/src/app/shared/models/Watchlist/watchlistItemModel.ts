@@ -3,4 +3,6 @@ export class WatchListItemModel {
     ImageUrls: string[];
     PinDate: Date;
     Title: string;
+    AuthorName: string;
+    Price: number;
 }

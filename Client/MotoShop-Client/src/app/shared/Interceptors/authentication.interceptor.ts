@@ -14,9 +14,6 @@ export class AuthenticationInterceptor implements HttpInterceptor {
         if (!this.service.isSignedIn || this.service.isRefreshTokenRequested == true)
             return next.handle(req);
 
-        console.log(this.service.tokenHasExpired);
-
-
         let token = this.service.getToken;
 
         if (!this.service.tokenHasExpired) {
@@ -28,6 +25,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
             return next.handle(clonedReq);
         }
+
 
         this.service.isRefreshTokenRequested = true;
 

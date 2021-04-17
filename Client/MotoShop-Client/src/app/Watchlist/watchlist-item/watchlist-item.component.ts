@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { buildImagePath } from 'src/app/shared/Helpers/buildProfileImagePath';
 import { WatchListItemModel } from 'src/app/shared/models/Watchlist/watchlistItemModel';
 
@@ -16,7 +17,7 @@ export class WatchlistItemComponent implements OnInit {
   public slides: string[] = [];
 
   public pinDateTransformed;
-  constructor(private datePipe: DatePipe) { }
+  constructor(private datePipe: DatePipe, private router: Router) { }
 
   ngOnInit(): void {
     for (let url of this.Model.ImageUrls)
@@ -28,5 +29,9 @@ export class WatchlistItemComponent implements OnInit {
 
   buildImageUrl(url) {
     return buildImagePath(url);
+  }
+
+  goToDetails() {
+    this.router.navigateByUrl("/details/" + this.Model.Id);
   }
 }

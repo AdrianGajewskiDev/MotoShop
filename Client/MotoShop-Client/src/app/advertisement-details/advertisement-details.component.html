@@ -8,6 +8,7 @@
         <h1>{{model.ShopItem.CarBrand}} {{model.ShopItem.CarModel}}</h1>
         <h3>{{model.ShopItem.Fuel}} | {{model.ShopItem.HorsePower}}HP | {{model.ShopItem.CubicCapacity}}cm3 |
             {{model.ShopItem.CarType}}</h3>
+        <button class="watch-btn" mat-raised-button color='warn' (click)="addToWatchlist()">{{btnMessage}}</button>
         <div class="divider"></div>
         <div class="ad-description">
             <p>{{model.Description}}</p>

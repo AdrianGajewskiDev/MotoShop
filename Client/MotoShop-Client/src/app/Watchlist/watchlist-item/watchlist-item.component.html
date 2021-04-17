@@ -2,11 +2,11 @@
     <div class="item-image">
         <app-image-slider [ImagesUrls]="slides"></app-image-slider>
     </div>
-    <div class="item-description">
+    <div class="item-description" (click)="goToDetails()">
         <h1>{{Model.Title}}</h1>
-        <h3>From: AdrianDev</h3>
+        <h3>From: {{Model.AuthorName}}</h3>
         <p>Pinned: {{pinDateTransformed}}</p>
-        <p>20 000$</p>
+        <p>{{Model.Price}}$</p>
         <button type="button" mat-raised-button color="primary">Unwatch</button>
         <a href="" class="icon">
             <mat-icon>close</mat-icon>
