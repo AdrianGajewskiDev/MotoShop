@@ -41,7 +41,7 @@ export class WatchlistItemComponent implements OnInit {
 
   hideElement(e) {
     if (this.animationState == "activate")
-      (this.crDocument.nativeElement.querySelector(".item-container") as HTMLElement).style.display = "none";
+      (this.crDocument.nativeElement.querySelector(".item-container") as HTMLElement).remove();
   }
 
   buildImageUrl(url) {

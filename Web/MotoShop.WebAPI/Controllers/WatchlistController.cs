@@ -102,12 +102,13 @@ namespace MotoShop.WebAPI.Controllers
 
             var result = new WatchListItemModel
             {
-                Id = item.ItemId,
+                Id = item.Id,
                 ImageUrls = _imageUploadService.GetImagePathsForItem(item.ItemId),
                 PinDate = item.PinDate,
                 Title = advertisementTitle,
                 Price = price,
-                AuthorName = authorName
+                AuthorName = authorName,
+                ItemId = item.ItemId
             };
 
             return result;

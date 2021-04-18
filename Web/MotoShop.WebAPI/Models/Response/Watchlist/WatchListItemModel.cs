@@ -11,5 +11,6 @@ namespace MotoShop.WebAPI.Models.Response.Watchlist
         public string Title { get; set; }
         public string AuthorName { get; set; }
         public float Price { get; set; }
+        public int ItemId { get; set; }
     }
 }

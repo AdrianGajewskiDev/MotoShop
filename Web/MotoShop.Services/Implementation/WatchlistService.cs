@@ -30,7 +30,7 @@ namespace MotoShop.Services.Implementation
         {
             var itemToRemove = new WatchlistItem { Id = id };
 
-            _context.WatchlistItems.Remove(itemToRemove);
+            _context.Entry(itemToRemove).State = EntityState.Deleted;
 
             if (_context.SaveChanges() > 0)
                 return true;

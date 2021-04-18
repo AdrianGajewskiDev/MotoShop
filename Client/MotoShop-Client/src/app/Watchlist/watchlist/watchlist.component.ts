@@ -13,11 +13,14 @@ export class WatchlistComponent implements OnInit {
 
   public model: WatchlistModel;
   public showLoadingSpinner = true;
+  public hasItemsInWatchlist = false;
 
   ngOnInit(): void {
     this.service.getWatchlist().subscribe((res: WatchlistModel) => {
       this.model = res;
       this.showLoadingSpinner = false;
+      if (this.model.Items != null)
+        this.hasItemsInWatchlist = true;
     },
       error => {
         console.log(error);

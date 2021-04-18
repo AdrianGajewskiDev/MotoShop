@@ -1,4 +1,10 @@
-<div class="container-with_bg_Image" fxLayoutAlign="start center" fxLayout="column">
+<div *ngIf="hasItemsInWatchlist == true" class="container-with_bg_Image" fxLayoutAlign="start center" fxLayout="column">
     <mat-spinner *ngIf="showLoadingSpinner == true" class="spinner"></mat-spinner>
-    <app-watchlist-item *ngFor="let item of model.Items" [Model]="item"></app-watchlist-item>
+    <app-watchlist-item *ngFor="let item of model.Items" [Model]="item">
+    </app-watchlist-item>
+</div>
+<div *ngIf="hasItemsInWatchlist == false" class="container-with_bg_Image" fxLayoutAlign="start center"
+    fxLayout="column">
+    <h1 class="error-message">You dont have any pinned adverts</h1>
+
 </div>
