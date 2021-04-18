@@ -2,12 +2,12 @@
     <div class="item-image">
         <app-image-slider [ImagesUrls]="slides"></app-image-slider>
     </div>
-    <div class="item-description" (click)="goToDetails()">
-        <h1>{{Model.Title}}</h1>
+    <div class="item-description">
+        <h1 (click)="goToDetails()">{{Model.Title}}</h1>
         <h3>From: {{Model.AuthorName}}</h3>
         <p>Pinned: {{pinDateTransformed}}</p>
         <p>{{Model.Price}}$</p>
-        <button type="button" mat-raised-button color="primary">Unwatch</button>
+        <button type="button" mat-raised-button color="primary" (click)="deleteItem()">{{btnMessage}}</button>
         <a href="" class="icon">
             <mat-icon>close</mat-icon>
         </a>

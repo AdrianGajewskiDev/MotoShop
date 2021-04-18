@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { serverAddToWatchlistUrl, serverWatchlistUrl } from "../server-urls";
+import { serverAddToWatchlistUrl, serverDeleteToWatchlistUrl, serverWatchlistUrl } from "../server-urls";
 
 @Injectable()
 export class WatchlistService {
@@ -12,5 +12,9 @@ export class WatchlistService {
 
     addToWatchlist(id: number) {
         return this.httpClient.post(serverAddToWatchlistUrl + "/" + id, null);
+    }
+
+    deleteWatchlistItem(id: number) {
+        return this.httpClient.delete(serverDeleteToWatchlistUrl + "/" + id);
     }
 }
