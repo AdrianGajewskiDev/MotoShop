@@ -4,18 +4,31 @@ import { Observable } from 'rxjs';
 import { IdentityService } from '../services/identity.service';
 
 
-@Injectable({ providedIn: "root"})
-export class AuthenticationGuard implements CanActivate{
+@Injectable({ providedIn: "root" })
+export class AuthenticationGuard implements CanActivate {
     constructor(private service: IdentityService,
-        private router: Router)  { }
+        private router: Router) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-        
-        if(this.service.isSignedIn)
+
+        console.log(this.getResolvedUrl(route));
+
+
+        if (this.getResolvedUrl(route) == "/identity" && this.service.isSignedIn) {
+            this.router.navigateByUrl('/home');
+            return false;
+        }
+
+        if (this.service.isSignedIn)
             return true;
 
         this.router.navigateByUrl('/identity');
         return;
+    }
+    getResolvedUrl(route: ActivatedRouteSnapshot): string {
+        return route.pathFromRoot
+            .map(v => v.url.map(segment => segment.toString()).join('/'))
+            .join('/');
     }
 
 }

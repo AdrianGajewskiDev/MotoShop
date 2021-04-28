@@ -27,6 +27,7 @@ const routes: Routes = [
   {
     path: "identity",
     component: IdentityPlaceholderComponent,
+    canActivate: [AuthenticationGuard],
     children: [
       {
         path: '',
@@ -41,7 +42,7 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent,
-        outlet: "identity"
+        outlet: "identity",
       }
     ]
   },

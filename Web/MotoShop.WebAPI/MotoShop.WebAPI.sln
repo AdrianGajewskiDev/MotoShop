@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotoShop.Data", "..\MotoSho
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotoShop.Services", "..\MotoShop.Services\MotoShop.Services.csproj", "{D7BE3AC3-B884-4831-A979-68574AB1FDA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotoShop.Tests", "..\MotoShop.Tests\MotoShop.Tests.csproj", "{12C5DE52-B1C6-426A-8167-CF6B522EDCDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotoShop.Tests", "..\MotoShop.Tests\MotoShop.Tests.csproj", "{12C5DE52-B1C6-426A-8167-CF6B522EDCDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotoShop.Tests.Integration", "..\MotoShop.Tests.Integration\MotoShop.Tests.Integration.csproj", "{84DD9ECE-7F82-4A6B-867E-2829705E42C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{12C5DE52-B1C6-426A-8167-CF6B522EDCDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12C5DE52-B1C6-426A-8167-CF6B522EDCDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12C5DE52-B1C6-426A-8167-CF6B522EDCDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84DD9ECE-7F82-4A6B-867E-2829705E42C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84DD9ECE-7F82-4A6B-867E-2829705E42C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84DD9ECE-7F82-4A6B-867E-2829705E42C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84DD9ECE-7F82-4A6B-867E-2829705E42C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
