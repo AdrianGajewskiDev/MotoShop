@@ -40,6 +40,7 @@ export class UserProfileComponent implements OnInit {
   public userData: UserProfileDataModel;
   public copiedUserData;
   public showError: boolean = false;
+  public hasAnyAdvertisements: boolean = false;
   public editUserDataForm: FormGroup;
   public editPasswordForm: FormGroup;
 
@@ -160,15 +161,19 @@ export class UserProfileComponent implements OnInit {
   }
   getAds() {
     this.showLoadingSpinner = true;
-    console.log("herer");
-
+    this.errorMessage = "Processing...";
     if (!this.adsDataSource) {
       this.adsService.getAllByUserID(this.identityService.getUserID).subscribe(
         (res: any) => {
-          res.Advertisements.forEach(element => {
-            element.Placed = this.datePipe.transform(element.Placed, "yyyy-MM-dd")
-          });
-          this.adsDataSource = new MatTableDataSource(res.Advertisements);
+          if (res.Advertisements.length > 0) {
+            res.Advertisements.forEach(element => {
+              element.Placed = this.datePipe.transform(element.Placed, "yyyy-MM-dd")
+            });
+            this.adsDataSource = new MatTableDataSource(res.Advertisements);
+            this.hasAnyAdvertisements = true;
+          }
+          else
+            this.errorMessage = "You don't have any advertisements";
         },
         error => {
           this.showLoadingSpinner = false;
@@ -211,5 +216,9 @@ export class UserProfileComponent implements OnInit {
 
     console.log(flag);
     return flag;
+  }
+
+  goToDetails(id) {
+    this.router.navigateByUrl("/details/" + id);
   }
 }

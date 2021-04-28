@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { buildImagePath } from '../shared/Helpers/buildProfileImagePath';
 import { AdvertisementDetailsModel } from '../shared/models/advertisements/advertisementDetails.model';
 import { AdvertisementsService } from '../shared/services/advertisements.service';
+import { IdentityService } from '../shared/services/identity.service';
 import { WatchlistService } from '../shared/services/watchlist.service';
 
 @Component({
@@ -33,7 +34,8 @@ export class AdvertisementDetailsComponent implements OnInit {
     private advertisementsService: AdvertisementsService,
     private datePipe: DatePipe,
     private watchlistService: WatchlistService,
-    private toastrService: ToastrService) { }
+    private toastrService: ToastrService,
+    private identityService: IdentityService) { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -47,6 +49,7 @@ export class AdvertisementDetailsComponent implements OnInit {
 
   public slides: string[] = [];
   ngOnInit(): void {
+
     this.id = this.routes.snapshot.params["id"];
 
     this.advertisementsService.getByID(this.id).subscribe(res => {
@@ -84,5 +87,7 @@ export class AdvertisementDetailsComponent implements OnInit {
 
     });
   }
-
+  isCurrentUserOwner() {
+    return this.identityService.getUserID === this.model.AuthorID;
+  }
 }
