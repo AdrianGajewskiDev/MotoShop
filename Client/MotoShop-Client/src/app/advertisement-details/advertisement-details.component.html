@@ -9,6 +9,7 @@
         <h3>{{model.ShopItem.Fuel}} | {{model.ShopItem.HorsePower}}HP | {{model.ShopItem.CubicCapacity}}cm3 |
             {{model.ShopItem.CarType}}</h3>
         <button class="watch-btn" mat-raised-button color='warn' (click)="addToWatchlist()">{{btnMessage}}</button>
+        <button class="watch-btn" mat-raised-button color='primary' *ngIf="isCurrentUserOwner()">Edit</button>
         <div class="divider"></div>
         <div class="ad-description">
             <p>{{model.Description}}</p>
@@ -23,7 +24,6 @@
         <p class="owner-info"><strong>Placed:</strong> {{model.Placed}} </p>
         <p class="owner-info"><strong>Advertisement ID:</strong> {{model.ID}} </p>
         <p class="owner-info"><a>See all Advertisements of this user</a></p>
-
     </div>
     <div class="car-details" fxLayout="row">
         <div class="car-details-section">

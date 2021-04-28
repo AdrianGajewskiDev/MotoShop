@@ -64,7 +64,7 @@ namespace MotoShop.Services.Implementation
         }
         public IEnumerable<Advertisement> GetAll()
         {
-            return AdvertisementQueries.GetAllWithAuthorAndShopItem(_context);
+            return _context.Advertisements.Include(x => x.Author).Include(x => x.ShopItem);
         }
         public IEnumerable<Advertisement> GetAllAdvertisementsByAuthorId(string authorID)
         {

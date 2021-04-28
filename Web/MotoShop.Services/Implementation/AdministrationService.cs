@@ -55,7 +55,7 @@ namespace MotoShop.Services.Implementation
         
         public IEnumerable<ApplicationUser> GetAllUsers()
         {
-            return AdministrationQueries.GetAllUsers(_dbContext);
+            return _dbContext.Users;
         }
 
         public IEnumerable<TResult> GetUsersData<TResult>(Func<ApplicationUser, TResult> selectExpression)

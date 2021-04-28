@@ -22,7 +22,8 @@ namespace MotoShop.Services.EntityFramework.CompiledQueries
             EF.CompileQuery((ApplicationDatabaseContext ctx) =>
             ctx.Advertisements
                 .Include(c => c.ShopItem)
-                .Include(c => c.Author));
+                .Include(c => c.Author)
+            );
 
         public static Func<ApplicationDatabaseContext, IEnumerable<Advertisement>> GetAllWithShopItem =
           EF.CompileQuery((ApplicationDatabaseContext ctx) =>

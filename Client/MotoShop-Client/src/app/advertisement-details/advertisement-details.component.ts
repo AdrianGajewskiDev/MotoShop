@@ -46,7 +46,6 @@ export class AdvertisementDetailsComponent implements OnInit {
     }
   }
 
-
   public slides: string[] = [];
   ngOnInit(): void {
 
@@ -88,6 +87,9 @@ export class AdvertisementDetailsComponent implements OnInit {
     });
   }
   isCurrentUserOwner() {
-    return this.identityService.getUserID === this.model.AuthorID;
+    if (this.identityService.isSignedIn)
+      return this.identityService.getUserID === this.model.AuthorID;
+    else
+      return false;
   }
 }

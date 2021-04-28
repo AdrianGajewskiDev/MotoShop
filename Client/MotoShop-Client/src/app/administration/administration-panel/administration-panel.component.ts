@@ -248,6 +248,8 @@ export class AdministrationPanelComponent implements OnInit {
   onErrorReceived(error) {
     this.showLoadingSpinner = false;
     this.toastr.error(error.message);
+    console.log(error);
+
   }
   refresh() {
     this.getData("server");
