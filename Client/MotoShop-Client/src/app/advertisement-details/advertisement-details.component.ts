@@ -1,7 +1,9 @@
 import { DatePipe } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { EditAdvertisementDialogComponent } from '../Dialogs/edit-advertisement-dialog/edit-advertisement-dialog.component';
 import { buildImagePath } from '../shared/Helpers/buildProfileImagePath';
 import { AdvertisementDetailsModel } from '../shared/models/advertisements/advertisementDetails.model';
 import { AdvertisementsService } from '../shared/services/advertisements.service';
@@ -35,7 +37,8 @@ export class AdvertisementDetailsComponent implements OnInit {
     private datePipe: DatePipe,
     private watchlistService: WatchlistService,
     private toastrService: ToastrService,
-    private identityService: IdentityService) { }
+    private identityService: IdentityService,
+    private dialogRef: MatDialog) { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -91,5 +94,14 @@ export class AdvertisementDetailsComponent implements OnInit {
       return this.identityService.getUserID === this.model.AuthorID;
     else
       return false;
+  }
+
+  editAdvertisement() {
+    this.dialogRef.open(EditAdvertisementDialogComponent, {
+      data: {
+        AdvertisementModel: this.model,
+      },
+      width: "350px"
+    })
   }
 }
