@@ -12,6 +12,7 @@ import { RegisterComponent } from './identity/register/register.component';
 import { UserProfileComponent } from './identity/user-profile/user-profile.component';
 import { AdministratorGuard } from './shared/Guards/administrator.guard';
 import { AuthenticationGuard } from './shared/Guards/authentication.guard';
+import { SignalRTestingComponent } from './signal-rtesting/signal-rtesting.component';
 import { WatchlistComponent } from './Watchlist/watchlist/watchlist.component';
 
 
@@ -77,6 +78,10 @@ const routes: Routes = [
     path: "watchlist",
     component: WatchlistComponent,
     canActivate: [AuthenticationGuard]
+  },
+  {
+    path: "test",
+    component: SignalRTestingComponent
   }
 ];
 

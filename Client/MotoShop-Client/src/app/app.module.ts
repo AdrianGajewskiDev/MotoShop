@@ -50,6 +50,8 @@ import { OWLCarouselComponent } from './owlcarousel/owlcarousel.component';
 import { WatchlistComponent } from './Watchlist/watchlist/watchlist.component';
 import { WatchlistItemComponent } from './Watchlist/watchlist-item/watchlist-item.component';
 import { WatchlistService } from './shared/services/watchlist.service';
+import { SignalRTestingComponent } from './signal-rtesting/signal-rtesting.component';
+import { SignalRService } from './shared/services/signalR.service';
 
 @NgModule({
   declarations: [
@@ -78,7 +80,8 @@ import { WatchlistService } from './shared/services/watchlist.service';
     ImageSliderComponent,
     OWLCarouselComponent,
     WatchlistComponent,
-    WatchlistItemComponent
+    WatchlistItemComponent,
+    SignalRTestingComponent
 
   ],
   imports: [
@@ -106,6 +109,7 @@ import { WatchlistService } from './shared/services/watchlist.service';
     DatePipe,
     ServerHealthService,
     WatchlistService,
+    SignalRService,
     ///Interceptors
     {
       provide: HTTP_INTERCEPTORS,
