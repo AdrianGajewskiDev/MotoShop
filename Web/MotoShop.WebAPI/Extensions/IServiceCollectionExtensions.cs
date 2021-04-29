@@ -95,6 +95,7 @@ namespace MotoShop.WebAPI.Extensions
             services.AddSingleton<ICachingService, CachingService>();
             services.AddSingleton<IEmailSenderService, EmailSender>();
             services.AddSingleton<IFilesPathProvider, BaseFilesPathProvider>();
+            services.AddSingleton<IWebSocketProviderService, SignalRService>();
 
             return services;
         }

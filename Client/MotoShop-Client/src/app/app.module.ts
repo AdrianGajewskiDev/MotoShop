@@ -50,7 +50,6 @@ import { OWLCarouselComponent } from './owlcarousel/owlcarousel.component';
 import { WatchlistComponent } from './Watchlist/watchlist/watchlist.component';
 import { WatchlistItemComponent } from './Watchlist/watchlist-item/watchlist-item.component';
 import { WatchlistService } from './shared/services/watchlist.service';
-import { SignalRTestingComponent } from './signal-rtesting/signal-rtesting.component';
 import { SignalRService } from './shared/services/signalR.service';
 
 @NgModule({
@@ -81,7 +80,6 @@ import { SignalRService } from './shared/services/signalR.service';
     OWLCarouselComponent,
     WatchlistComponent,
     WatchlistItemComponent,
-    SignalRTestingComponent
 
   ],
   imports: [

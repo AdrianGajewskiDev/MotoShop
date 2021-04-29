@@ -1,7 +1,5 @@
-﻿using MotoShop.Services.HelperModels;
-using MotoShop.Services.Services;
+﻿using MotoShop.Services.Services;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MotoShop.Services.Implementation
@@ -20,11 +18,6 @@ namespace MotoShop.Services.Implementation
             await _cachingService.CacheResponseAsync(data, connectionID, new TimeSpan(0,10,10));
         }
 
-        public IEnumerable<ConnectionResult> GetActivConnections()
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<bool> HasActivConnection(string userID)
         {
             var result = await _cachingService.GetCachedResponseAsync(userID);
@@ -39,7 +32,9 @@ namespace MotoShop.Services.Implementation
 
         public async Task UpdateConnectionIDAsync(string data, string newConnectionID)
         {
-            RemoveConnection(data);
+            if(await HasActivConnection(data))
+                RemoveConnection(data);
+
             await AddConnectionAsync(newConnectionID, data);
         }
     }

@@ -18,10 +18,18 @@ namespace MotoShop.WebAPI.SignalR.Hubs
             var connectionID = Context.ConnectionId;
             var userID = Context.User.FindFirst(x => x.Type == "UserID").Value;
 
-            if(await _webSocketProvider.HasActivConnection(userID))
-                await _webSocketProvider.AddConnectionAsync(connectionID, userID);
+            await _webSocketProvider.UpdateConnectionIDAsync(userID, connectionID);
 
             await base.OnConnectedAsync();
+        }
+
+        public override Task OnDisconnectedAsync(System.Exception exception)
+        {
+            var connectionID = Context.ConnectionId;
+
+            _webSocketProvider.RemoveConnection(connectionID);
+
+            return base.OnDisconnectedAsync(exception);
         }
     }
 }
