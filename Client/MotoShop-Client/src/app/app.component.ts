@@ -9,14 +9,13 @@ import { SignalRService } from './shared/services/signalR.service';
 })
 export class AppComponent implements OnInit {
   constructor(
-    private signalRService: SignalRService,
-    private toastr: ToastrService) { }
+    private signalRService: SignalRService) { }
 
   title = 'MotoShop-Client';
 
   ngOnInit() {
     this.signalRService.acquireConnection();
     this.signalRService.startConnection();
-    this.signalRService.listenFor("message", (res) => this.toastr.info(res));
+    this.signalRService.test().subscribe(res => console.log(res));
   }
 }
