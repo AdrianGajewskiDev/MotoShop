@@ -79,6 +79,7 @@ namespace MotoShop.WebAPI.Controllers
                 return Ok(model);
             }
 
+            //TODO: add seperation to filter, eq: filter="Username, Name", split by ','
             var usersData = _service.GetUsersData<string>(filter);
 
             var dataModel = new GetAllUsersResponseModel<string>

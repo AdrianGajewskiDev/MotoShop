@@ -13,6 +13,7 @@ using MotoShop.WebAPI.Attributes.Base;
 using MotoShop.WebAPI.Authorization;
 using MotoShop.WebAPI.AutoMapper.Profiles;
 using MotoShop.WebAPI.Configurations;
+using MotoShop.WebAPI.FileProviders;
 using MotoShop.WebAPI.Helpers;
 using MotoShop.WebAPI.Helpers.Database;
 using MotoShop.WebAPI.Token_Providers;
@@ -93,6 +94,7 @@ namespace MotoShop.WebAPI.Extensions
             services.AddSingleton<CacheBase>();
             services.AddSingleton<ICachingService, CachingService>();
             services.AddSingleton<IEmailSenderService, EmailSender>();
+            services.AddSingleton<IFilesPathProvider, BaseFilesPathProvider>();
 
             return services;
         }

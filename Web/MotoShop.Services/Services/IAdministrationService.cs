@@ -19,5 +19,7 @@ namespace MotoShop.Services.Services
         Task<bool> IsInRole(ApplicationUser user, string role);
         Task<bool> RoleExists(string role);
         Task<bool> IsAdministrator(string userID);
+
+        Task CreateRoleAsync(string roleName);
     }
 }

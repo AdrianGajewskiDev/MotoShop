@@ -17,6 +17,7 @@ using System.IO;
 using Microsoft.AspNetCore.Http;
 using MotoShop.Services.HelperModels;
 using MotoShop.WebAPI.HealthChecks;
+using MotoShop.WebAPI.FileProviders;
 
 namespace MotoShop.Web
 {
@@ -81,10 +82,13 @@ namespace MotoShop.Web
             }
 
             app.UseStaticFiles();
+
+            var fileProvider = app.ApplicationServices.GetRequiredService<IFilesPathProvider>();
+
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(),@"wwwroot", @"resources")),
-                RequestPath = new PathString("/wwwroot/resources")
+                FileProvider = new PhysicalFileProvider(fileProvider.PathToSave),
+                RequestPath = new PathString(fileProvider.RequestPath)
             });
          
             app.UseResponseCompression();

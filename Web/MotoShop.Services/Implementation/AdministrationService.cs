@@ -48,6 +48,11 @@ namespace MotoShop.Services.Implementation
             return await _userManager.AddToRoleAsync(user, ApplicationRoles.Administrator);
         }
 
+        public async Task CreateRoleAsync(string roleName)
+        {
+            await _roleManager.CreateAsync(new IdentityRole { Name = roleName });
+        }
+
         public async Task<IdentityResult> DeleteAdmin(ApplicationUser user)
         {
             return await _userManager.RemoveFromRoleAsync(user, ApplicationRoles.Administrator);
