@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Http;
 using MotoShop.Services.HelperModels;
 using MotoShop.WebAPI.HealthChecks;
 using MotoShop.WebAPI.FileProviders;
+using MotoShop.WebAPI.SignalR.Hubs;
 
 namespace MotoShop.Web
 {
@@ -68,7 +69,10 @@ namespace MotoShop.Web
                 options.ValueLengthLimit = int.MaxValue;
                 options.MultipartBodyLengthLimit = int.MaxValue;
             });
+
             services.AddApplicationServices();
+
+            services.AddSignalR();
 
         }
 
@@ -109,6 +113,7 @@ namespace MotoShop.Web
                 endpoints.MapControllers();
                 endpoints.MapControllerRoute(name: "default", pattern: "api/{controller}/{action?}/{params?}");
                 endpoints.MapHealthChecks("/serverHealth");
+                endpoints.MapHub<MessagesHub>("/message");
             });
         }
     }
