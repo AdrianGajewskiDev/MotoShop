@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MotoShop.Data.Database_Context;
 
 namespace MotoShop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210430174107_add Message entity")]
+    partial class addMessageentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -594,7 +596,7 @@ namespace MotoShop.Data.Migrations
                         .HasForeignKey("ReceiverID");
 
                     b.HasOne("MotoShop.Data.Models.User.ApplicationUser", "Sender")
-                        .WithMany("Messages")
+                        .WithMany()
                         .HasForeignKey("SenderID");
 
                     b.Navigation("Receiver");
@@ -669,8 +671,6 @@ namespace MotoShop.Data.Migrations
 
             modelBuilder.Entity("MotoShop.Data.Models.User.ApplicationUser", b =>
                 {
-                    b.Navigation("Messages");
-
                     b.Navigation("Watchlist");
                 });
 #pragma warning restore 612, 618

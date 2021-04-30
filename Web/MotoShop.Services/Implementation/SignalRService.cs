@@ -18,6 +18,11 @@ namespace MotoShop.Services.Implementation
             await _cachingService.CacheResponseAsync(data, connectionID, new TimeSpan(0,10,10));
         }
 
+        public async Task<string> GetConnectionIDAsync(string data)
+        {
+            return await _cachingService.GetCachedResponseAsync(data);
+        }
+
         public async Task<bool> HasActivConnection(string userID)
         {
             var result = await _cachingService.GetCachedResponseAsync(userID);

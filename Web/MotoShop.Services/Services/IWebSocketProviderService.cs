@@ -10,5 +10,6 @@ namespace MotoShop.Services.Services
         void RemoveConnection(string connectionID);
         Task UpdateConnectionIDAsync(string data, string newConnectionID);
         Task<bool> HasActivConnection(string userID);
+        Task<string> GetConnectionIDAsync(string data);
     }
 }

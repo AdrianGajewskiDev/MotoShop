@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using MotoShop.Data.Models.Messages;
 using MotoShop.Data.Models.Store;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MotoShop.Data.Models.User
@@ -14,6 +16,8 @@ namespace MotoShop.Data.Models.User
         public bool IsExternal { get; set; }
 
         public virtual Watchlist Watchlist { get; set; }
+
+        public virtual ICollection<Message> Messages { get; set; }
 
     }
 }
