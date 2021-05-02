@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { ConversationDialogComponent } from '../Dialogs/conversation-dialog/conversation-dialog.component';
 import { carBrands } from "../shared/Constants/carBrands"
 import { fuels } from '../shared/Constants/fuels';
 import { gearboxes } from '../shared/Constants/gearboxes';
@@ -55,7 +56,8 @@ export class HomeComponent implements OnInit {
   }
 
   addAdvertisement() {
-    this.router.navigateByUrl("new-advertisement");
+    this.dialog.open(ConversationDialogComponent, { panelClass: 'custom-dialog-container' });
+    //this.router.navigateByUrl("new-advertisement");
   }
 
   //#region UI Methods
