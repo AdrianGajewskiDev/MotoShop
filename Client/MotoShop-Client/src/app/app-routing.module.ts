@@ -27,17 +27,17 @@ const routes: Routes = [
   {
     path: "identity",
     component: IdentityPlaceholderComponent,
-    canActivate: [AuthenticationGuard],
     children: [
       {
         path: '',
         component: LoginComponent,
-        outlet: "identity"
+        outlet: "identity",
       },
       {
         path: 'register',
         component: RegisterComponent,
-        outlet: "identity"
+        outlet: "identity",
+
       },
       {
         path: 'login',

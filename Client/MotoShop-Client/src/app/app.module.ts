@@ -51,6 +51,7 @@ import { WatchlistComponent } from './Watchlist/watchlist/watchlist.component';
 import { WatchlistItemComponent } from './Watchlist/watchlist-item/watchlist-item.component';
 import { WatchlistService } from './shared/services/watchlist.service';
 import { SignalRService } from './shared/services/signalR.service';
+import { AuthenticationGuard } from './shared/Guards/authentication.guard';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,6 @@ import { SignalRService } from './shared/services/signalR.service';
     OWLCarouselComponent,
     WatchlistComponent,
     WatchlistItemComponent,
-
   ],
   imports: [
     AngularMaterialModule,
@@ -113,7 +113,8 @@ import { SignalRService } from './shared/services/signalR.service';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthenticationInterceptor,
       multi: true
-    }
+    },
+    AuthenticationGuard
   ],
   entryComponents: [
     UserDetailsDialogComponent,
@@ -121,7 +122,7 @@ import { SignalRService } from './shared/services/signalR.service';
     ConfirmationDialogComponent,
     AdvertisementDetailsDialogComponent,
     EditAdvertisementDialogComponent,
-    ServerHealthItemDetailsDialogComponent
+    ServerHealthItemDetailsDialogComponent,
   ],
   bootstrap: [AppComponent]
 })

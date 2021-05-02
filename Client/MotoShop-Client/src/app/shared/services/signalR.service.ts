@@ -26,7 +26,6 @@ export class SignalRService {
 
     public startConnection() {
         this.hubConnection.start().then(() => console.log("Connected"), error => console.log(error));
-        this.hubConnection.on("message", (res) => this.toastr.info(res));
     }
 
     public listenFor(methodName: string, callback: (...args: any[]) => void) {

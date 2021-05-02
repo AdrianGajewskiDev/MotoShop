@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { carBrands } from "../shared/Constants/carBrands"
 import { fuels } from '../shared/Constants/fuels';
@@ -16,7 +17,8 @@ export class HomeComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private service: AdvertisementsService,
-    private router: Router) { }
+    private router: Router,
+    private dialog: MatDialog) { }
 
   public brands = [];
   public models = [];
