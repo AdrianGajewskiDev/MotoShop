@@ -18,10 +18,15 @@ namespace MotoShop.Data.Database_Context
         public DbSet<Watchlist> Watchlists { get; set; }
         public DbSet<WatchlistItem> WatchlistItems { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Conversation> Conversations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Message>().HasOne(x => x.Sender).WithMany(x => x.Messages).HasForeignKey(x => x.SenderID);
+            builder
+                .Entity<Conversation>()
+                .HasOne(x => x.Sender)
+                .WithMany(x => x.Conversations)
+                .HasForeignKey(x => x.SenderID);
 
             base.OnModelCreating(builder);
         }

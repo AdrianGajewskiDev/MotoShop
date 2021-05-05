@@ -17,7 +17,7 @@ namespace MotoShop.Data.Models.User
 
         public virtual Watchlist Watchlist { get; set; }
 
-        public virtual ICollection<Message> Messages { get; set; }
+        public virtual ICollection<Conversation> Conversations { get; set; }
 
     }
 }

@@ -1,4 +1,5 @@
-import { AfterViewChecked, Component, ElementRef, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnInit, DoCheck, IterableDiffers, IterableDiffer } from '@angular/core';
+import { NgImageSliderComponent } from 'ng-image-slider';
 
 @Component({
   selector: 'app-conversation-dialog',
@@ -7,6 +8,7 @@ import { AfterViewChecked, Component, ElementRef, OnInit } from '@angular/core';
 })
 export class ConversationDialogComponent implements OnInit, AfterViewChecked {
 
+
   constructor(private elementRef: ElementRef) { }
 
   ngOnInit(): void {
@@ -14,6 +16,7 @@ export class ConversationDialogComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked() {
     const msgContainers = this.elementRef.nativeElement.querySelectorAll(".messageItem-container");
+    console.log(msgContainers);
 
     for (let container of msgContainers) {
       let childHeight = (container as HTMLElement).children[0].clientHeight + 10;
@@ -22,7 +25,7 @@ export class ConversationDialogComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  sampleMessages = [
+  sampleMessages: Message[] = [
     {
       content: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eum, ex!",
       sender: "owner"
@@ -56,4 +59,14 @@ export class ConversationDialogComponent implements OnInit, AfterViewChecked {
       sender: "recipient"
     }
   ]
+
+
+  sendMessage(content) {
+    this.sampleMessages.push({ sender: "owner", content: content })
+  }
+}
+
+class Message {
+  content: string;
+  sender: string
 }

@@ -10,16 +10,16 @@
         </mat-form-field>
     </div>
     <div class="message-dialog-content">
-        <div *ngFor="let msg of sampleMessages" class="messageItem-container">
+        <div *ngFor="let msg of sampleMessages; let i = index" [id]="'msg-'+i" class="messageItem-container">
             <div class="message" [ngClass]="msg.sender == 'owner' ? 'owner' : 'recipient'">
-                <p class="msg-content">{{msg.content}}</p>
+                <p class="msg-content"></p>{{msg.content}}
             </div>
         </div>
 
     </div>
     <div class="message-dialog-actions" fxLayout="row" fxLayoutAlign="space-around center">
-        <input type="text" placeholder="Type something..." class="msg-input">
-        <button mat-raised-button color="warn" class="msg-btn">
+        <textarea type="text" placeholder="Type something..." class="msg-input" #msgContent></textarea>
+        <button mat-raised-button color="warn" class="msg-btn" (click)="sendMessage(msgContent.value)">
             <mat-icon>send</mat-icon>
         </button>
     </div>

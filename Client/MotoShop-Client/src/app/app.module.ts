@@ -7,6 +7,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms"
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http"
 import { ToastrModule } from "../../node_modules/ngx-toastr"
+import { AutosizeModule } from "ngx-autosize"
 
 //services
 import { FormsMapper } from './shared/mapper/formsMapper';
@@ -95,8 +96,8 @@ import { ConversationDialogComponent } from './Dialogs/conversation-dialog/conve
     FlexLayoutModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    GoogleAuthenticationModule
-
+    GoogleAuthenticationModule,
+    AutosizeModule
   ],
   providers: [
     IdentityService,

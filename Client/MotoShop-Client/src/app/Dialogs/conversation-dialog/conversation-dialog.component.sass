@@ -31,6 +31,7 @@
                 .msg-content
                     color: #fff
                     font-size: 14px
+                    max-width: 100% !important
             .owner
                 right: 0
                 background: #fff
@@ -45,12 +46,17 @@
         height: 10%
         width: 100%
         background: grey
-        display: flex
-        flex-direction: row
+        position: relative
         .msg-input
-            justify-self: flex-start
             width: 70%
-            height: 70%
+            height: 35px !important
             padding: 5px
             border-radius: 15px
             border: none
+            position: absolute
+            left: 0
+            margin: 5px
+        .msg-btn
+            position: absolute
+            right: 0
+            margin: 5px
