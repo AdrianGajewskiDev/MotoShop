@@ -1,6 +1,4 @@
-﻿using MotoShop.Data.Models.User;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
 
 namespace MotoShop.Data.Models.Messages
 {
@@ -10,8 +8,6 @@ namespace MotoShop.Data.Models.Messages
         public string Content { get; set; }
         public DateTime Sent { get; set; }
         public bool Read { get; set; }
-
-
         public Conversation Conversation { get; set; }
     }
 }

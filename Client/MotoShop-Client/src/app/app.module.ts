@@ -54,6 +54,7 @@ import { WatchlistService } from './shared/services/watchlist.service';
 import { SignalRService } from './shared/services/signalR.service';
 import { AuthenticationGuard } from './shared/Guards/authentication.guard';
 import { ConversationDialogComponent } from './Dialogs/conversation-dialog/conversation-dialog.component';
+import { ConversationService } from './shared/services/conversation.service';
 
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import { ConversationDialogComponent } from './Dialogs/conversation-dialog/conve
     ServerHealthService,
     WatchlistService,
     SignalRService,
+    ConversationService,
     ///Interceptors
     {
       provide: HTTP_INTERCEPTORS,

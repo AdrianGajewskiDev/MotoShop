@@ -88,6 +88,7 @@ namespace MotoShop.WebAPI.Extensions
             services.AddTransient<ITokenProviderService, JWTProviderService>();
             services.AddTransient<IImageUploadService, ImageUploader> ();
             services.AddTransient<IWatchlistService, WatchlistService>();
+            services.AddTransient<IConversationService, ConversationService>();
 
 
             //Singletons

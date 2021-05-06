@@ -3,6 +3,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ConversationDialogComponent } from '../Dialogs/conversation-dialog/conversation-dialog.component';
 import { EditAdvertisementDialogComponent } from '../Dialogs/edit-advertisement-dialog/edit-advertisement-dialog.component';
 import { buildImagePath } from '../shared/Helpers/buildProfileImagePath';
 import { AdvertisementDetailsModel } from '../shared/models/advertisements/advertisementDetails.model';
@@ -103,5 +104,16 @@ export class AdvertisementDetailsComponent implements OnInit {
       },
       width: "350px"
     })
+  }
+
+  sendMessage() {
+    this.dialogRef.open(ConversationDialogComponent, {
+      panelClass: 'custom-dialog-container', data:
+      {
+        SenderID: this.identityService.getUserID,
+        ReceiverID: this.model.AuthorID,
+        Topic: this.model.Title
+      }
+    });
   }
 }

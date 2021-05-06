@@ -56,8 +56,7 @@ export class HomeComponent implements OnInit {
   }
 
   addAdvertisement() {
-    this.dialog.open(ConversationDialogComponent, { panelClass: 'custom-dialog-container' });
-    //this.router.navigateByUrl("new-advertisement");
+    this.router.navigateByUrl("new-advertisement");
   }
 
   //#region UI Methods

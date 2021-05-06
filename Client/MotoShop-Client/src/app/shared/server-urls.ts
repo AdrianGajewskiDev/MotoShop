@@ -36,3 +36,7 @@ export const serverOverallHealthUrl = "https://localhost:44304/api/serverHealth"
 export const serverWatchlistUrl = "https://localhost:44304/api/watchlist";
 export const serverAddToWatchlistUrl = "https://localhost:44304/api/watchlist";
 export const serverDeleteToWatchlistUrl = "https://localhost:44304/api/watchlist";
+
+//Conversations
+export const serverGetConversationUrl = "https://localhost:44304/api/messages";
+
