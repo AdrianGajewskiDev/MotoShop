@@ -2,11 +2,11 @@
     <div class="message-dialog-info">
         <mat-form-field class="form-input">
             <mat-label>Recipient</mat-label>
-            <input matInput readonly value="AdrianDev" autocomplete="off">
+            <input matInput readonly [value]="conversation.ReceiverName" autocomplete="off">
         </mat-form-field>
         <mat-form-field class="form-input">
             <mat-label>Topic</mat-label>
-            <input readonly matInput value="BMW E46" autocomplete="off">
+            <input readonly matInput [value]="conversation.Topic" autocomplete="off">
         </mat-form-field>
     </div>
     <div class="message-dialog-content">

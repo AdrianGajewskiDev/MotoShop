@@ -17,7 +17,8 @@
         </div>
         <p class="price">{{model.ShopItem.Price}}$</p>
         <button mat-raised-button color="primary" (click)="showPhoneNumber()">{{phoneNumber}}</button>
-        <button mat-raised-button color="warn" (click)="sendMessage()">Send Message</button>
+        <button mat-raised-button color="warn" (click)="sendMessage()" [disabled]="isCurrentUserOwner()">Send
+            Message</button>
         <div class="divider"></div>
         <h1>Owner</h1>
         <p class="owner-info">{{model.Author.Name}} {{model.Author.LastName}}</p>

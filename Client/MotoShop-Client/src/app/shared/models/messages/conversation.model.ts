@@ -6,7 +6,7 @@ export class Conversation {
     SenderID: string;
     Sender: UserProfileDataModel;
     ReceiverID: string;
-    Receiver: UserProfileDataModel;
+    ReceiverName: string;
     Topic: string;
     Messages: Message[];
 }

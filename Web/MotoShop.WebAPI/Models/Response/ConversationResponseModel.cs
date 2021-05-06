@@ -9,6 +9,7 @@ namespace MotoShop.WebAPI.Models.Response
         public string Topic { get; set; }
         public string SenderID { get; set; }
         public string ReceiverID { get; set; }
+        public string ReceiverName { get; set; }
 
         public ICollection<Message> Messages { get; set; }
     }

@@ -1,6 +1,7 @@
 import { AfterViewChecked, Component, ElementRef, OnInit, DoCheck, IterableDiffers, IterableDiffer, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgImageSliderComponent } from 'ng-image-slider';
+import { Conversation } from 'src/app/shared/models/messages/conversation.model';
 import { ConversationService } from 'src/app/shared/services/conversation.service';
 
 
@@ -17,13 +18,18 @@ interface DialogData {
 })
 export class ConversationDialogComponent implements OnInit, AfterViewChecked {
 
+  public conversation: Conversation;
 
   constructor(private elementRef: ElementRef,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private service: ConversationService) { }
 
   ngOnInit(): void {
-    this.service.getConversation(this.data.SenderID, this.data.ReceiverID, this.data.Topic).subscribe((res) => console.log(res), error => console.log(error));
+    this.service.getConversation(this.data.SenderID, this.data.ReceiverID, this.data.Topic).subscribe((res: Conversation) => {
+      console.log(res);
+      this.conversation = res
+
+    }, error => console.log(error));
   }
 
   ngAfterViewChecked() {

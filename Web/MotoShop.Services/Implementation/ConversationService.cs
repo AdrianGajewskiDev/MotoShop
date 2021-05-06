@@ -25,11 +25,11 @@ namespace MotoShop.Services.Implementation
 
         public Conversation GetConversationBySenderAndRecipient(string senderID, string recipientID)
         {
-            var conversation = _dbContext.Conversations.Where(x => x.SenderID == senderID && x.ReceiverID == recipientID).Include(x => x.Messages).FirstOrDefault();
+            var conversation = _dbContext.Conversations.Where(x => x.SenderID == senderID && x.ReceiverID == recipientID).Include(x => x.Messages).Include(x => x.Receiver).FirstOrDefault();
 
             if(conversation is null)
             {
-                conversation = _dbContext.Conversations.Where(x => x.SenderID == recipientID && x.ReceiverID == senderID).Include(x => x.Messages).FirstOrDefault();
+                conversation = _dbContext.Conversations.Where(x => x.SenderID == recipientID && x.ReceiverID == senderID).Include(x => x.Messages).Include(x => x.Receiver).FirstOrDefault();
             }
 
             return conversation;
