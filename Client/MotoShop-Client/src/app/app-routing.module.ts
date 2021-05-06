@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AddAdvertisementComponent } from './add-advertisement/add-advertisement.component';
 import { AdministrationPanelComponent } from './administration/administration-panel/administration-panel.component';
 import { AdvertisementDetailsComponent } from './advertisement-details/advertisement-details.component';
+import { ConversationsListComponent } from './conversations-list/conversations-list.component';
 import { HomeComponent } from './home/home.component';
 import { ConfirmationComponent } from './identity/confirmation-component/confirmation-component.component';
 import { ForgotPasswordComponent } from './identity/forgot-password/forgot-password.component';
@@ -76,6 +77,11 @@ const routes: Routes = [
   {
     path: "watchlist",
     component: WatchlistComponent,
+    canActivate: [AuthenticationGuard]
+  },
+  {
+    component: ConversationsListComponent,
+    path: "conversations",
     canActivate: [AuthenticationGuard]
   }
 ];
