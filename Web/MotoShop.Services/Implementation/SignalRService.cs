@@ -15,17 +15,17 @@ namespace MotoShop.Services.Implementation
 
         public async Task AddConnectionAsync(string connectionID, string data)
         {
-            await _cachingService.CacheResponseAsync(data, connectionID, new TimeSpan(0,10,10));
+            await _cachingService.SaveToCacheAsync(data, connectionID);
         }
 
         public async Task<string> GetConnectionIDAsync(string data)
         {
-            return await _cachingService.GetCachedResponseAsync(data);
+            return await _cachingService.GetFromCacheAsync(data);
         }
 
         public async Task<bool> HasActivConnection(string userID)
         {
-            var result = await _cachingService.GetCachedResponseAsync(userID);
+            var result = await _cachingService.GetFromCacheAsync(userID);
 
             return string.IsNullOrEmpty(result);
         }

@@ -8,11 +8,12 @@ import { SignalRService } from './shared/services/signalR.service';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements OnInit {
-  constructor() { }
+  constructor(private signalRService: SignalRService) { }
 
   title = 'MotoShop-Client';
 
   ngOnInit() {
-
+    // this.signalRService.acquireConnection();
+    // this.signalRService.startConnection();
   }
 }

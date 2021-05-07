@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 using MotoShop.Services.Services;
 using System.Threading.Tasks;
 
 namespace MotoShop.WebAPI.SignalR.Hubs
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class MessagesHub : Hub
     {
         private readonly IWebSocketProviderService _webSocketProvider;
@@ -15,10 +18,15 @@ namespace MotoShop.WebAPI.SignalR.Hubs
 
         public override  async Task OnConnectedAsync()
         {
-            //var connectionID = Context.ConnectionId;
-            //var userID = Context.User.FindFirst(x => x.Type == "UserID").Value;
+            var connectionID = Context.ConnectionId;
+            var userID = Context.User.FindFirst(x => x.Type == "UserID")?.Value;
 
-            //await _webSocketProvider.UpdateConnectionIDAsync(userID, connectionID);
+
+            if (!string.IsNullOrEmpty(userID))
+            {
+                await _webSocketProvider.UpdateConnectionIDAsync(userID, connectionID);
+            }
+
 
             await base.OnConnectedAsync();
         }

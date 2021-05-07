@@ -65,5 +65,15 @@ namespace MotoShop.Services.Implementation
 
             return (string.IsNullOrEmpty(cachedResponse)) ? null : cachedResponse;
         }
+
+        public async  Task<string> GetFromCacheAsync(string key)
+        {
+            return await _distributedCache.GetStringAsync(key);
+        }
+
+        public async Task SaveToCacheAsync(string key, string value)
+        {
+            await _distributedCache.SetStringAsync(key, value);
+        }
     }
 }

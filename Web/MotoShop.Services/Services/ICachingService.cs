@@ -12,5 +12,7 @@ namespace MotoShop.Services.Services
         Task<string> GetCachedResponseAsync(string key);
         Task ClearCache(IEnumerable<string> keys);
         RedisConnectionResult Connected(string host, int port);
+        public Task SaveToCacheAsync(string key, string value);
+        public Task<string> GetFromCacheAsync(string key);
     }
 }

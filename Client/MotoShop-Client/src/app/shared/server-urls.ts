@@ -39,4 +39,5 @@ export const serverDeleteToWatchlistUrl = "https://localhost:44304/api/watchlist
 
 //Conversations
 export const serverGetConversationUrl = "https://localhost:44304/api/messages";
+export const serverSendMessageUrl = "https://localhost:44304/api/messages";
 

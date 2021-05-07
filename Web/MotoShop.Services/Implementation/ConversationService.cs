@@ -4,7 +4,6 @@ using MotoShop.Data.Models.Messages;
 using MotoShop.Services.HelperModels;
 using MotoShop.Services.Services;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace MotoShop.Services.Implementation
@@ -79,6 +78,13 @@ namespace MotoShop.Services.Implementation
             }
 
             return flag;
+        }
+
+        public bool AddMessage(Message newMessage)
+        {
+            _dbContext.Messages.Add(newMessage);
+
+            return _dbContext.SaveChanges() > 0;
         }
     }
 }

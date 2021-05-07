@@ -1,8 +1,10 @@
 import { AfterViewChecked, Component, ElementRef, OnInit, DoCheck, IterableDiffers, IterableDiffer, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { NgImageSliderComponent } from 'ng-image-slider';
+import { ToastrService } from 'ngx-toastr';
 import { Conversation } from 'src/app/shared/models/messages/conversation.model';
+import { NewMessageModel } from 'src/app/shared/models/messages/newMessage.model';
 import { ConversationService } from 'src/app/shared/services/conversation.service';
+import { ServiceLocator } from 'src/app/shared/services/locator.service';
 
 
 interface DialogData {
@@ -19,10 +21,15 @@ interface DialogData {
 export class ConversationDialogComponent implements OnInit, AfterViewChecked {
 
   public conversation: Conversation;
+  private service: ConversationService;
+  private toastr: ToastrService;
 
   constructor(private elementRef: ElementRef,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private service: ConversationService) { }
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+
+    this.service = ServiceLocator.injector.get(ConversationService);
+    this.toastr = ServiceLocator.injector.get(ToastrService);
+  }
 
   ngOnInit(): void {
     this.service.getConversation(this.data.SenderID, this.data.ReceiverID, this.data.Topic).subscribe((res: Conversation) => {
@@ -43,5 +50,12 @@ export class ConversationDialogComponent implements OnInit, AfterViewChecked {
   }
 
   sendMessage(content) {
+    let model = new NewMessageModel();
+
+    model.ReceiverID = this.conversation.ReceiverID;
+    model.ConversationId = this.conversation.Id;
+    model.Content = content;
+
+    this.service.sendMessage(model).subscribe(res => this.toastr.info("Send message"), error => console.log(error))
   }
 }

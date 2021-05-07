@@ -9,6 +9,7 @@ using MotoShop.WebAPI.Models.Requests.Conversations;
 using MotoShop.WebAPI.Models.Response;
 using MotoShop.WebAPI.Models.Response.Conversations;
 using MotoShop.WebAPI.SignalR.Hubs;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,15 +19,16 @@ namespace MotoShop.WebAPI.Controllers
     [Route("api/[controller]")]
     public class MessagesController : ControllerBase
     {
-        private readonly IHubContext<MessagesHub> _messagesHub;
         private readonly IConversationService _conversationService;
+        private readonly IWebSocketProviderService _webSocketProviderService;
+        private readonly IHubContext<MessagesHub> _hub;
 
-        public MessagesController(IHubContext<MessagesHub> messagesHub, IConversationService conversationService)
+        public MessagesController(IConversationService conversationService, IWebSocketProviderService webSocketProviderService, IHubContext<MessagesHub> hub)
         {
-            _messagesHub = messagesHub;
             _conversationService = conversationService;
+            _webSocketProviderService = webSocketProviderService;
+            _hub = hub;
         }
-
 
         [HttpGet()]
         [Authorize]
@@ -98,6 +100,37 @@ namespace MotoShop.WebAPI.Controllers
             }
 
             return NotFound(StaticMessages.NotFound(nameof(Conversation), "UserID", userID));
+        }
+
+        [HttpPost()]
+        public async Task<IActionResult> SendMessage(NewMessageRequestModel model)
+        {
+            if (model is null)
+                return BadRequest(StaticMessages.WasNull(nameof(NewMessageRequestModel)));
+
+            var newMessage = new Message
+            {
+                Content = model.Content,
+                Read = false,
+                Sent = DateTime.UtcNow,
+                ConversationID = model.ConversationId
+            };
+
+            var result = _conversationService.AddMessage(newMessage);
+
+            if(result)
+            {
+                var connectionID = await _webSocketProviderService.GetConnectionIDAsync(model.ReceiverID);
+
+                if(!string.IsNullOrEmpty(connectionID))
+                {
+                    await _hub.Clients.Client(connectionID).SendAsync("message", newMessage);
+
+                    return Ok();
+                }
+            }
+
+            return BadRequest();
         }
 
     }
