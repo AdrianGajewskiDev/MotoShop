@@ -153,6 +153,8 @@ export class AdministrationPanelComponent implements OnInit {
           this.serverService.getOverallHealth().subscribe((res: HealthReportModel) => {
             this.showLoadingSpinner = false;
             this.serverHealth = res;
+            console.log(res);
+
           },
             error => this.onErrorReceived(error))
         }

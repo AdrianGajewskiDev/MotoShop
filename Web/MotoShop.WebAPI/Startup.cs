@@ -36,7 +36,7 @@ namespace MotoShop.Web
         {
             services.AddCaching(Configuration);
             services.AddCompression();
-            services.AddControllers().AddJsonOptions(JsonConfiguration.Configure);
+            services.AddControllers().AddNewtonsoftJson(JsonConfiguration.Configure);
             services.AddDbContext<ApplicationDatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Production"), SqlServerConfigurations.Configure), ServiceLifetime.Transient);
             services.AddIdentity<ApplicationUser, IdentityRole>(ApplicationUserConfigurations.Configure)
                 .AddEntityFrameworkStores<ApplicationDatabaseContext>()

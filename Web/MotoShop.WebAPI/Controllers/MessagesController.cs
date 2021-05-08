@@ -45,7 +45,7 @@ namespace MotoShop.WebAPI.Controllers
                         ReceiverID = recipientID,
                         SenderID = senderID,
                         Topic = topic,
-                        Messages = conversation.Messages,
+                        Messages = conversation.Messages.ToArray(),
                         Id = conversation.Id,
                         ReceiverName = conversation.Receiver.UserName
                     };

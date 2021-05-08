@@ -10,8 +10,7 @@
         </mat-form-field>
     </div>
     <div class="message-dialog-content">
-        <div *ngFor="let msg of conversation.Messages.values; let i = index" [id]="'msg-'+i"
-            class="messageItem-container">
+        <div *ngFor="let msg of conversation.Messages; let i = index" class="messageItem-container">
             <div class="message" [ngClass]="msg.Sender == 'owner' ? 'owner' : 'recipient'">
                 <p class="msg-content"></p>{{msg.Content}}
             </div>

@@ -2,6 +2,7 @@ import { AfterViewChecked, Component, ElementRef, OnInit, DoCheck, IterableDiffe
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { Conversation } from 'src/app/shared/models/messages/conversation.model';
+import { Message } from 'src/app/shared/models/messages/message.model';
 import { NewMessageModel } from 'src/app/shared/models/messages/newMessage.model';
 import { ConversationService } from 'src/app/shared/services/conversation.service';
 import { IdentityService } from 'src/app/shared/services/identity.service';
@@ -37,16 +38,18 @@ export class ConversationDialogComponent implements OnInit, AfterViewChecked {
   ngOnInit(): void {
     this.service.getConversation(this.data.SenderID, this.data.ReceiverID, this.data.Topic).subscribe((res: Conversation) => {
       this.conversation = res
-      console.log(this.conversation);
 
-      for (let msg of res.Messages.values()) {
+
+      for (let msg of res.Messages) {
         if (this.identityService.getUserID === this.conversation.SenderID)
           msg.Sender = "owner";
         else
           msg.Sender = "recipient";
       }
 
+
     }, error => console.log(error));
+
   }
 
   ngAfterViewChecked() {
@@ -57,6 +60,8 @@ export class ConversationDialogComponent implements OnInit, AfterViewChecked {
 
       (container as HTMLElement).style.minHeight = `${childHeight}px`;
     }
+
+    this.scrollToBottomOfMessagePanel();
   }
 
   sendMessage(content) {
@@ -66,6 +71,15 @@ export class ConversationDialogComponent implements OnInit, AfterViewChecked {
     model.ConversationId = this.conversation.Id;
     model.Content = content;
 
+    this.conversation.Messages.push({ Content: model.Content, Read: false, Sent: new Date(Date.now.toString()), Sender: "owner", Id: 0 });
     this.service.sendMessage(model).subscribe(res => this.toastr.info("Send message"), error => console.log(error))
+  }
+
+  scrollToBottomOfMessagePanel() {
+    let msgScrollbar = this.elementRef.nativeElement.querySelector(".message-dialog-content") as HTMLElement;
+
+    msgScrollbar.scrollTo({ top: msgScrollbar.scrollHeight });
+    console.log(msgScrollbar.scrollHeight);
+
   }
 }

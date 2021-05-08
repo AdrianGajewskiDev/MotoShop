@@ -1,15 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MotoShop.WebAPI.Configurations.Policy;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json.Serialization;
 
 namespace MotoShop.WebAPI.Configurations
 {
     public class JsonConfiguration
     {
-        public static void Configure(JsonOptions options)
+        public static void Configure(MvcNewtonsoftJsonOptions options)
         {
-            options.JsonSerializerOptions.PropertyNamingPolicy = new JsonCustomNamingPolicy();
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            options.SerializerSettings.ContractResolver = new DefaultContractResolver()
+            {
+                NamingStrategy = new DefaultNamingStrategy()
+            };
         }
     }
 }

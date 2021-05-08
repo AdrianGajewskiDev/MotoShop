@@ -8,5 +8,5 @@ export class Conversation {
     ReceiverID: string;
     ReceiverName: string;
     Topic: string;
-    Messages: Message[];
+    Messages: Array<Message>;
 }

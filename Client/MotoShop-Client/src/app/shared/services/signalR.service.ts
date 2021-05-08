@@ -61,7 +61,7 @@ export class SignalRService {
             console.log("Connected")
         }, error => console.log(error));
 
-        this.hubConnection.on("message", () => this.toastr.success("Receiving message"));
+        this.hubConnection.on("message", (res) => this.toastr.success(`Receiving message: ${res.content}`));
         this.hubConnection.on("test", () => this.toastr.info("Receiving"))
     }
 

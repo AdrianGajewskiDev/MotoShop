@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
 
     this.identityService.signIn(model).subscribe(
       (res: any) => {
+
         this.showLoadingSpinner = false;
         this.identityService.saveToken(res.Token);
         this.identityService.saveRefreshToken(res.RefreshToken);

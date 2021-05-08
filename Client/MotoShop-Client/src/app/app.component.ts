@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   title = 'MotoShop-Client';
 
   ngOnInit() {
-    // this.signalRService.acquireConnection();
-    // this.signalRService.startConnection();
+    this.signalRService.acquireConnection();
+    this.signalRService.startConnection();
   }
 }
