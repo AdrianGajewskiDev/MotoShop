@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Conversation } from 'src/app/shared/models/messages/conversation.model';
 import { NewMessageModel } from 'src/app/shared/models/messages/newMessage.model';
 import { ConversationService } from 'src/app/shared/services/conversation.service';
+import { IdentityService } from 'src/app/shared/services/identity.service';
 import { ServiceLocator } from 'src/app/shared/services/locator.service';
 
 
@@ -23,18 +24,27 @@ export class ConversationDialogComponent implements OnInit, AfterViewChecked {
   public conversation: Conversation;
   private service: ConversationService;
   private toastr: ToastrService;
+  private identityService: IdentityService
 
   constructor(private elementRef: ElementRef,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
 
     this.service = ServiceLocator.injector.get(ConversationService);
     this.toastr = ServiceLocator.injector.get(ToastrService);
+    this.identityService = ServiceLocator.injector.get(IdentityService);
   }
 
   ngOnInit(): void {
     this.service.getConversation(this.data.SenderID, this.data.ReceiverID, this.data.Topic).subscribe((res: Conversation) => {
-      console.log(res);
       this.conversation = res
+      console.log(this.conversation);
+
+      for (let msg of res.Messages.values()) {
+        if (this.identityService.getUserID === this.conversation.SenderID)
+          msg.Sender = "owner";
+        else
+          msg.Sender = "recipient";
+      }
 
     }, error => console.log(error));
   }

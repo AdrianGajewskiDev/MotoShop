@@ -54,8 +54,6 @@ export class UserProfileComponent implements OnInit {
   public displayedColumns: string[] = ['Title', 'Price', 'Placed'];
 
   ngOnInit(): void {
-    this.getAds();
-
     this.editUserDataForm = this.fb.group({
       name: [],
       lastName: [''],
@@ -75,11 +73,6 @@ export class UserProfileComponent implements OnInit {
           this.imageUrl = this.userData.ImageUrl;
         else
           this.imageUrl = buildImagePath(this.userData.ImageUrl);
-
-
-        console.log(this.imageUrl);
-
-
       },
       (error) => {
 
@@ -213,8 +206,6 @@ export class UserProfileComponent implements OnInit {
 
     if (JSON.stringify(this.userData) !== JSON.stringify(this.copiedUserData))
       flag = true;
-
-    console.log(flag);
     return flag;
   }
 

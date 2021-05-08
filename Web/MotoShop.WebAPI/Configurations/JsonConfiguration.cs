@@ -10,7 +10,6 @@ namespace MotoShop.WebAPI.Configurations
         public static void Configure(JsonOptions options)
         {
             options.JsonSerializerOptions.PropertyNamingPolicy = new JsonCustomNamingPolicy();
-            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
         }
     }
 }
