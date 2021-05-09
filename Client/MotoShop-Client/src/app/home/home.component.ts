@@ -48,8 +48,6 @@ export class HomeComponent implements OnInit {
     this.brands = carBrands.map(x => x.brand);
 
     this.service.getTopThree().subscribe((res: TopThreeAdvertisementsRequestResult) => {
-      console.log(res);
-
       this.showLoadingMessage = false;
       this.advertisements = res.Advertisements;
     });

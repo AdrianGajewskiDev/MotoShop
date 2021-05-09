@@ -116,9 +116,7 @@ export class AddAdvertisementComponent implements OnInit {
     }
 
     this.adService.addAdvertisement(model).subscribe((res: any) => {
-      console.log(res);
-
-      this.imageUploader.uploadAdvertisementImage(this.images, res.Id).subscribe(res => {
+      this.imageUploader.uploadAdvertisementImage(this.images, res.id).subscribe(res => {
         this.showLoadingSpinner = false;
         this.toastr.success("Successfully added your advertisement");
         this.router.navigateByUrl("/home");
