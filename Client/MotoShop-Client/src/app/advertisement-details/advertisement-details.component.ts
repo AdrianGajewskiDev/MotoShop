@@ -66,8 +66,6 @@ export class AdvertisementDetailsComponent implements OnInit {
         this.slides.push(this.buildImageUrl(this.baseServrResourcesPath + image));
       }
 
-      console.log(this.model);
-
     }, error => {
       this.showLoadingSpinner = false;
       console.log(error);

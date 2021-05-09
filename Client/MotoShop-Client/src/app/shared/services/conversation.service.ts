@@ -8,10 +8,6 @@ export class ConversationService {
     constructor(private client: HttpClient) { }
 
     getConversation(senderID, recipientID, topic) {
-        console.log(senderID, "sender");
-        console.log(recipientID, "rec");
-        console.log(topic, "top");
-
         return this.client.get(serverGetConversationUrl + `?senderID=${senderID}&recipientID=${recipientID}&topic=${topic}`)
     }
 

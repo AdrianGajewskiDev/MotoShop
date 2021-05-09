@@ -65,21 +65,19 @@ export class ConversationDialogComponent implements OnInit, AfterViewChecked {
   }
 
   sendMessage(content) {
+    (this.elementRef.nativeElement.querySelector(".msg-input") as HTMLTextAreaElement).value = "";
+
     let model = new NewMessageModel();
 
     model.ReceiverID = this.conversation.ReceiverID;
     model.ConversationId = this.conversation.Id;
     model.Content = content;
-
     this.conversation.Messages.push({ Content: model.Content, Read: false, Sent: new Date(Date.now.toString()), Sender: "owner", Id: 0 });
     this.service.sendMessage(model).subscribe(res => this.toastr.info("Send message"), error => console.log(error))
   }
 
   scrollToBottomOfMessagePanel() {
     let msgScrollbar = this.elementRef.nativeElement.querySelector(".message-dialog-content") as HTMLElement;
-
     msgScrollbar.scrollTo({ top: msgScrollbar.scrollHeight });
-    console.log(msgScrollbar.scrollHeight);
-
   }
 }
