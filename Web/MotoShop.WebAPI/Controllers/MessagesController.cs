@@ -120,7 +120,9 @@ namespace MotoShop.WebAPI.Controllers
 
             if(result)
             {
-                var connectionID = await _webSocketProviderService.GetConnectionIDAsync(model.ReceiverID);
+                var key = string.Concat(model.ReceiverID, StaticMessages.ConnectionID);
+
+                var connectionID = await _webSocketProviderService.GetConnectionIDAsync(key);
 
                 if(!string.IsNullOrEmpty(connectionID))
                 {

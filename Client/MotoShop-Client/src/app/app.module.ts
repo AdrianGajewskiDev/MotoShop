@@ -53,7 +53,7 @@ import { WatchlistItemComponent } from './Watchlist/watchlist-item/watchlist-ite
 import { WatchlistService } from './shared/services/watchlist.service';
 import { SignalRService } from './shared/services/signalR.service';
 import { AuthenticationGuard } from './shared/Guards/authentication.guard';
-import { ConversationDialogComponent, ScrollToBottomDirective } from './Dialogs/conversation-dialog/conversation-dialog.component';
+import { ConversationDialogComponent } from './Dialogs/conversation-dialog/conversation-dialog.component';
 import { ConversationService } from './shared/services/conversation.service';
 import { ConversationsListComponent } from './conversations-list/conversations-list.component';
 

@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using MotoShop.Services.Services;
+using MotoShop.WebAPI.Helpers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MotoShop.WebAPI.SignalR.Hubs
@@ -24,7 +26,10 @@ namespace MotoShop.WebAPI.SignalR.Hubs
 
             if (!string.IsNullOrEmpty(userID))
             {
-                await _webSocketProvider.UpdateConnectionIDAsync(userID, connectionID);
+                var strBuilder = new StringBuilder();
+                var key = strBuilder.Append(userID).Append(StaticMessages.ConnectionID);
+
+                await _webSocketProvider.UpdateConnectionIDAsync(key.ToString(), connectionID);
             }
 
 

@@ -20,6 +20,8 @@ namespace MotoShop.WebAPI.Helpers
         public static string Updated(string data) => _serialize($"-{data} was successfully updated");
         public static string Empty(string text) => _serialize(text);
 
+        public static string ConnectionID = "ConnectionID";
+
         private static string _serialize(string value) => JsonConvert.SerializeObject(value);
     }
 }

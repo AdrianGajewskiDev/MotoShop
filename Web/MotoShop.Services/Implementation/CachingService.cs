@@ -68,12 +68,13 @@ namespace MotoShop.Services.Implementation
 
         public async  Task<string> GetFromCacheAsync(string key)
         {
-            return await _distributedCache.GetStringAsync(key);
+            var result = await _distributedCache.GetStringAsync(key);
+            return result;
         }
 
         public async Task SaveToCacheAsync(string key, string value)
         {
-            await _distributedCache.SetStringAsync(key, value);
+            await _distributedCache.SetStringAsync(key, value, new DistributedCacheEntryOptions {AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)});
         }
     }
 }
