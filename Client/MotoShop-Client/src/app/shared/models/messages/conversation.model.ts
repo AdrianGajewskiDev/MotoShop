@@ -4,7 +4,7 @@ import { Message } from "./message.model";
 export class Conversation {
     Id: number;
     SenderID: string;
-    Sender: UserProfileDataModel;
+    SenderName: string;
     ReceiverID: string;
     ReceiverName: string;
     Topic: string;

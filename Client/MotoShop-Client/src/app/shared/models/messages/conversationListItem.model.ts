@@ -8,4 +8,5 @@ export class ConversationListItemModel {
     ReceiverName: string;
     SenderID: string;
     UserNameToDisplay: string;
+    ReceiverID: string;
 }

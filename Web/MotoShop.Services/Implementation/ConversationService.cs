@@ -27,11 +27,20 @@ namespace MotoShop.Services.Implementation
 
         public Conversation GetConversationBySenderAndRecipient(string senderID, string recipientID)
         {
-            var conversation = _dbContext.Conversations.Where(x => x.SenderID == senderID && x.ReceiverID == recipientID).Include(x => x.Messages).Include(x => x.Receiver).FirstOrDefault();
+            var conversation = _dbContext.Conversations
+                .Where(x => x.SenderID == senderID && x.ReceiverID == recipientID)
+                .Include(x => x.Messages).Include(x => x.Receiver)
+                .Include(x =>x.Sender)
+                .FirstOrDefault();
 
             if (conversation is null)
             {
-                conversation = _dbContext.Conversations.Where(x => x.SenderID == recipientID && x.ReceiverID == senderID).Include(x => x.Messages).Include(x => x.Receiver).FirstOrDefault();
+                conversation = _dbContext.Conversations
+                    .Where(x => x.SenderID == recipientID && x.ReceiverID == senderID)
+                    .Include(x => x.Messages)
+                    .Include(x => x.Receiver)
+                    .Include(x => x.Sender)
+                    .FirstOrDefault();
             }
 
             return conversation;
@@ -52,7 +61,8 @@ namespace MotoShop.Services.Implementation
                     Topic = x.Topic,
                     ReceiverName = x.Receiver.UserName,
                     SenderID = x.SenderID,
-                    SenderName = x.Sender.UserName
+                    SenderName = x.Sender.UserName,
+                    ReceiverID = x.ReceiverID
                 });
 
             if (conversations.Count() == 0)
@@ -70,7 +80,8 @@ namespace MotoShop.Services.Implementation
                        Topic = x.Topic,
                        ReceiverName = x.Receiver.UserName,
                        SenderName = x.Sender.UserName,
-                       SenderID = x.SenderID
+                       SenderID = x.SenderID,
+                       ReceiverID = x.ReceiverID
                    });
             }
 

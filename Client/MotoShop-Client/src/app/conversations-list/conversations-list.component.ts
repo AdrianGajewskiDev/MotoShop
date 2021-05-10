@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ConversationDialogComponent } from '../Dialogs/conversation-dialog/conversation-dialog.component';
+import { ConversationListItemModel } from '../shared/models/messages/conversationListItem.model';
 import { ConversationsListModel } from '../shared/models/messages/conversationsList.model';
 import { ConversationService } from '../shared/services/conversation.service';
 import { IdentityService } from '../shared/services/identity.service';
@@ -11,7 +14,8 @@ import { IdentityService } from '../shared/services/identity.service';
 export class ConversationsListComponent implements OnInit {
 
   constructor(private service: ConversationService,
-    private identityService: IdentityService) { }
+    private identityService: IdentityService,
+    private dialogRef: MatDialog) { }
 
   public model: ConversationsListModel;
   public userNameToDisplay;
@@ -19,8 +23,6 @@ export class ConversationsListComponent implements OnInit {
   ngOnInit(): void {
     this.service.getConversationsList().subscribe((res: any) => {
       this.model = res.ConversationsList;
-      console.log(this.model);
-
       for (let conv of this.model.Conversations) {
         var date = new Date(conv.LastMsgSentTime);
         conv.FormatedSentTime = `${date.getHours()}:${date.getMinutes()}`
@@ -29,6 +31,17 @@ export class ConversationsListComponent implements OnInit {
       }
     },
       (error) => console.log(error));
+  }
+
+  getConversationDetails(data: ConversationListItemModel) {
+    this.dialogRef.open(ConversationDialogComponent, {
+      panelClass: 'custom-dialog-container', data:
+      {
+        SenderID: data.SenderID,
+        ReceiverID: data.ReceiverID,
+        Topic: data.Topic
+      }
+    });
   }
 
 }

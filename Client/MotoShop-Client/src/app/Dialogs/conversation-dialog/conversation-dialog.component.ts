@@ -26,6 +26,7 @@ export class ConversationDialogComponent implements OnInit, AfterViewChecked {
   private service: ConversationService;
   private toastr: ToastrService;
   private identityService: IdentityService
+  public usernameToDisplay: string;
 
   constructor(private elementRef: ElementRef,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
@@ -41,11 +42,16 @@ export class ConversationDialogComponent implements OnInit, AfterViewChecked {
 
 
       for (let msg of res.Messages) {
-        if (this.identityService.getUserID === this.conversation.SenderID)
+        if (this.identityService.getUserID === this.conversation.SenderID) {
           msg.Sender = "owner";
-        else
+          this.usernameToDisplay = this.conversation.ReceiverName;
+        }
+        else {
+          this.usernameToDisplay = this.conversation.SenderName;
           msg.Sender = "recipient";
+        }
       }
+
 
 
     }, error => console.log(error));

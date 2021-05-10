@@ -11,5 +11,6 @@ namespace MotoShop.Services.HelperModels
         public string SenderName { get; set; }
         public string ReceiverName { get; set; }
         public string SenderID { get; set; }
+        public string ReceiverID { get;  set; }
     }
 }

@@ -16,6 +16,7 @@
             color: #fff
             padding: 3px
             border-bottom: 2px solid #1F3F92
+            cursor: pointer
             .conv-item-section
                 display: flex
                 flex-direction: row
@@ -26,3 +27,14 @@
                     flex-grow: .2
                 .title
                     font-weight: bold
+
+@media screen and ( max-width: 1250px )
+    .conv_form-container
+        width: 50% !important
+@media screen and ( max-width: 750px )
+    .conv_form-container
+        width: 60% !important
+        font-size: 12px !important
+@media screen and ( max-width: 500px )
+    .conv_form-container
+        width: 100% !important
