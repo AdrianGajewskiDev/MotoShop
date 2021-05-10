@@ -14,4 +14,8 @@ export class ConversationService {
     sendMessage(model: NewMessageModel) {
         return this.client.post(serverSendMessageUrl, model);
     }
+
+    getConversationsList() {
+        return this.client.get(serverGetConversationUrl + "/conversations");
+    }
 }

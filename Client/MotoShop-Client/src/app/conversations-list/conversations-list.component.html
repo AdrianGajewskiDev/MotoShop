@@ -1,39 +1,15 @@
 <div class="conv-container" fxLayoutAlign="center start">
     <div class="conv_form-container">
-        <div class="conv-item">
+        <div *ngFor="let conv of model.Conversations" class="conv-item">
             <div class="conv-item-section">
-                <p>AdrianDev</p>
-                <p class="date">20:45, 7 September</p>
+                <p>{{conv.UserNameToDisplay}}</p>
+                <p class="date">{{conv.FormatedSentTime}}</p>
             </div>
             <div class="conv-item-section">
-                <p class="title">BMW E46</p>
+                <p class="title">{{conv.Topic}}</p>
             </div>
             <div class="conv-item-section">
-                <p class="msgContent">Lorem ipsum, dolor sit amet consectetur adipisicing ...</p>
-            </div>
-        </div>
-        <div class="conv-item">
-            <div class="conv-item-section">
-                <p>AdrianDev</p>
-                <p class="date">20:45, 7 September</p>
-            </div>
-            <div class="conv-item-section">
-                <p class="title">BMW E46</p>
-            </div>
-            <div class="conv-item-section">
-                <p class="msgContent">Lorem ipsum, dolor sit amet consectetur adipisicing ...</p>
-            </div>
-        </div>
-        <div class="conv-item">
-            <div class="conv-item-section">
-                <p>AdrianDev</p>
-                <p class="date">20:45, 7 September</p>
-            </div>
-            <div class="conv-item-section">
-                <p class="title">BMW E46</p>
-            </div>
-            <div class="conv-item-section">
-                <p class="msgContent">Lorem ipsum, dolor sit amet consectetur adipisicing ...</p>
+                <p class="msgContent">{{conv.LastMsgContent.substring(0, 40)}}...</p>
             </div>
         </div>
     </div>

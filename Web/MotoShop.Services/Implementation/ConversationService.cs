@@ -39,23 +39,39 @@ namespace MotoShop.Services.Implementation
 
         public ConversationsListModel GetUserConversations(string userID)
         {
-            var conversations = _dbContext.Conversations.Include(x => x.Messages).Where(x => x.SenderID == userID && x.Messages.Count() != 0).Select(x => new ConversationListItemModel
-            {
-                Id = x.Id,
-                LastMsgContent = x.Messages.OrderBy(x => x.Sent).Last().Content,
-                LastMsgSentTime = x.Messages.OrderBy(x => x.Sent).Last().Sent,
-                Topic = x.Topic
-            });
-
-            if (conversations.Count() == 0)
-            {
-                conversations = _dbContext.Conversations.Include(x => x.Messages).Where(x => x.ReceiverID == userID && x.Messages.Count() != 0).Select(x => new ConversationListItemModel
+            var conversations = _dbContext.Conversations
+                .Include(x => x.Messages)
+                .Include(x => x.Sender)
+                .Include(x => x.Receiver)
+                .Where(x => x.SenderID == userID && x.Messages.Count() != 0)
+                .Select(x => new ConversationListItemModel
                 {
                     Id = x.Id,
                     LastMsgContent = x.Messages.OrderBy(x => x.Sent).Last().Content,
                     LastMsgSentTime = x.Messages.OrderBy(x => x.Sent).Last().Sent,
-                    Topic = x.Topic
+                    Topic = x.Topic,
+                    ReceiverName = x.Receiver.UserName,
+                    SenderID = x.SenderID,
+                    SenderName = x.Sender.UserName
                 });
+
+            if (conversations.Count() == 0)
+            {
+                conversations = _dbContext.Conversations
+                   .Include(x => x.Messages)
+                   .Include(x => x.Sender)
+                   .Include(x => x.Receiver)
+                   .Where(x => x.ReceiverID == userID && x.Messages.Count() != 0)
+                   .Select(x => new ConversationListItemModel
+                   {
+                       Id = x.Id,
+                       LastMsgContent = x.Messages.OrderBy(x => x.Sent).Last().Content,
+                       LastMsgSentTime = x.Messages.OrderBy(x => x.Sent).Last().Sent,
+                       Topic = x.Topic,
+                       ReceiverName = x.Receiver.UserName,
+                       SenderName = x.Sender.UserName,
+                       SenderID = x.SenderID
+                   });
             }
 
             return new ConversationsListModel
