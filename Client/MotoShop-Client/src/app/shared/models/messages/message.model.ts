@@ -4,4 +4,5 @@ export class Message {
     Sent: Date;
     Read: boolean;
     Sender: string;
+    SenderID: string;
 }

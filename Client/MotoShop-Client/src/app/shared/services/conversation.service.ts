@@ -18,4 +18,8 @@ export class ConversationService {
     getConversationsList() {
         return this.client.get(serverGetConversationUrl + "/conversations");
     }
+
+    getUnreadMessagesCount() {
+        return this.client.get(serverGetConversationUrl + "/unread");
+    }
 }

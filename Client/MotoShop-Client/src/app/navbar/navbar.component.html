@@ -18,7 +18,10 @@
                         class="material-icons">account_circle</span></button>
                 <mat-menu #beforeMenu="matMenu" xPosition="before" class="dropdown-menu">
                     <button mat-menu-item (click)="goTo('/userProfile')">My Account</button>
-                    <button mat-menu-item (click)="goTo('/conversations')">My Conversations</button>
+                    <button mat-menu-item (click)="goTo('/conversations')">My
+                        Conversations <span *ngIf="unreadMessagesCount !== 0"
+                            class="badge">{{unreadMessagesCount}}</span>
+                    </button>
                     <button mat-menu-item (click)="logout()">Logout</button>
                 </mat-menu>
             </li>
@@ -44,7 +47,8 @@
                             class="material-icons">account_circle</span></button>
                     <mat-menu #beforeMenu="matMenu" xPosition="before" class="dropdown-menu">
                         <button mat-menu-item (click)="goTo('/userProfile'); drawer.toggle()">My Account</button>
-                        <button mat-menu-item (click)="goTo('/conversations')">My Conversations</button>
+                        <button mat-menu-item (click)="goTo('/conversations')">My
+                            Conversations <span class="badge">{{unreadMessagesCount}}</span></button>
                         <button mat-menu-item (click)="logout(); drawer.toggle()">Logout</button>
                     </mat-menu>
                 </li>

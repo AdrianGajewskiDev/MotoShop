@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MotoShop.Data.Database_Context;
 
 namespace MotoShop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210510142459_add SenderID var to Message entity model")]
+    partial class addSenderIDvartoMessageentitymodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -627,11 +629,13 @@ namespace MotoShop.Data.Migrations
 
             modelBuilder.Entity("MotoShop.Data.Models.Messages.Message", b =>
                 {
-                    b.HasOne("MotoShop.Data.Models.Messages.Conversation", null)
+                    b.HasOne("MotoShop.Data.Models.Messages.Conversation", "Conversation")
                         .WithMany("Messages")
                         .HasForeignKey("ConversationID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Conversation");
                 });
 
             modelBuilder.Entity("MotoShop.Data.Models.Store.Advertisement", b =>

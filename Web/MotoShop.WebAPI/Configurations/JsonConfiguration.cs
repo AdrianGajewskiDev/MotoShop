@@ -10,7 +10,7 @@ namespace MotoShop.WebAPI.Configurations
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             options.SerializerSettings.ContractResolver = new DefaultContractResolver()
             {
-                NamingStrategy = new DefaultNamingStrategy()
+                NamingStrategy = new DefaultNamingStrategy(),
             };
         }
     }

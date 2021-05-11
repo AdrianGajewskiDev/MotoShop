@@ -29,8 +29,9 @@ namespace MotoShop.Services.Implementation
         {
             var conversation = _dbContext.Conversations
                 .Where(x => x.SenderID == senderID && x.ReceiverID == recipientID)
-                .Include(x => x.Messages).Include(x => x.Receiver)
-                .Include(x =>x.Sender)
+                .Include(x => x.Messages)
+                .Include(x => x.Receiver)
+                .Include(x => x.Sender)
                 .FirstOrDefault();
 
             if (conversation is null)
@@ -112,6 +113,27 @@ namespace MotoShop.Services.Implementation
             _dbContext.Messages.Add(newMessage);
 
             return _dbContext.SaveChanges() > 0;
+        }
+
+        public int GetUnreadMessagesCountForUser(string userID)
+        {
+            var messages = _dbContext.Conversations.Where(x => x.SenderID == userID || x.ReceiverID == userID).Include(x => x.Messages.Where(x => x.SenderID != userID)).Select(x => x.Messages);
+
+            int count = 0;
+
+            foreach(var msg in messages)
+            {
+                var userMsg = msg.Where(x => x.SenderID != userID).ToList();
+
+                count += userMsg.Count;
+            }
+
+            return count;
+        }
+
+        public bool HasAnyConversation(string v)
+        {
+            return _dbContext.Conversations.Any(x => x.SenderID == v || x.ReceiverID == v);
         }
     }
 }

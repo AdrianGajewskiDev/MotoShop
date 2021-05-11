@@ -12,5 +12,7 @@ namespace MotoShop.Services.Services
         Conversation GetConversationBySenderAndRecipient(string senderID, string recipientID);
         ConversationsListModel GetUserConversations(string userID);
         bool AddMessage(Message newMessage);
+        int GetUnreadMessagesCountForUser(string userID);
+        bool HasAnyConversation(string v);
     }
 }

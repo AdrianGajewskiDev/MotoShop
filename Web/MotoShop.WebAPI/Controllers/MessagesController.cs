@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using MotoShop.Data.Models.Messages;
 using MotoShop.Services.Services;
+using MotoShop.WebAPI.Attributes;
 using MotoShop.WebAPI.Extensions;
 using MotoShop.WebAPI.Helpers;
 using MotoShop.WebAPI.Models.Requests.Conversations;
@@ -32,6 +33,7 @@ namespace MotoShop.WebAPI.Controllers
 
         [HttpGet()]
         [Authorize]
+        [Cache(10)]
         public ActionResult<ConversationResponseModel> GetConversation([FromQuery] string senderID, [FromQuery]string recipientID, [FromQuery]string topic)
         {
             if(_conversationService.HasConversation(senderID, recipientID))
@@ -84,6 +86,7 @@ namespace MotoShop.WebAPI.Controllers
 
         [HttpGet("conversations")]
         [Authorize]
+        [Cache(15)]
         public IActionResult GetConversations()
         {
             var userID = User.GetUserID();
@@ -104,6 +107,8 @@ namespace MotoShop.WebAPI.Controllers
         }
 
         [HttpPost()]
+        [Authorize]
+        [ClearCache]
         public async Task<IActionResult> SendMessage(NewMessageRequestModel model)
         {
             if (model is null)
@@ -114,7 +119,8 @@ namespace MotoShop.WebAPI.Controllers
                 Content = model.Content,
                 Read = false,
                 Sent = DateTime.UtcNow,
-                ConversationID = model.ConversationId
+                ConversationID = model.ConversationId,
+                SenderID = User.GetUserID()
             };
 
             var result = _conversationService.AddMessage(newMessage);
@@ -136,5 +142,29 @@ namespace MotoShop.WebAPI.Controllers
             return BadRequest();
         }
 
+
+        [HttpGet("unread")]
+        [Authorize]
+        public IActionResult GetUnreadMessagesCount()
+        {
+            var userID = User.GetUserID();
+
+            bool hasAnyActivConversations = _conversationService.HasAnyConversation(User.GetUserID());
+
+            if (hasAnyActivConversations)
+            {
+                var count = _conversationService.GetUnreadMessagesCountForUser(userID);
+
+                
+                var responseModel = new UnreadMessagesResponseModel
+                {
+                    Count = count
+                };
+
+                return Ok(responseModel);
+            }
+
+            return NotFound(StaticMessages.NotFound("Messages", "UserID", userID));
+        }
     }
 }

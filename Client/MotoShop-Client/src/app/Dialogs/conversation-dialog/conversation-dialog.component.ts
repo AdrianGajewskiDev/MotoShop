@@ -7,6 +7,7 @@ import { NewMessageModel } from 'src/app/shared/models/messages/newMessage.model
 import { ConversationService } from 'src/app/shared/services/conversation.service';
 import { IdentityService } from 'src/app/shared/services/identity.service';
 import { ServiceLocator } from 'src/app/shared/services/locator.service';
+import { SignalRService } from 'src/app/shared/services/signalR.service';
 
 
 interface DialogData {
@@ -25,7 +26,8 @@ export class ConversationDialogComponent implements OnInit, AfterViewChecked {
   public conversation: Conversation;
   private service: ConversationService;
   private toastr: ToastrService;
-  private identityService: IdentityService
+  private identityService: IdentityService;
+  private signalRService: SignalRService;
   public usernameToDisplay: string;
 
   constructor(private elementRef: ElementRef,
@@ -39,10 +41,10 @@ export class ConversationDialogComponent implements OnInit, AfterViewChecked {
   ngOnInit(): void {
     this.service.getConversation(this.data.SenderID, this.data.ReceiverID, this.data.Topic).subscribe((res: Conversation) => {
       this.conversation = res
-
+      console.log(res);
 
       for (let msg of res.Messages) {
-        if (this.identityService.getUserID === this.conversation.SenderID) {
+        if (this.identityService.getUserID === msg.SenderID) {
           msg.Sender = "owner";
           this.usernameToDisplay = this.conversation.ReceiverName;
         }
@@ -52,10 +54,19 @@ export class ConversationDialogComponent implements OnInit, AfterViewChecked {
         }
       }
 
-
-
     }, error => console.log(error));
 
+
+    this.signalRService.messageReceivedSubject.subscribe((res: any) => {
+      console.log("here");
+
+      let model = new NewMessageModel();
+
+      model.ReceiverID = this.conversation.ReceiverID;
+      model.ConversationId = this.conversation.Id;
+      model.Content = res.Content
+      this.conversation.Messages.push({ Content: model.Content, Read: false, Sent: new Date(Date.now.toString()), Sender: "recipient", Id: 0, SenderID: res.SenderID });
+    });
   }
 
   ngAfterViewChecked() {
@@ -78,7 +89,7 @@ export class ConversationDialogComponent implements OnInit, AfterViewChecked {
     model.ReceiverID = this.conversation.ReceiverID;
     model.ConversationId = this.conversation.Id;
     model.Content = content;
-    this.conversation.Messages.push({ Content: model.Content, Read: false, Sent: new Date(Date.now.toString()), Sender: "owner", Id: 0 });
+    this.conversation.Messages.push({ Content: model.Content, Read: false, Sent: new Date(Date.now.toString()), Sender: "owner", Id: 0, SenderID: "" });
     this.service.sendMessage(model).subscribe(res => this.toastr.info("Send message"), error => console.log(error))
   }
 

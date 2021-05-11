@@ -4,6 +4,7 @@ import { Injectable } from "@angular/core";
 import * as signalR from "@aspnet/signalr";
 import { IHttpConnectionOptions } from "@aspnet/signalr";
 import { ToastrService } from "ngx-toastr";
+import { Subject } from "rxjs";
 import { serverBaseUrl } from "../server-urls";
 import { IdentityService } from "./identity.service";
 
@@ -17,6 +18,8 @@ export class SignalRService {
     private hubConnection: signalR.HubConnection;
 
     private connectionStatus: "connected" | "disconnected" = "disconnected";
+
+    public messageReceivedSubject = new Subject();
 
     public setConnectionStatus(value) {
         localStorage.setItem("connectionStatus", value);
@@ -61,8 +64,7 @@ export class SignalRService {
             console.log("Connected")
         }, error => console.log(error));
 
-        this.hubConnection.on("message", (res) => this.toastr.success(`Receiving message: ${res.content}`));
-        this.hubConnection.on("test", () => this.toastr.info("Receiving"))
+        this.hubConnection.on("message", (res) => this.messageReceivedSubject.next(res));
     }
 
     public listenFor(methodName: string, callback: (...args: any[]) => void) {
